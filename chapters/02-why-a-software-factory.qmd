@@ -1,0 +1,88 @@
+---
+title: "Why a Software Factory?"
+---
+
+I started a company called Aikaara in early 2026. The idea is simple to state and hard to build: a machine that builds software factories.
+
+This chapter explains what that means and why I think it is the right thing to build right now.
+
+## The Problem
+
+Every company needs custom software. Not all of it — most companies can use off-the-shelf tools for email, accounting, and project management. But every company has workflows, processes, and data that are specific to them. Those need custom software.
+
+The current options for getting custom software are:
+
+1. **Hire developers.** Expensive ($50–200/hour), slow to onboard, hard to retain.
+2. **Outsource.** Cheaper per hour, but communication overhead eats the savings. Quality is inconsistent.
+3. **Use no-code tools.** Works for simple things. Falls apart when requirements get specific.
+4. **Buy SaaS products.** Works until your needs don't match the product's assumptions. Then you are stuck.
+
+None of these options scale well. Hiring more developers does not make software arrive proportionally faster — there is a well-known law about this (Brooks's Law). Outsourcing introduces coordination costs. No-code tools have hard limits. SaaS products serve the average case, not your case.
+
+## The Assembly Line Analogy
+
+Before the assembly line, manufacturing a car was artisanal work. A team of skilled craftsmen would build one car at a time, start to finish. It was slow and expensive.
+
+Henry Ford did not invent a better car. He invented a better process for building cars. The assembly line broke manufacturing into small, repeatable steps. Each step was simple enough to be done quickly and consistently. The output was the same car, produced faster and cheaper.
+
+Software development is in the artisanal stage. A team of skilled developers builds one feature at a time, often from scratch, using their judgment at every step.
+
+AI agents make it possible to build an assembly line for software.
+
+## The Software Assembly Line
+
+Here is what the assembly line looks like:
+
+```
+Spec → Decompose → Dispatch → Build → QA → Merge → Ship
+```
+
+**Spec.** A human writes what they want. This can be a product requirement, a bug report, or a feature request. It does not need to be in a specific format. Natural language works.
+
+**Decompose.** An AI agent breaks the spec into small, independent tasks. Each task is scoped so that a single agent can complete it without needing to understand the full system. The agent also identifies dependencies between tasks.
+
+**Dispatch.** Tasks are assigned to AI agents running in parallel. Each agent gets the task description, the relevant code files, and any context it needs. Multiple agents can work on different tasks at the same time.
+
+**Build.** Each agent writes the code for its assigned task. It works in an isolated branch so it does not interfere with other agents.
+
+**QA.** Another AI agent reviews the output. It checks if the code compiles, if the tests pass, if the implementation matches the spec, and if there are obvious problems. It produces a pass/fail verdict.
+
+**Merge.** Approved branches are merged into the main codebase. An AI agent handles conflict resolution for simple cases and flags complex conflicts for human review.
+
+**Ship.** Automated deployment pushes the changes to production.
+
+No single AI agent is smart enough to handle this entire pipeline. But a system of agents, each handling one step, can. The human's job shifts from writing code to designing the pipeline, reviewing outputs, and making decisions the agents cannot make.
+
+## Why Now?
+
+Three things changed in 2025 and 2026:
+
+**AI coding agents became reliable enough for scoped tasks.** They still make mistakes. But for well-defined tasks with clear inputs and outputs, they succeed often enough to be useful. A success rate of 70–80% on agent-sized tasks is enough to build a viable pipeline, because failed tasks can be retried or escalated to humans.
+
+**Orchestration tools matured.** Tools like OpenClaw, Claude Code, Cursor, and others made it possible to give AI agents real access to real systems — terminals, file systems, APIs, deployment pipelines. The "agent" is no longer a chatbot pretending to code. It is a program that runs commands on a server.
+
+**The cost dropped.** An AI agent costs between $0.05 and $2.00 per task, depending on complexity. A developer costs $50–200 per hour. For routine work — writing CRUD endpoints, setting up project scaffolding, fixing lint errors, writing tests — the economics are obvious.
+
+## What Aikaara Builds
+
+Aikaara is building the tools and processes that make this assembly line work.
+
+Every company's factory will be different. Different tech stacks, different coding conventions, different business logic, different deployment targets. But the meta-process — the process of building a factory — is the same.
+
+Aikaara's plan has three phases:
+
+**Phase 1: Build open-source tools.** Individual tools for each step of the assembly line. A task decomposer. A code reviewer. A convention enforcer. Each tool is useful on its own. Together they form a pipeline. These tools earn credibility and attract developers.
+
+**Phase 2: Connect the tools into workflows.** A system that chains the tools together. Spec goes in, deployed code comes out. This is the assembly line.
+
+**Phase 3: Sell the factory.** Package the workflow system so that other companies can set up their own software factories, customized for their tech stack and business.
+
+This book documents Phase 1. The 31-day sprint starting March 1 is about building the first set of tools and products.
+
+## What This Book Is Not
+
+This book is not a theoretical argument for why AI will change software development. There are plenty of those.
+
+This book is a record of what actually happened when one person tried to build a software company using AI agents as the primary engineering team. It includes the products that shipped, the problems that came up, the mistakes that were made, and the lessons that came out of it.
+
+Everything in this book happened. The timestamps are real. The commit hashes link to real code. The failures are not hypothetical.

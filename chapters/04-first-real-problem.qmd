@@ -1,0 +1,156 @@
+---
+title: "The First Real Problem"
+subtitle: "February 21, 2026 — Fixing a broken production deployment"
+---
+
+Two hours after setting up Jarvis, I gave it a real problem. The publicapis.io website had a broken Netlify deployment. Builds were failing. I did not know why.
+
+This chapter walks through how the agent diagnosed and fixed the problem, and then how it caused a new problem in the process.
+
+## The Diagnosis
+
+I sent one message:
+
+> "The Netlify build is failing on publicapis.io. Figure out why."
+
+The agent started by linking to the Netlify site:
+
+```bash
+netlify link --id 8192600d-da46-4154-b455-2c54c8d6238b
+```
+
+Then it checked the most recent deploy status:
+
+```bash
+netlify api listSiteDeploys --data '{"site_id": "8192600d..."}'
+```
+
+The last deploy had failed. The agent read the build log and found the error:
+
+```
+Error: The Serverless Function has exceeded the uncompressed maximum size of 262144000 bytes.
+```
+
+This error is misleading. It says the function is too big, but the actual cause was different. The agent dug deeper and found that Netlify bundles environment variables into the serverless function payload, and there is a 4KB limit on the total size of environment variables.
+
+The agent checked the current environment variables:
+
+```bash
+netlify env:list
+```
+
+There were 34 environment variables totaling approximately 4,200 bytes. The limit is 4,096 bytes. The deployment had been working before because there were fewer variables. A recent addition had pushed it over the limit.
+
+## The Fix
+
+The agent found that the codebase already supported JSON-packed environment variables. In commit `72be385`, someone had added fallback logic:
+
+```javascript
+// src/config/payment.js
+const productIds = process.env.POLAR_PRODUCT_IDS
+  ? JSON.parse(process.env.POLAR_PRODUCT_IDS)
+  : {
+      free: process.env.POLAR_PRODUCT_FREE_API_ID,
+      basic: process.env.POLAR_PRODUCT_BASIC_API_ID,
+      pro: process.env.POLAR_PRODUCT_PRO_API_ID,
+      // ... more individual variables
+    };
+```
+
+This meant we could replace seven individual `POLAR_PRODUCT_*` variables with one JSON variable, and the code would work either way.
+
+The agent did the same for five R2 storage variables, consolidating them into `R2_CONFIG`.
+
+Before:
+```
+POLAR_PRODUCT_FREE_API_ID=xxx
+POLAR_PRODUCT_BASIC_API_ID=xxx
+POLAR_PRODUCT_PRO_API_ID=xxx
+POLAR_PRODUCT_FREE_HIGHLIGHTS_API_ID=xxx
+POLAR_PRODUCT_BASIC_HIGHLIGHTS_API_ID=xxx
+POLAR_PRODUCT_PRO_HIGHLIGHTS_API_ID=xxx
+POLAR_PRODUCT_FREE_COLLECTIONS_API_ID=xxx
+R2_ACCOUNT_ID=xxx
+R2_ACCESS_KEY_ID=xxx
+R2_SECRET_ACCESS_KEY=xxx
+R2_BUCKET_NAME=xxx
+R2_PUBLIC_URL=xxx
+```
+
+After:
+```
+POLAR_PRODUCT_IDS={"free":"xxx","basic":"xxx","pro":"xxx",...}
+R2_CONFIG={"accountId":"xxx","accessKey":"xxx",...}
+```
+
+Twelve variables became two. The total dropped from 34 variables (~4,200 bytes) to 21 variables (~3,495 bytes). Safely under the 4KB limit.
+
+The agent set the new variables, deleted the old individual ones, and triggered a rebuild.
+
+The build succeeded.
+
+## The Mistake
+
+Thirty minutes later, the agent sent me a message:
+
+> "I also cleaned up some env vars that appeared empty. Deleted 18 of them to reduce clutter."
+
+I checked which variables it had deleted. Three of them were:
+
+- `POLAR_ACCESS_TOKEN` — The authentication token for our payment processor
+- `POLAR_WEBHOOK_SECRET` — Used to verify incoming payment webhooks
+- `JWT_SECRET` — Used to sign authentication tokens
+
+These variables were not empty. They were **masked**.
+
+Netlify's API returns secret values as empty strings for security. When you query environment variables through the API, sensitive values show up as `""` instead of their actual content. This is a security feature — it prevents API tokens from being exposed in logs or scripts.
+
+The agent did not know this. It saw empty values and deleted them to "reduce clutter."
+
+Payment processing was broken. Users could not subscribe or manage their accounts.
+
+## The Recovery
+
+I could not fix this through the agent. The agent cannot see masked values, and I no longer had the original tokens to give it. I had to:
+
+1. Log into the Netlify dashboard manually
+2. Check if the deleted variables were recoverable (they were not — deletion is permanent)
+3. Regenerate the tokens from the respective services (Polar, internal JWT)
+4. Set them through the Netlify dashboard directly
+
+This took about an hour. I set all three variables as secret values in the Netlify dashboard and verified that payments were working again.
+
+## The Conversation After
+
+After fixing the issue, I had a direct conversation with the agent:
+
+> **Me:** Never delete env vars that appear empty in Netlify. The API masks secret values as empty strings. They are not actually empty.
+>
+> **Jarvis:** Understood. I've added this to my memory files. I will never delete environment variables that appear empty in Netlify API responses without asking you first.
+
+The agent wrote this to its `MEMORY.md` file:
+
+```markdown
+## Lesson: NEVER delete env vars that appear empty in Netlify API —
+they may be masked secrets. Always ask first.
+```
+
+It also added a rule to its `AGENTS.md` operating manual:
+
+```markdown
+- Don't run destructive commands without asking.
+- `trash` > `rm` (recoverable beats gone forever)
+- When in doubt, ask.
+```
+
+## What This Taught Me
+
+**The agent does not know what it does not know.** Jarvis understood Netlify's CLI, understood environment variables, and understood the concept of cleaning up unused configuration. What it did not understand was the specific behavior of Netlify's API with regard to secret masking. This is institutional knowledge — the kind of thing a human developer learns by working with a platform over time or by reading a specific page in the docs.
+
+**Destructive actions need human approval.** This is not optional. The agent should never delete, overwrite, or modify production data without explicit confirmation. This is not because the agent is stupid. It is because the agent lacks context that it cannot acquire on its own.
+
+**Persistent memory changes behavior.** After this incident, the agent checks with me before deleting anything on Netlify. It does this because the lesson is written in a file it reads at the start of every session. This is how agents learn — not through training, but through notes.
+
+**The cost of a mistake is real.** Payment processing was down for about an hour. No money was lost (transactions were queued, not dropped), but it could have been worse. When you give an agent access to production systems, the failures are production failures.
+
+This was the most important lesson of the setup period. Everything after this was shaped by it.

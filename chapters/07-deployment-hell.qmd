@@ -1,0 +1,33 @@
+---
+title: "Deployment Hell"
+subtitle: "February 22–24, 2026 — Getting things actually running"
+---
+
+There is a large gap between "the code works on my machine" and "the product is live on the internet." This chapter covers the deployment problems we hit and how we solved them.
+
+*[To be written as we complete the ChatSite and publicapis.io deployments. Will cover:]*
+
+## Railway and Strapi
+
+- The missing PostgreSQL driver (`pg` not in dependencies)
+- The lockfile sync problem (`npm ci` fails when package.json and package-lock.json diverge)
+- Memory limits on the 4GB droplet preventing `npm install`
+- The Railway reference variable syntax for connecting services (`${{postgres.RAILWAY_PRIVATE_DOMAIN}}`)
+
+## Netlify and Environment Variables
+
+- The 4KB Lambda limit (revisited with more detail)
+- How to audit environment variable sizes
+- The JSON consolidation pattern for reducing variable count
+- Why `yarn run build` vs `npm run build` matters (Netlify site config vs netlify.toml)
+
+## The Gap Between "Built" and "Deployed"
+
+- Why the agent can build a project that compiles but does not deploy
+- The problem of configuration: code needs to know where it is running
+- Environment-specific behavior that does not show up in local builds
+- How to structure projects so that deployment is part of the build process, not an afterthought
+
+## Lessons
+
+*[To be written]*

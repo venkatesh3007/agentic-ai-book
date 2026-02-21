@@ -8,7 +8,7 @@ book:
   author: "Venkatesh Rao"
   date: "2026"
   description: |
-    31 days. 31 products. One AI agent. Zero excuses.
+    31 days. 31 products. One AI agent.
     A hands-on journal of building an AI-native software factory from scratch —
     with real code, real failures, and real timestamps.
   reader-mode: true
@@ -18,11 +18,18 @@ book:
   chapters:
     - index.qmd
     - preface.qmd
-    - part: "Part I: The Setup"
+    - part: "Part I: The Setup (February 2026)"
       chapters:
-        - chapters/00-why.qmd
-        - chapters/00-toolkit.qmd
-    - part: "Part II: The Build (31 Days, 31 Products)"
+        - chapters/01-what-is-agentic-ai.qmd
+        - chapters/02-why-a-software-factory.qmd
+        - chapters/03-meeting-jarvis.qmd
+        - chapters/04-first-real-problem.qmd
+        - chapters/05-the-toolkit.qmd
+        - chapters/06-building-chatsite.qmd
+        - chapters/07-deployment-hell.qmd
+        - chapters/08-writing-in-the-open.qmd
+        - chapters/09-planning-the-sprint.qmd
+    - part: "Part II: The Build (March 1–31, 2026)"
       chapters:
         - chapters/day-01.qmd
         - chapters/day-02.qmd

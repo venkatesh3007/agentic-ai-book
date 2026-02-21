@@ -1,0 +1,50 @@
+---
+title: "Writing in the Open"
+subtitle: "February 25–26, 2026 — Setting up this book"
+---
+
+This chapter is meta. It describes how this book is written, why it is open-source, and how the writing process itself uses AI agents.
+
+## Why Open Source
+
+The book is free to read on GitHub. The full source is at [venkatesh3007/agentic-ai-book](https://github.com/venkatesh3007/agentic-ai-book).
+
+The reasoning:
+
+1. **Credibility.** Anyone can verify the claims in this book by checking the commit history. The timestamps, the code changes, and the deployment logs are all public.
+
+2. **Audience building.** The book is a marketing asset. Each chapter can be shared on Twitter, Hacker News, and Indie Hackers. Readers who find value in the free version may buy the formatted Kindle edition.
+
+3. **Feedback.** Open-source books get pull requests. Readers fix typos, suggest improvements, and point out errors. This makes the book better than I could make it alone.
+
+## The Toolchain
+
+The book is written in Quarto, an open-source publishing system. The source files are Markdown with some extra formatting. From the same source, Quarto generates:
+
+- **HTML** — The free website at [venkatesh3007.github.io/agentic-ai-book](https://venkatesh3007.github.io/agentic-ai-book/)
+- **PDF** — Formatted for KDP (Amazon Kindle Direct Publishing) print edition
+- **EPUB** — For Kindle ebook
+
+Every push to the `main` branch triggers a GitHub Action that rebuilds the website automatically.
+
+## How the Writing Works
+
+The writing process uses the same AI agent that builds the products:
+
+1. We build something during the day
+2. The agent has a record of everything that happened (commands run, errors hit, decisions made)
+3. I ask the agent to draft the chapter based on what actually happened
+4. I edit the draft for voice, accuracy, and structure
+5. We push to GitHub
+
+The agent writes clear descriptions of technical events. I add the human perspective — why I made certain choices, what I was thinking, what I felt when things broke.
+
+## The Business Model
+
+- **Free:** Full book content on GitHub and the website
+- **Paid:** Formatted Kindle ebook and paperback on Amazon KDP
+- **License:** Creative Commons BY-NC-SA 4.0 (free to share, no commercial use without permission)
+
+The precedent for this model is "You Don't Know JS" by Kyle Simpson (180k+ GitHub stars, published through O'Reilly) and "The JavaScript Way" by Baptiste Pesquet (topped GitHub trending charts at launch with no initial audience).
+
+*[This chapter will be expanded with details about the Quarto setup, the GitHub Pages configuration, and the specific problems we hit (like the Pages deployment source needing to be set to "GitHub Actions" instead of branch-based).]*

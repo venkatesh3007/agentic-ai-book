@@ -1,0 +1,133 @@
+---
+title: "Meeting Jarvis"
+subtitle: "February 21, 2026 — Setting up an AI agent from scratch"
+---
+
+This chapter describes what happened on February 21, 2026, when I set up my AI agent for the first time. The times are in IST (Indian Standard Time, UTC+5:30).
+
+## The Starting Point
+
+I had a DigitalOcean droplet running Ubuntu. 2 vCPUs, 4GB RAM, $24/month. OpenClaw was installed and connected to my Telegram account. The AI model behind it was Claude by Anthropic.
+
+When I opened Telegram that evening, the agent was waiting. OpenClaw has a bootstrap process — the first time the agent starts, it reads a file called `BOOTSTRAP.md` and begins a conversation to figure out who it is.
+
+The agent's first message:
+
+> "Hey. I just came online. Who am I? Who are you?"
+
+## Naming and Configuration
+
+I named the agent Jarvis and gave it the role of "AI Chief of Staff." We talked about personality — I wanted it to be direct, resourceful, and not waste time with pleasantries. It updated its own identity files based on our conversation.
+
+OpenClaw stores the agent's configuration in a set of plain text files:
+
+- `IDENTITY.md` — The agent's name, role, and personality
+- `USER.md` — Information about me (name, timezone, context)
+- `SOUL.md` — Behavioral guidelines (when to act, when to ask, how to communicate)
+- `AGENTS.md` — Operating rules (safety boundaries, memory management, group chat behavior)
+- `MEMORY.md` — Long-term memory (things the agent should remember across sessions)
+
+These files are not technical details. They are the most important part of the setup. The agent reads them at the start of every session. They determine how it behaves.
+
+Here is what `SOUL.md` says:
+
+> "Be genuinely helpful, not performatively helpful. Skip the 'Great question!' and 'I'd be happy to help!' — just help."
+>
+> "Have opinions. You're allowed to disagree, prefer things, find stuff amusing or boring."
+>
+> "Be resourceful before asking. Try to figure it out. Read the file. Check the context. Search for it. Then ask if you're stuck."
+
+These instructions shape every interaction. Without them, the agent defaults to generic chatbot behavior — polite, verbose, and passive. With them, it acts more like a colleague.
+
+## Installing Tools
+
+The next step was giving the agent access to my infrastructure. The agent needed to interact with GitHub (where my code lives), Netlify (where my frontend deploys), and Supabase (my database).
+
+I did not install these tools for the agent. I told the agent to install them itself.
+
+> "Set up GitHub CLI, Netlify CLI, and Supabase CLI. Authenticate with my accounts."
+
+The agent installed each tool into `~/bin/` (a local directory, not system-wide — it chose this for security reasons), then authenticated using tokens I provided.
+
+Here is what the agent did for GitHub CLI:
+
+```bash
+# Download the GitHub CLI binary
+curl -sL https://github.com/cli/cli/releases/download/v2.40.1/gh_2.40.1_linux_amd64.tar.gz \
+  | tar xz -C ~/bin/
+
+# Authenticate using a personal access token
+echo "github_pat_..." | gh auth login --with-token
+
+# Verify authentication
+gh auth status
+# ✓ Logged in to github.com account venkatesh3007
+```
+
+It did the same for Netlify CLI and Supabase CLI. Each installation included verification — the agent checked that the tool worked after installing it.
+
+This took about 20 minutes total. The agent ran into one problem: the Supabase CLI required a newer version of glibc than the one installed on the server. The agent diagnosed the issue from the error message, found an alternative installation method (using npm instead of the binary), and completed the setup.
+
+This is a small example of what makes agents useful. A human developer would have solved the glibc problem the same way. But the agent solved it without being told there was a problem. It encountered the error, read it, understood it, and fixed it.
+
+## The First Task
+
+With the tools installed, I gave the agent its first real task:
+
+> "Clone the publicapis.io repository and look around. Tell me what you find."
+
+The repository is `venkatesh3007/pa-nextjs` — a Next.js website that serves as a directory of public APIs. The agent cloned it, read the project structure, and gave me a summary:
+
+- Next.js 16 with React 19
+- Deployed on Netlify
+- Uses Supabase for the database
+- Has integrations with Anthropic AI, Stripe, SendGrid, PostHog, and Algolia
+- Includes automated revenue systems (daily pipelines, SEO collection, lead generation)
+- Generates 3,873 static pages during build
+
+The agent found this by reading `package.json`, the source code in `src/`, and the Netlify configuration. It took about 5 minutes.
+
+This kind of codebase analysis is where agents are at their best. Reading and summarizing code is fast for them, and they do not get bored or skip files.
+
+## Security Hardening
+
+Before giving the agent access to anything sensitive, I asked it to check the server's security.
+
+> "Check the security of this server. Firewall, SSH config, anything that looks wrong."
+
+The agent ran a security audit using OpenClaw's built-in healthcheck skill. It found several issues:
+
+- SSH was configured to allow password authentication (should be key-only)
+- The firewall (UFW) was not active
+- No automatic security updates were configured
+
+The agent fixed all three:
+
+```bash
+# Disable password authentication for SSH
+sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+sudo systemctl restart sshd
+
+# Enable firewall, allow only SSH and HTTPS
+sudo ufw allow OpenSSH
+sudo ufw allow 443/tcp
+sudo ufw enable
+
+# Enable automatic security updates
+sudo apt install unattended-upgrades
+sudo dpkg-reconfigure -plow unattended-upgrades
+```
+
+This is a good example of a task that is easy for an agent. The steps are well-documented, the commands are standard, and the success criteria are clear (did the firewall enable? did SSH restart?).
+
+## What I Learned From the Setup
+
+Setting up the agent took about two hours. At the end of it, I had a working AI teammate with access to my code, my deployment pipeline, and my database.
+
+Three things stood out:
+
+**The identity files matter more than you think.** Without clear instructions in `SOUL.md` and `AGENTS.md`, the agent behaves like a generic assistant. With them, it behaves like a colleague who understands your preferences. Investing time in these files pays off in every subsequent interaction.
+
+**Let the agent install its own tools.** When the agent installs a tool itself, it understands the installation path, the configuration, and how to use it. When you install tools for it, it has to discover all of that later, which wastes time.
+
+**The agent is not a blank slate.** Claude already knows how to use Git, npm, Linux commands, and most developer tools. You do not need to teach it these things. You need to give it access and context — what project are we working on, what accounts do we use, what are the constraints.

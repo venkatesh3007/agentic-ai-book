@@ -1,0 +1,95 @@
+---
+title: "What Is Agentic AI?"
+---
+
+Most people use AI the way they use a search engine. They type a question, get an answer, and move on. That is not what this book is about.
+
+This book is about AI agents. An AI agent is a program that can take actions on its own. It can read files, run commands, call APIs, deploy code, and make decisions — without a human clicking buttons at every step.
+
+Here is a concrete example. On February 21, 2026, I asked my AI agent to fix a broken deployment on my website. I sent one message on Telegram:
+
+> "The Netlify build is failing. Figure out why and fix it."
+
+The agent did the following, without me doing anything else:
+
+1. Cloned the repository from GitHub
+2. Installed the Netlify command-line tool
+3. Read the build logs from Netlify
+4. Found the root cause (environment variables exceeded a size limit)
+5. Proposed a fix (consolidating variables into JSON format)
+6. Applied the fix
+7. Triggered a new build
+8. Confirmed the build succeeded
+
+That entire sequence took about 40 minutes. I was not involved after the first message.
+
+This is what "agentic" means. The AI is not answering questions. It is doing work.
+
+## How AI Agents Are Different From Chatbots
+
+A chatbot like ChatGPT is a conversation interface. You ask, it answers. It has no access to your systems. It cannot take actions. When the conversation ends, it forgets everything.
+
+An AI agent is different in three ways:
+
+**1. It has tools.** My agent has access to a Linux terminal, GitHub, Netlify, Supabase, and anything else I give it. When it decides to clone a repository, it runs `git clone` on a real server. When it deploys code, a real deployment happens.
+
+**2. It has memory.** My agent writes notes to files on disk. When it learns something — like "Netlify masks secret values as empty strings in its API" — it writes that down. The next time it wakes up, it reads those files and remembers.
+
+**3. It has autonomy.** I do not tell it which commands to run. I tell it what I want done, and it figures out the steps. Sometimes it asks me questions. Sometimes it makes mistakes. But it is making decisions, not following a script.
+
+## The Technology Stack Behind It
+
+Here is how my agent works, in plain terms:
+
+- **The brain** is a large language model (LLM). In my case, it is Claude, made by Anthropic. The LLM reads text, understands what needs to be done, and decides what to do next.
+
+- **The body** is a platform called OpenClaw. OpenClaw connects the LLM to messaging apps (Telegram, WhatsApp, Signal) and gives it tools (terminal access, file reading, web browsing). OpenClaw also handles memory — it stores conversation history and lets the agent write persistent notes.
+
+- **The interface** is Telegram. I send messages to the agent the same way I would message a coworker. The agent replies in the same chat.
+
+The LLM does not run on my server. It runs on Anthropic's infrastructure. My server runs OpenClaw, which sends messages back and forth between Telegram and the LLM, and executes any commands the LLM decides to run.
+
+```
+Me (Telegram) → OpenClaw (my server) → Claude (Anthropic API)
+                     ↓
+              Executes commands
+              Reads/writes files
+              Calls APIs
+```
+
+## What AI Agents Can and Cannot Do
+
+Based on my experience so far, here is what works and what does not.
+
+**What agents do well:**
+
+- Reading and understanding large codebases quickly
+- Diagnosing errors by reading logs and tracing through code
+- Writing boilerplate code (API routes, database schemas, UI components)
+- Running repetitive tasks (installing tools, configuring environments)
+- Searching documentation and synthesizing information
+
+**What agents do poorly:**
+
+- Understanding business context they have never been told about
+- Knowing when something "looks wrong" without explicit criteria
+- Handling secrets and sensitive data safely (they cannot distinguish a masked value from an empty one)
+- Knowing when to stop and ask instead of guessing
+- Maintaining quality over long, multi-step tasks without check-ins
+
+**What agents cannot do at all (yet):**
+
+- Make product decisions (what should we build?)
+- Understand users (what do people actually want?)
+- Navigate ambiguity (the spec is unclear — what should I do?)
+- Take responsibility (if it breaks production, you are still the one who gets the call)
+
+The rest of this book is about working within these boundaries. The goal is not to replace humans. The goal is to set up a system where the agent handles the parts it is good at, and the human handles the parts it is not.
+
+## Why This Matters Now
+
+A year ago, AI agents were research projects. Today, I am using one to build and ship real software products. The gap between "interesting demo" and "useful tool" has closed.
+
+This does not mean the technology is perfect. It is not. You will see plenty of failures in this book. But it is good enough that the question has changed. The question is no longer "can AI agents write code?" The question is "how do you organize work so that AI agents are effective?"
+
+That is what this book tries to answer.

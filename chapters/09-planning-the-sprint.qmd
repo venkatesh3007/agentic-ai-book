@@ -1,0 +1,56 @@
+---
+title: "Planning the Sprint"
+subtitle: "February 27–28, 2026 — Choosing 31 products to build"
+---
+
+On March 1, the 31-day sprint begins. This chapter describes how I chose what to build.
+
+## The Criteria
+
+Each product must:
+
+1. **Ship in one day.** It has to be usable by the end of the day. Not perfect, but functional.
+2. **Be real.** Not a demo, not a prototype. Something a person or business could actually use.
+3. **Teach something.** Each product should exercise a different aspect of building with AI agents.
+4. **Build toward the factory.** The products should collectively form the building blocks of Aikaara's software factory.
+
+## The Product List
+
+*[To be finalized by February 28. Will include 31 products spanning:]*
+
+**Developer tools** (from the software-factory roadmap):
+- spec-to-tasks — Break specs into agent-sized tasks
+- agent-eval — Evaluate agent-generated code
+- convention-keeper — Extract and enforce codebase conventions
+- context-pack — Assemble minimal context for agents
+
+**Business websites** (from the ChatSite template):
+- Websites for real businesses using the ChatSite framework
+- Each one customized for a different business type
+
+**Internal tools:**
+- Dashboard for tracking agent performance
+- Cost tracker for API usage
+- Deployment pipeline automation
+
+**Open-source utilities:**
+- Small, useful tools that solve specific problems
+- Each one a standalone npm package or CLI tool
+
+## The Schedule
+
+- **Week 1 (March 1–7):** Foundation tools and first websites
+- **Week 2 (March 8–14):** Developer tools from the factory roadmap
+- **Week 3 (March 15–21):** Business products and integrations
+- **Week 4 (March 22–28):** Factory infrastructure and connecting the pieces
+- **Days 29–31 (March 29–31):** Polish, documentation, and the factory demo
+
+## The Rules
+
+1. One product per day. No carrying over work to the next day.
+2. Every product gets pushed to GitHub before midnight IST.
+3. Every product gets a chapter in this book.
+4. Jarvis does the building. I do the directing and writing.
+5. Failures are documented. There is no hiding bad days.
+
+*[This chapter will be updated with the finalized product list before March 1.]*

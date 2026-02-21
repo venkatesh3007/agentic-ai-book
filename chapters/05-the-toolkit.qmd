@@ -1,0 +1,115 @@
+---
+title: "The Toolkit"
+subtitle: "What you need to build with AI agents"
+---
+
+This chapter lists every tool I used, how much it costs, and why I chose it. If you want to follow along with the 31-day sprint, this is your shopping list.
+
+## The Agent Platform: OpenClaw
+
+[OpenClaw](https://github.com/openclaw/openclaw) is open-source software that turns an AI model into a persistent agent. It runs on your own server and connects to messaging apps.
+
+What OpenClaw provides:
+
+- **Messaging bridge.** Connects the AI to Telegram, WhatsApp, Signal, Discord, and others. You message the agent like you would message a person.
+- **Tool access.** The agent can run shell commands, read and write files, browse the web, and call APIs.
+- **Memory.** The agent has persistent files it can read and write. These survive across conversations.
+- **Skills.** Modular instruction sets that teach the agent how to do specific things (check weather, manage GitHub issues, control smart home devices).
+- **Sub-agents.** The agent can spawn separate sessions to handle tasks in parallel.
+- **Cron jobs.** The agent can schedule tasks to run at specific times.
+
+OpenClaw is free. You need a server to run it on and an API key from an AI provider (Anthropic, OpenAI, etc.).
+
+**Installation:** Follow the instructions at [docs.openclaw.ai](https://docs.openclaw.ai). The basic setup takes about 30 minutes.
+
+## The AI Model: Claude by Anthropic
+
+I use Claude as the language model behind Jarvis. Specifically:
+
+- **Claude Opus** for complex tasks (debugging, architecture decisions, writing)
+- **Claude Sonnet** for routine tasks (scaffolding, simple fixes, sub-agent work)
+
+Opus costs about $15 per million input tokens and $75 per million output tokens. Sonnet costs $3 and $15 respectively. In practice, a full day of heavy agent usage costs $5–15 in API calls.
+
+You could use a different model. OpenClaw supports OpenAI (GPT-4), Google (Gemini), DeepSeek, and local models. I chose Claude because it is the best at following complex instructions and working with code, based on my testing.
+
+## The Server
+
+A DigitalOcean droplet:
+
+- **Size:** 2 vCPUs, 4GB RAM
+- **OS:** Ubuntu 22.04
+- **Cost:** $24/month
+- **Location:** Bangalore (BLR1) — close to me for low latency
+
+This is enough to run OpenClaw and basic development tasks. It is not enough to run heavy builds — the server runs out of memory when installing large npm packages. For heavy builds, I use cloud services (Netlify, Railway) or spawn build tasks on more powerful machines.
+
+## Source Control: GitHub
+
+All code lives on GitHub under the account `venkatesh3007`. Every product built during the sprint gets its own repository.
+
+The agent authenticates using a personal access token and can clone, commit, push, create pull requests, and manage issues.
+
+## Frontend Deployment: Netlify
+
+Netlify hosts the static frontends. Free tier covers everything I need:
+
+- Automatic deploys from GitHub pushes
+- Custom domain support
+- Serverless functions
+- Environment variable management
+
+The main constraint is the 4KB environment variable limit on serverless functions, which we hit on Day 1.
+
+## Backend Deployment: Railway
+
+Railway hosts backend services (APIs, databases, CMS). It deploys from GitHub and provides:
+
+- PostgreSQL databases
+- Automatic builds from Dockerfiles or Nixpacks
+- Environment variable management
+- Public domains
+
+Free tier gives $5/month of usage. Paid tier starts at $5/month for hobby use.
+
+## Database: Supabase
+
+Supabase provides managed PostgreSQL databases with a REST API, authentication, and real-time subscriptions.
+
+Free tier includes:
+
+- 500MB database
+- 50,000 monthly active users
+- 2GB file storage
+- Unlimited API requests
+
+For the products in this book, the free tier is sufficient.
+
+## The Full Cost
+
+| Item | Monthly Cost |
+|------|-------------|
+| DigitalOcean droplet (OpenClaw server) | $24 |
+| Anthropic API (Claude) | $150–300 |
+| Netlify | Free |
+| Railway | $0–5 |
+| Supabase | Free |
+| GitHub | Free |
+| Domain names | ~$10–30 |
+| **Total** | **$200–360/month** |
+
+This is the entire engineering budget. There are no developer salaries, no office costs, no software licenses.
+
+The Anthropic API cost is the largest expense and the most variable. Heavy debugging days with Opus cost more. Routine scaffolding days with Sonnet cost less.
+
+## What You Need to Follow Along
+
+If you want to build along with this book:
+
+1. A server (any VPS with 2+ GB RAM — DigitalOcean, Hetzner, AWS Lightsail)
+2. An Anthropic API key (sign up at [console.anthropic.com](https://console.anthropic.com))
+3. A GitHub account
+4. A Netlify account
+5. A Telegram account (for messaging the agent)
+
+Total setup time: about two hours. Total cost to start: about $30 (server + first day of API usage).

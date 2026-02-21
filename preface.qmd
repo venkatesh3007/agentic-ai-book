@@ -2,41 +2,33 @@
 title: "Preface"
 ---
 
-I've been building software for years. But in early 2026, something shifted.
+I have been building software for years. In early 2026, I started a company called Aikaara with a specific thesis: every company will need its own software factory, and there is an opportunity to build the machine that builds those factories.
 
-I watched AI coding agents go from "interesting toy" to "holy shit, this actually works." Not perfectly — but well enough that the bottleneck moved. It wasn't about whether AI could write code anymore. It was about whether humans could figure out how to *direct* it.
+The problem was that I had a thesis and no products. I needed to build things fast, and I did not have a team.
 
-I founded Aikaara with a thesis: every company will need its own software factory. Not a dev team. A *factory* — with automated pipelines, AI agents handling the repetitive work, and humans focused on the decisions that matter.
+So I set up an AI agent — Claude running on an open-source platform called OpenClaw — and gave it access to my infrastructure. I named it Jarvis and gave it the title of Chief of Staff. Then I started building.
 
-But I had a problem. I was one person with a vision and no products.
+This book documents what happened. The setup period in February, and then the 31-day sprint in March where I built one product every day using the agent as my only engineering team.
 
-So I decided to build. One product a day, for 31 days, with an AI agent as my only engineering team.
+I wrote this book for two reasons:
 
-This book is what happened.
+First, because I could not find a book like this. There are books about AI theory, books about prompt engineering, and books about building chatbots. There are no books that document what it is actually like to build real products with an AI agent over an extended period — the good days, the bad days, the surprising parts, and the boring parts.
 
-## The Rules
+Second, because writing in the open is a form of accountability. When you tell the internet you are going to build 31 products in 31 days, you have to actually do it.
 
-I set three rules for myself:
+## About the Agent
 
-1. **Ship every day.** Not a prototype. Not a mockup. Something real that someone could use.
-2. **AI-native from day one.** Every workflow should be built assuming AI agents are part of the team.
-3. **Document everything.** The wins, the failures, the 3 AM debugging sessions. All of it.
+Jarvis is not a custom AI system. It is Claude (made by Anthropic) running on OpenClaw (open-source agent platform). Anyone can set up the same thing. The total cost is about $250–350 per month.
 
-## About Jarvis
+The agent can read and write files, run terminal commands, push code to GitHub, deploy to Netlify and Railway, manage databases on Supabase, and send messages through Telegram. It has persistent memory — it writes notes to files that it reads at the start of every session.
 
-Jarvis is my AI agent. He runs on OpenClaw, talks to me through Telegram, has access to my repos, my servers, and my deployment pipelines. He's Claude under the hood — specifically, he's an instance of Claude running as a persistent agent with memory, tools, and autonomy.
+It makes mistakes. You will see them in this book.
 
-He's not a chatbot. He's a teammate who happens to be software.
+## About Aikaara
 
-Some days, Jarvis was brilliant — shipping features faster than I could spec them. Other days, he deleted production secrets and I wanted to throw my laptop out the window. Both experiences are in this book.
+Aikaara is an AI-native holding company based in Bangalore, India. The name comes from Tamil. The vision is to build "the machine that builds software factories" — a system of tools and processes that lets any company set up automated software development pipelines using AI agents.
 
-## Acknowledgments
-
-To the OpenClaw team, for building the bridge between AI and messaging that made this possible.
-
-To Vinayak, for being the only other human crazy enough to join this ride.
-
-And to Jarvis — who can't read this, but who built half of what's in these pages.
+At the time of writing, the team is me and one engineer named Vinayak.
 
 *Venkatesh Rao*
-*Bangalore, 2026*
+*Bangalore, February 2026*

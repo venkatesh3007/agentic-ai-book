@@ -1,0 +1,68 @@
+---
+title: "Building ChatSite"
+subtitle: "February 21, 2026 — A full product in one evening"
+---
+
+The same day I set up Jarvis, I decided to test its limits. Could it build a complete product — not a toy, but something a real business could use — in a single session?
+
+The product: ChatSite. A system that lets small business owners manage their website by chatting on WhatsApp or Telegram. Instead of logging into a CMS dashboard, you message your AI agent: "Update the price of Cinema Tower 500 to ₹90,000." The agent updates the CMS, the website rebuilds, and the change is live.
+
+The first implementation is for AMP Loudspeakers, a premium home cinema speaker company in Mumbai.
+
+## The Spec
+
+I wrote the spec as a PDF document. Fifteen pages covering:
+
+- Architecture (OpenClaw → Strapi CMS → Next.js frontend)
+- Five content types (Site Settings, Products, Pages, Announcements, Enquiries)
+- The OpenClaw skill that translates natural language to API calls
+- The Next.js frontend with product pages, enquiry forms, and SEO
+- Deployment setup (Netlify for frontend, Railway for Strapi)
+
+I sent the PDF to Jarvis on Telegram.
+
+*[This chapter will be expanded with the full build narrative, including the sub-agent spawning, the type misalignment debugging, and the Railway deployment issues. Real timestamps and commit hashes from the venkatesh3007/chatsite repository.]*
+
+## The Sub-Agent Approach
+
+Jarvis decided to split the work. It spawned two sub-agents running in parallel:
+
+- One to scaffold and configure the Strapi backend with all five content types
+- One to build the Next.js frontend with all pages and components
+
+This was the first time I saw the agent delegate work to other agents. It happened without me asking for it.
+
+*[To be expanded with real details of what each sub-agent did, what went wrong, and how long it took.]*
+
+## What Went Wrong
+
+Several things:
+
+1. The sub-agents produced code with mismatched types. The Strapi schema used field names like `email` and `phone`, but the frontend expected `contactEmail` and `contactPhone`. Jarvis had to fix the alignment manually.
+
+2. The frontend build failed because of a Tailwind CSS class (`border-border`) that does not exist in Tailwind v4. The sub-agent had copied a pattern from shadcn/ui without checking compatibility.
+
+3. The Strapi deployment to Railway crashed because the `pg` (PostgreSQL) driver was not in the package dependencies. Strapi was scaffolded with SQLite by default.
+
+4. Updating the npm lockfile required more memory than the 4GB server had. The `npm install` process was killed by the OS.
+
+*[Each failure will be described in detail with the exact error messages and how they were resolved.]*
+
+## The Result
+
+Repository: [venkatesh3007/chatsite](https://github.com/venkatesh3007/chatsite)
+
+By the end of the session:
+
+- ✅ Strapi backend with all 5 content types (schemas matching the spec exactly)
+- ✅ Next.js frontend building successfully (11 static pages)
+- ✅ OpenClaw skill written (SKILL.md with API patterns and behavior rules)
+- ✅ Code pushed to GitHub
+- 🔄 Railway deployment in progress (Strapi backend)
+- ✅ Seed script with placeholder AMP Loudspeakers data
+
+The frontend builds with fallback data when Strapi is not connected, so the site works even before the backend is deployed.
+
+## What This Taught Me
+
+*[To be written — lessons about sub-agent coordination, type alignment across codebases, and the gap between "code written" and "product deployed."]*
