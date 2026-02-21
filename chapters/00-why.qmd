@@ -1,0 +1,51 @@
+---
+title: "Why a Software Factory?"
+---
+
+## The Thesis
+
+Here's what I believe: in five years, every mid-size company will have its own software factory. Not an outsourced dev team. Not a no-code tool. A *factory* — an automated system that takes business requirements and produces working software.
+
+The analogy is manufacturing. Before the assembly line, making a car was artisanal. Skilled craftsmen hand-built every part. It was slow, expensive, and didn't scale.
+
+Then Ford figured out the assembly line. The car didn't change. The *process* of making cars changed.
+
+Software is at that inflection point right now.
+
+## The Assembly Line for Software
+
+```
+Spec → Decompose → Dispatch → Build → QA → Merge → Ship
+```
+
+Each stage can be partially or fully automated with AI agents:
+
+- **Spec**: Human writes what they want (or AI helps refine it)
+- **Decompose**: AI breaks the spec into agent-sized tasks
+- **Dispatch**: Tasks are assigned to parallel AI agents
+- **Build**: Agents write the code
+- **QA**: AI reviews the output against the spec
+- **Merge**: AI handles integration and conflict resolution
+- **Ship**: Automated deployment
+
+No single AI agent can do all of this. But a *system* of agents, each handling one stage, can.
+
+That's a software factory.
+
+## Why Now?
+
+Three things converged in 2025-2026:
+
+1. **AI coding agents got good enough.** Not perfect — but good enough to handle well-scoped tasks autonomously.
+2. **Orchestration tools matured.** Tools like OpenClaw, Claude Code, and Cursor made it possible to give agents real access to real systems.
+3. **The economics flipped.** An AI agent costs $0.05-$2.00 per task. A developer costs $50-$200/hour. For routine work, the math is obvious.
+
+## What Aikaara Is
+
+Aikaara is the company I'm building to make this real. The name comes from the Tamil word ஐகாரா — it means "the one who creates."
+
+The vision: **the machine that builds software factories.**
+
+Every company's factory will be different — different tech stack, different conventions, different business logic. But the *meta-process* of building a factory is the same. That's what Aikaara productizes.
+
+This book is the story of building the first factory — ours.

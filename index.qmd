@@ -1,0 +1,40 @@
+---
+title: "AI-Native"
+subtitle: "How I Built a Software Factory with AI Agents"
+---
+
+# 31 Days. 31 Products. One AI Agent. {.unnumbered}
+
+This is not a book about AI theory.
+
+This is a journal. A real-time record of what happened when I decided to build a software factory — from scratch, in 31 days — with an AI agent as my co-founder.
+
+Every product in this book was actually shipped. Every failure actually happened. Every timestamp is real. The commit hashes link to real code on GitHub.
+
+I wrote this book the same way I built the products: with an AI agent. His name is Jarvis. He's my Chief of Staff, my pair programmer, and occasionally my therapist when deploys fail at 2 AM.
+
+## Who This Book Is For
+
+- **Developers** who want to build with AI agents, not just read about them
+- **Founders** who want to see what "AI-native" actually looks like in practice
+- **Anyone** who's curious what happens when you stop treating AI as a chatbot and start treating it as a teammate
+
+## How to Read This Book
+
+Each day is self-contained. You can read them in order (recommended) or jump to whatever product interests you.
+
+Every chapter follows the same structure:
+
+- **The Goal** — what we're building today
+- **The Build** — real-time narrative with code, decisions, and struggles
+- **The Ship** — what we actually delivered
+- **The Lesson** — what I learned (often the hard way)
+
+The code is real and open source. Fork it. Break it. Build on it.
+
+::: {.callout-tip}
+## Follow Along
+All code lives at [github.com/venkatesh3007](https://github.com/venkatesh3007). Each day's chapter links to the relevant repositories and commits.
+:::
+
+Let's build.

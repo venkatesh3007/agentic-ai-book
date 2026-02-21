@@ -1,0 +1,27 @@
+---
+title: "Day 15: [TBD]"
+subtitle: "[Product name TBD]"
+---
+
+::: {.callout-note}
+## Product: [TBD]
+**Date**: [TBD]
+**Repo**: [TBD]
+**Status**: 🔲 Not started
+:::
+
+## The Goal
+
+*[To be written after we build it]*
+
+## The Build
+
+*[Real-time narrative goes here]*
+
+## The Ship
+
+*[What we actually delivered]*
+
+## The Lesson
+
+*[What I learned]*

@@ -1,0 +1,29 @@
+/* Custom styles for AI-Native book */
+
+.callout-note {
+  border-left-color: #d4a574 !important;
+}
+
+/* Day header styling */
+.chapter-header {
+  border-bottom: 2px solid #d4a574;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+
+/* Timestamp styling for build narratives */
+.timestamp {
+  font-family: monospace;
+  color: #888;
+  font-size: 0.9em;
+}
+
+/* Code block improvements */
+div.sourceCode {
+  border-radius: 8px;
+}
+
+/* Product status badges */
+.status-shipped { color: #22c55e; font-weight: bold; }
+.status-wip { color: #eab308; font-weight: bold; }
+.status-failed { color: #ef4444; font-weight: bold; }

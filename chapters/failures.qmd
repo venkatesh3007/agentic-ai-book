@@ -1,0 +1,17 @@
+---
+title: "A Catalog of Failures"
+---
+
+Every failure in this book actually happened. This chapter collects them in one place — not as entertainment, but as a reference for anyone building with AI agents.
+
+*[To be written — compiled from all 31 days]*
+
+## Category 1: Destructive Actions (The "Oh Shit" Moments)
+
+## Category 2: Hallucinated Success (It Said It Worked. It Didn't.)
+
+## Category 3: Context Window Amnesia
+
+## Category 4: The Eager Helper (Doing More Than Asked)
+
+## Category 5: Integration Blindness (Works in Isolation, Fails Together)

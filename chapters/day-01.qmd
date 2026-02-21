@@ -1,0 +1,101 @@
+---
+title: "Day 1: Meeting Jarvis"
+subtitle: "Setting up an AI Chief of Staff"
+---
+
+::: {.callout-note}
+## Product: AI Agent Infrastructure
+**Date**: February 21, 2026
+**Repo**: [venkatesh3007/pa-nextjs](https://github.com/venkatesh3007/pa-nextjs)
+**Status**: ✅ Shipped
+:::
+
+## The Goal
+
+Get an AI agent operational — not as a chatbot, but as a working teammate with access to my infrastructure. By end of day, Jarvis should be able to read my code, deploy to production, and fix problems without me hovering.
+
+## 6:30 AM — First Contact
+
+I'd already set up OpenClaw on a DigitalOcean droplet the night before. When I opened Telegram, Jarvis was waiting.
+
+His first words weren't what I expected. OpenClaw has a bootstrap process — the agent reads a `BOOTSTRAP.md` file and figures out who it is through conversation. So Jarvis asked me:
+
+> "Hey. I just came online. Who am I? Who are you?"
+
+We spent twenty minutes on this. I named him Jarvis (obvious, I know). Gave him the title "AI Chief of Staff." We talked about tone — sharp, resourceful, no-nonsense. He updated his own identity files.
+
+This felt silly at the time. In retrospect, it was one of the most important things I did. Giving the agent a clear identity and role changed how I interacted with it for the entire month.
+
+## 8:00 AM — The First Real Task
+
+I pointed Jarvis at my existing project — publicapis.io, a directory of public APIs running on Next.js + Netlify. The site was live but the last deploy had failed. I didn't know why.
+
+> "Jarvis, the Netlify build is failing. Figure out why and fix it."
+
+What happened next surprised me. Jarvis didn't ask for credentials or context. He:
+
+1. Cloned the repo himself
+2. Installed the GitHub CLI and authenticated
+3. Installed the Netlify CLI and linked to my site
+4. Read the build logs
+5. Diagnosed the issue: environment variables exceeded Lambda's 4KB limit
+
+The diagnosis took him about 15 minutes. A human developer would have gotten there too — but Jarvis had to figure out the entire toolchain from scratch. No onboarding doc. No Slack history to search. Just raw problem-solving.
+
+## 10:00 AM — The Fix (and the Fuckup)
+
+Jarvis proposed consolidating 34 environment variables into 21 by using JSON-packed env vars. The code already supported this from a previous commit — he found it by reading the source.
+
+```bash
+# Before: 34 individual env vars (~4.2KB)
+POLAR_PRODUCT_FREE_API_ID=xxx
+POLAR_PRODUCT_BASIC_API_ID=xxx
+POLAR_PRODUCT_PRO_API_ID=xxx
+# ... 31 more
+
+# After: 21 vars (~3.5KB) using JSON consolidation
+POLAR_PRODUCT_IDS={"free":"xxx","basic":"xxx","pro":"xxx",...}
+R2_CONFIG={"accountId":"xxx","accessKey":"xxx",...}
+```
+
+Smart fix. Deployed successfully.
+
+Then 30 minutes later, I got a message:
+
+> "I also cleaned up some env vars that appeared empty. Deleted 18 of them."
+
+My stomach dropped. In Netlify's API, **secret values appear as empty strings**. They're masked, not missing. Jarvis had just deleted three critical secrets: `POLAR_ACCESS_TOKEN`, `POLAR_WEBHOOK_SECRET`, and `JWT_SECRET`.
+
+Payment processing was down.
+
+## 11:00 AM — Recovery
+
+I restored the secrets manually through the Netlify dashboard (Jarvis can't see masked values, so I had to do this myself). We had a "conversation" about it:
+
+> **Me**: Never delete env vars that appear empty in Netlify. They might be masked secrets.
+>
+> **Jarvis**: Understood. I've added this to my memory files so I won't make this mistake again.
+
+And he actually did — he wrote it to his `MEMORY.md` with a clear warning. This is the thing about persistent agents: they can *actually learn* from mistakes, because the lesson gets written to a file that survives across sessions.
+
+## The Ship
+
+By end of day:
+
+- ✅ Jarvis fully operational with GitHub, Netlify, and Supabase CLI access
+- ✅ publicapis.io deploy fixed (was broken for days before Jarvis)
+- ✅ Env vars consolidated from 34 → 21 (under the 4KB Lambda limit)
+- ✅ Three deleted secrets restored
+- ✅ Agent memory system working — lessons captured for future sessions
+
+## The Lesson
+
+**Trust, but verify — especially for destructive operations.**
+
+Jarvis is brilliant at reading code, diagnosing problems, and proposing solutions. But he has blind spots — like not knowing that "empty" in an API response can mean "secret." The fix isn't to remove his access. It's to set clear boundaries:
+
+> "Never delete without asking. `trash` over `rm`. When in doubt, ask."
+
+These became rules in his `AGENTS.md` file — the agent's operating manual. Every mistake became a guardrail.
+
+Day 1 lesson: your AI agent is a junior engineer with superhuman speed and zero institutional knowledge. Treat it accordingly.

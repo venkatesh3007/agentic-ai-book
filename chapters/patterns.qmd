@@ -1,0 +1,19 @@
+---
+title: "Patterns That Worked"
+---
+
+After 31 days of building with an AI agent, certain patterns emerged. This chapter distills the ones that consistently led to good outcomes.
+
+*[To be written after the 31-day sprint — this will be the distilled wisdom]*
+
+## Pattern 1: Spec Tightly, Execute Loosely
+
+## Pattern 2: Memory Is Everything
+
+## Pattern 3: The 15-Minute Rule
+
+## Pattern 4: Parallel Agents, Serial Integration
+
+## Pattern 5: Ship the Skeleton First
+
+## Pattern 6: Let the Agent Surprise You

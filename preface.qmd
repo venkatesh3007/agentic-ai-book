@@ -1,0 +1,42 @@
+---
+title: "Preface"
+---
+
+I've been building software for years. But in early 2026, something shifted.
+
+I watched AI coding agents go from "interesting toy" to "holy shit, this actually works." Not perfectly — but well enough that the bottleneck moved. It wasn't about whether AI could write code anymore. It was about whether humans could figure out how to *direct* it.
+
+I founded Aikaara with a thesis: every company will need its own software factory. Not a dev team. A *factory* — with automated pipelines, AI agents handling the repetitive work, and humans focused on the decisions that matter.
+
+But I had a problem. I was one person with a vision and no products.
+
+So I decided to build. One product a day, for 31 days, with an AI agent as my only engineering team.
+
+This book is what happened.
+
+## The Rules
+
+I set three rules for myself:
+
+1. **Ship every day.** Not a prototype. Not a mockup. Something real that someone could use.
+2. **AI-native from day one.** Every workflow should be built assuming AI agents are part of the team.
+3. **Document everything.** The wins, the failures, the 3 AM debugging sessions. All of it.
+
+## About Jarvis
+
+Jarvis is my AI agent. He runs on OpenClaw, talks to me through Telegram, has access to my repos, my servers, and my deployment pipelines. He's Claude under the hood — specifically, he's an instance of Claude running as a persistent agent with memory, tools, and autonomy.
+
+He's not a chatbot. He's a teammate who happens to be software.
+
+Some days, Jarvis was brilliant — shipping features faster than I could spec them. Other days, he deleted production secrets and I wanted to throw my laptop out the window. Both experiences are in this book.
+
+## Acknowledgments
+
+To the OpenClaw team, for building the bridge between AI and messaging that made this possible.
+
+To Vinayak, for being the only other human crazy enough to join this ride.
+
+And to Jarvis — who can't read this, but who built half of what's in these pages.
+
+*Venkatesh Rao*
+*Bangalore, 2026*
