@@ -29,7 +29,9 @@ I use Claude as the language model behind Jarvis. Specifically:
 - **Claude Opus** for complex tasks (debugging, architecture decisions, writing)
 - **Claude Sonnet** for routine tasks (scaffolding, simple fixes, sub-agent work)
 
-Opus costs about $15 per million input tokens and $75 per million output tokens. Sonnet costs $3 and $15 respectively. In practice, a full day of heavy agent usage costs $5–15 in API calls.
+I initially bought $25 of Anthropic API credits and started using them directly. Within 15 minutes of real agent work, I had burned through $6–7. The API also has very low rate limits for new accounts — the agent would get throttled after a few back-to-back tasks.
+
+So I switched to my Claude Code Max subscription ($200/month). This gives higher rate limits and more predictable costs. It still hits rate limits sometimes after 4–5 consecutive heavy tasks, but it recovers after a short cooldown period. For sustained agent work, a subscription plan is more practical than pay-per-token API credits.
 
 You could use a different model. OpenClaw supports OpenAI (GPT-4), Google (Gemini), DeepSeek, and local models. I chose Claude because it is the best at following complex instructions and working with code, based on my testing.
 
@@ -90,17 +92,15 @@ For the products in this book, the free tier is sufficient.
 | Item | Monthly Cost |
 |------|-------------|
 | DigitalOcean droplet (OpenClaw server) | $24 |
-| Anthropic API (Claude) | $150–300 |
+| Claude Code Max subscription | $200 |
 | Netlify | Free |
 | Railway | $0–5 |
 | Supabase | Free |
 | GitHub | Free |
 | Domain names | ~$10–30 |
-| **Total** | **$200–360/month** |
+| **Total** | **~$260/month** |
 
-This is the entire engineering budget. There are no developer salaries, no office costs, no software licenses.
-
-The Anthropic API cost is the largest expense and the most variable. Heavy debugging days with Opus cost more. Routine scaffolding days with Sonnet cost less.
+This is the entire engineering budget for running the agent. There are no developer salaries, no office costs, no software licenses beyond what is listed here.
 
 ## What You Need to Follow Along
 
@@ -112,4 +112,4 @@ If you want to build along with this book:
 4. A Netlify account
 5. A Telegram account (for messaging the agent)
 
-Total setup time: about two hours. Total cost to start: about $30 (server + first day of API usage).
+Total setup time: about two hours. Total cost to start: about $225 (server + Claude Code Max subscription). If you use pay-per-token API credits instead, be aware that agent work burns through tokens fast — I spent $6–7 in the first 15 minutes on a $25 credit purchase.

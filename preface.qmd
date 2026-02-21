@@ -2,9 +2,11 @@
 title: "Preface"
 ---
 
-I have been building software for years. In early 2026, I started a company called Aikaara with a specific thesis: every company will need its own software factory, and there is an opportunity to build the machine that builds those factories.
+I have been building software for years. My company, Aikaara Technologies, does software services work — AI chatbots, fintech integrations, ecommerce tools. Real products for real clients.
 
-The problem was that I had a thesis and no products. I needed to build things fast, and I did not have a team.
+In early 2026, I started thinking about something bigger: what if the process of building software could itself be automated? Not fully — but enough to change the economics. The thesis: every company will need its own software factory, and there is an opportunity to build the machine that builds those factories.
+
+I had client projects proving the concept worked. But I needed to build the factory tools themselves, fast.
 
 So I set up an AI agent — Claude running on an open-source platform called OpenClaw — and gave it access to my infrastructure. I named it Jarvis and gave it the title of Chief of Staff. Then I started building.
 
@@ -26,7 +28,9 @@ It makes mistakes. You will see them in this book.
 
 ## About Aikaara
 
-Aikaara is an AI-native holding company based in Bangalore, India. The name comes from Tamil. The vision is to build "the machine that builds software factories" — a system of tools and processes that lets any company set up automated software development pipelines using AI agents.
+Aikaara Technologies is a software company based in Bangalore, India. We do real software services work — we built the AI chatbot for TaxBuddy (collected 100% of payments last filing season), built their capital gains parser, work with Centrum Broking on KYC and onboarding, and have a Shopify app (Aikaara AI Sales Assistant) being sold to ecommerce stores.
+
+The software factory vision came out of this client work. When you build for multiple companies, you see the same patterns over and over. The factory is about automating those patterns so the team can focus on the parts that are actually different.
 
 At the time of writing, the team is me and one engineer named Vinayak.
 

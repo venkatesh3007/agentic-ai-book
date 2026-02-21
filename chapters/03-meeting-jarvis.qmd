@@ -9,7 +9,9 @@ This chapter describes what happened on February 21, 2026, when I set up my AI a
 
 I had a DigitalOcean droplet running Ubuntu. 2 vCPUs, 4GB RAM, $24/month. OpenClaw was installed and connected to my Telegram account. The AI model behind it was Claude by Anthropic.
 
-When I opened Telegram that evening, the agent was waiting. OpenClaw has a bootstrap process — the first time the agent starts, it reads a file called `BOOTSTRAP.md` and begins a conversation to figure out who it is.
+I initially bought $25 of Anthropic API credits and connected them to OpenClaw. Within 15 minutes of real agent work, the credits had dropped by $6–7. The API rate limits for new accounts were also very low — the agent would get throttled after a few consecutive tasks. So I switched to my existing Claude Code Max subscription ($200/month), which gave higher limits and more sustainable usage.
+
+On February 21, 2026, at around 4:15 PM IST, I opened Telegram. The agent was waiting. OpenClaw has a bootstrap process — the first time the agent starts, it reads a file called `BOOTSTRAP.md` and begins a conversation to figure out who it is.
 
 The agent's first message:
 

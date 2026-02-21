@@ -63,11 +63,17 @@ Three things changed in 2025 and 2026:
 
 **The cost dropped.** An AI agent costs between $0.05 and $2.00 per task, depending on complexity. A developer costs $50–200 per hour. For routine work — writing CRUD endpoints, setting up project scaffolding, fixing lint errors, writing tests — the economics are obvious.
 
-## What Aikaara Builds
+## What Aikaara Is (and Is Not)
 
-Aikaara is building the tools and processes that make this assembly line work.
+Aikaara is not a research lab. It is a software services company that builds real products for real clients.
 
-Every company's factory will be different. Different tech stacks, different coding conventions, different business logic, different deployment targets. But the meta-process — the process of building a factory — is the same.
+We built the AI chatbot for TaxBuddy, a tax filing platform. That chatbot collected 100% of payments during the last filing season. We built a capital gains parser for them. We work with Centrum Broking on their KYC and onboarding project. We have a Shopify app — Aikaara AI Sales Assistant — that is being built and sold to ecommerce stores.
+
+These are not hypothetical projects. They are live products used by real companies and real customers.
+
+The software factory vision came out of this work. When you build software for multiple clients at the same time, you notice that 80% of the work is the same across projects — setting up repositories, scaffolding APIs, writing CRUD operations, configuring deployments, writing tests. The other 20% is the business-specific logic that makes each project unique.
+
+The factory is about automating the 80% so that the team can focus on the 20%.
 
 Aikaara's plan has three phases:
 
@@ -75,9 +81,9 @@ Aikaara's plan has three phases:
 
 **Phase 2: Connect the tools into workflows.** A system that chains the tools together. Spec goes in, deployed code comes out. This is the assembly line.
 
-**Phase 3: Sell the factory.** Package the workflow system so that other companies can set up their own software factories, customized for their tech stack and business.
+**Phase 3: Use the factory internally and offer it to clients.** Package the workflow system so that other companies can set up their own software factories, customized for their tech stack and business.
 
-This book documents Phase 1. The 31-day sprint starting March 1 is about building the first set of tools and products.
+This book documents the early stages. The 31-day sprint starting March 1 is about building the first set of tools and products.
 
 ## What This Book Is Not
 

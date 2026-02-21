@@ -3,7 +3,7 @@ title: "The First Real Problem"
 subtitle: "February 21, 2026 — Fixing a broken production deployment"
 ---
 
-Two hours after setting up Jarvis, I gave it a real problem. The publicapis.io website had a broken Netlify deployment. Builds were failing. I did not know why.
+The same evening I set up Jarvis — February 21, 2026 — I gave it a real problem. The publicapis.io website had a broken Netlify deployment. Builds were failing. I did not know why.
 
 This chapter walks through how the agent diagnosed and fixed the problem, and then how it caused a new problem in the process.
 

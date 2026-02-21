@@ -6,7 +6,7 @@ Most people use AI the way they use a search engine. They type a question, get a
 
 This book is about AI agents. An AI agent is a program that can take actions on its own. It can read files, run commands, call APIs, deploy code, and make decisions — without a human clicking buttons at every step.
 
-Here is a concrete example. On February 21, 2026, I asked my AI agent to fix a broken deployment on my website. I sent one message on Telegram:
+Here is a concrete example. On the evening of February 21, 2026, a few hours after setting up my AI agent, I asked it to fix a broken deployment on my website. I sent one message on Telegram:
 
 > "The Netlify build is failing. Figure out why and fix it."
 
