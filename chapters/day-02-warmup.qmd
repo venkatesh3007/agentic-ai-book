@@ -1,0 +1,67 @@
+---
+title: "Day 2: Sunday Rest and Research"
+subtitle: "Finding the factory blueprint"
+---
+
+::: {.callout-note}
+## Product: Research & Discovery
+**Date**: February 22, 2026 (Sunday)
+**Focus**: Peter Steinberger's "Shipping at Inference Speed" methodology
+**Status**: ✅ Foundation discovered
+:::
+
+## The Goal
+
+Sometimes the most productive day is one where you don't build anything at all. Sunday was for research — digging into how others are already doing what I'm trying to do.
+
+## 10:00 AM — The Peter Trail
+
+I'd been hearing about Peter Steinberger (@steipete) and his "factory approach" to building with AI. He's the creator of OpenClaw, but I needed to understand his methodology — not just his tools.
+
+Jarvis helped me track down the key article: ["Shipping at Inference Speed"](https://steipete.me/posts/2025/shipping-at-inference-speed). Reading it was like finding the blueprint I'd been looking for.
+
+## The Evolution
+
+Peter's journey mapped perfectly to where I want to go:
+
+**May 2025**: Started with "vibe coding" — casual AI assistance  
+**Mid 2025**: GPT-5 unlock → serious daily building with AI  
+**Late 2025**: "Building like a factory" — systematic approach emerges  
+**Early 2026**: Clawdis (his personal AI assistant setup)  
+**Now**: OpenClaw (productized version for everyone)  
+
+## The Factory Philosophy
+
+Peter's core insight: **"Shipping at inference speed"**
+
+His rules became my rules:
+- **CLI first**: "Whatever you build, start with the model and a CLI first"
+- **Multiple projects**: Build 3-8 things simultaneously  
+- **Queue ideas**: Let AI models churn through them
+- **Commit to main**: No branches, just ship
+- **Cross-pollinate**: Reference patterns across projects
+
+## The Infrastructure
+
+What caught my attention: Peter didn't just build products. He built infrastructure that compounds:
+- **Oracle**: GPT query system
+- **VibeTunnel**: Mobile coding environment  
+- **Domain CLIs**: Tools for every aspect of his work
+- **Home automation**: AI integrated into daily life
+
+## The Lesson
+
+**Study the masters, then adapt their methods.**
+
+Peter proved that daily AI-assisted building isn't just possible — it's how you stay ahead. The competitive advantage comes from infrastructure that compounds daily effort into systematic capability.
+
+His approach will inform everything I build in the 31-day sprint.
+
+## Sunday Evening Plan
+
+Spent the evening updating my mental model:
+- **March 1-31**: Not just 31 products, but 31 experiments in factory building
+- **Focus**: Infrastructure that enables faster building, not just individual tools
+- **Method**: Peter's principles + my own domain knowledge
+
+Tomorrow: Start building the infrastructure.
