@@ -5,13 +5,17 @@ subtitle: "How I Built a Software Factory with AI Agents"
 
 # 31 Days. 31 Products. One AI Agent. {.unnumbered}
 
-This book is a record of what happened when I tried to build a software company using AI agents as the primary engineering team.
+**📍 Current Status: February 23, 2026 — Pre-Sprint Setup Phase**
 
-From March 1 to March 31, 2026, I built one product every day. My only engineering resource was an AI agent named Jarvis — Claude running on OpenClaw, talking to me through Telegram, with access to my servers, my code, and my deployment pipelines.
+This book is a real-time record of my attempt to build a software company using AI agents as the primary engineering team.
 
-Some products shipped cleanly. Some broke in production. Some taught me things I did not expect to learn. All of them are documented here with real code, real timestamps, and real commit hashes.
+**The Plan**: From March 1 to March 31, 2026, build one product every day. My only engineering resource is an AI agent named Jarvis — Claude running on OpenClaw, talking to me through Telegram, with access to my servers, my code, and my deployment pipelines.
 
-Part I covers the setup period in February 2026 — getting the agent running, solving the first real problems, and preparing for the sprint. Part II covers each of the 31 days. Part III covers the patterns and lessons that emerged.
+**What you're reading**: A work-in-progress book that gets updated daily as the work happens. No retrospective storytelling. No post-hoc analysis. Just real events documented as they occur.
+
+**Part I** covers the setup period (February 2026) — getting the agent running, solving the first real problems, and preparing for the sprint.  
+**Part II** will cover each of the 31 days (starting March 1).  
+**Part III** will capture the patterns and lessons (written as they emerge).
 
 ## Who This Book Is For
 
@@ -19,13 +23,18 @@ Part I covers the setup period in February 2026 — getting the agent running, s
 - Founders who want to see what "AI-native" means in practice, not in theory
 - Anyone who wants an honest account of what works and what does not
 
-## How to Read This Book
+## How to Read This Book (Work in Progress)
 
-Part I should be read in order. It explains the tools, the setup, and the context you need to understand the 31-day sprint.
+**Part I** (available now) should be read in order. It explains the tools, the setup, and the context for the 31-day sprint.
 
-Part II can be read in any order. Each day is a self-contained story about building one product.
+**Part II** (starting March 1) will be written daily as each product is built. Each day will be a self-contained story.
 
-Part III is a summary of what I learned. Read it after at least a few days from Part II, so the patterns make sense.
+**Part III** (written as patterns emerge) will capture lessons and insights as they become clear.
+
+::: {.callout-tip}
+## Following the Progress
+Check out different git commits to read the book as it existed on any given day. End-of-day commits will be tagged for easy access.
+:::
 
 The code is open source. Every repository is linked in the relevant chapter. You can read the code, fork it, or use it as a starting point for your own projects.
 

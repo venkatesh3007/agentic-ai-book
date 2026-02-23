@@ -10,7 +10,7 @@ I had client projects proving the concept worked. But I needed to build the fact
 
 So I set up an AI agent — Claude running on an open-source platform called OpenClaw — and gave it access to my infrastructure. I named it Jarvis and gave it the title of Chief of Staff. Then I started building.
 
-This book documents what happened. The setup period in February, and then the 31-day sprint in March where I built one product every day using the agent as my only engineering team.
+This book documents what is happening in real-time. The setup period in February (currently in progress), and then the planned 31-day sprint in March where I will build one product every day using the agent as my only engineering team.
 
 I wrote this book for two reasons:
 

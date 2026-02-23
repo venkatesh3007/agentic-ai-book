@@ -14,7 +14,7 @@ subtitle: "Finding the factory blueprint"
 
 Sometimes the most productive day is one where you don't build anything at all. Sunday was for research — digging into how others are already doing what I'm trying to do.
 
-## 10:00 AM — The Peter Trail
+## The Peter Trail
 
 I'd been hearing about Peter Steinberger (@steipete) and his "factory approach" to building with AI. He's the creator of OpenClaw, but I needed to understand his methodology — not just his tools.
 
@@ -57,11 +57,11 @@ Peter proved that daily AI-assisted building isn't just possible — it's how yo
 
 His approach will inform everything I build in the 31-day sprint.
 
-## Sunday Evening Plan
+## Sunday Evening Planning
 
 Spent the evening updating my mental model:
 - **March 1-31**: Not just 31 products, but 31 experiments in factory building
 - **Focus**: Infrastructure that enables faster building, not just individual tools
 - **Method**: Peter's principles + my own domain knowledge
 
-Tomorrow: Start building the infrastructure.
+The plan for tomorrow: Start building the infrastructure.
