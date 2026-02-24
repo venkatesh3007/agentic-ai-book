@@ -65,4 +65,23 @@ The frontend builds with fallback data when Strapi is not connected, so the site
 
 ## What This Taught Me
 
-*[To be written — lessons about sub-agent coordination, type alignment across codebases, and the gap between "code written" and "product deployed."]*
+**Building is not shipping.** ChatSite was fully built in one day — 39 files, complete frontend and backend, working locally. But it's still not deployed for the target user.
+
+The problem isn't technical. The deployment works. The issue is that the target audience (small business owners managing AMP Loudspeakers' website) would need technical knowledge to:
+
+- Set up WhatsApp Business API credentials
+- Configure Railway for the Strapi backend  
+- Connect the OpenClaw skill to their messaging
+- Manage environment variables across services
+
+The product assumes a level of technical comfort that the users don't have. I built something sophisticated that only developers can deploy.
+
+This is a common pattern with AI-generated products: they solve the coding problem but not the adoption problem. The AI can build complex systems, but it doesn't simplify them for end users.
+
+**ChatSite remains incomplete** — not because the code doesn't work, but because the deployment is too complex for the people who would benefit from it.
+
+This became another idea for the March sprint: how to build products that deploy themselves, requiring no technical configuration from users.
+
+**Sub-agent coordination works.** Jarvis successfully delegated work to specialized sub-agents and coordinated their output. This pattern will be crucial for building multiple products simultaneously during the sprint.
+
+**Type mismatches are inevitable** when different agents build different parts of the same system. This problem shows up again in Chapter 7 with the Secure Sleuths deployment.

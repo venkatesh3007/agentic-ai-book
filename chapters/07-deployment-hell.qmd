@@ -1,33 +1,136 @@
 ---
 title: "Deployment Hell"
-subtitle: "February 22–24, 2026 — Getting things actually running"
+subtitle: "February 22–24, 2026 — When building is easy but shipping is hard"
 ---
 
-There is a large gap between "the code works on my machine" and "the product is live on the internet." This chapter covers the deployment problems we hit and how we solved them.
+Building the Secure Sleuths bug bounty platform with Jarvis took one day. Getting it deployed and functional took three days.
 
-*[To be written as we complete the ChatSite and publicapis.io deployments. Will cover:]*
+This wasn't a failure. It was expensive research.
 
-## Railway and Strapi
+## Day 1: The Build
 
-- The missing PostgreSQL driver (`pg` not in dependencies)
-- The lockfile sync problem (`npm ci` fails when package.json and package-lock.json diverge)
-- Memory limits on the 4GB droplet preventing `npm install`
-- The Railway reference variable syntax for connecting services (`${{postgres.RAILWAY_PRIVATE_DOMAIN}}`)
+February 22, 2026. I gave Jarvis a product specification document and asked it to build a complete bug bounty platform. In 6 hours, it generated:
 
-## Netlify and Environment Variables
+- 39 files: Complete Next.js application with TypeScript
+- 4 user dashboards: Hunter, Client, Triage, Developer roles  
+- 2 database migrations: Full PostgreSQL schema with Row Level Security
+- Advanced features: CVSS scoring, duplicate detection, real-time messaging
 
-- The 4KB Lambda limit (revisited with more detail)
-- How to audit environment variable sizes
-- The JSON consolidation pattern for reducing variable count
-- Why `yarn run build` vs `npm run build` matters (Netlify site config vs netlify.toml)
+The code compiled locally. All tests passed. It looked production-ready.
 
-## The Gap Between "Built" and "Deployed"
+I was wrong.
 
-- Why the agent can build a project that compiles but does not deploy
-- The problem of configuration: code needs to know where it is running
-- Environment-specific behavior that does not show up in local builds
-- How to structure projects so that deployment is part of the build process, not an afterthought
+## Days 2-3: The Reality
 
-## Lessons
+Deploying to production revealed the gap between "it compiles" and "it works."
 
-*[To be written]*
+### The TypeScript Error Cascade
+
+The first Netlify build failed with a TypeScript error:
+
+```
+Property 'program' does not exist on type 'Report'. 
+Did you mean 'programs'?
+```
+
+I fixed it manually. The next build failed with a different error:
+
+```
+Property 'sender_id' does not exist on type 'Message'. 
+Did you mean 'sender'?
+```
+
+This pattern repeated 30+ times across 8 different files. Each fix revealed another type mismatch. The AI had generated internally consistent code, but the TypeScript compiler found edge cases we missed.
+
+### When AI Meets Reality
+
+The problems fell into categories:
+
+**Database relationship mismatches:** The AI generated interfaces assuming single relationships, but the database returned arrays. Code expected `report.programs.name` but got `report.programs[0].name`.
+
+**Interface duplication:** Two files defined different Message interfaces with different properties, causing type conflicts when components interacted.
+
+**Next.js 14 compatibility:** The useSearchParams() hook required Suspense boundaries for server-side rendering, which the AI hadn't included.
+
+### The Rate Limit Reality
+
+Here's what nobody talks about: AI-native development burns through rate limits fast.
+
+I'm paying $200/month for Claude Code Max. That's supposed to be the "unlimited" tier. But after 4-5 consecutive build-fix-deploy cycles, I hit rate limits. The agent would pause for 10-15 minutes between fixes.
+
+When you're debugging 30+ TypeScript errors iteratively, this kills flow state. The economics don't work yet.
+
+### Building an Auto-Fixer
+
+After manually fixing 15+ similar errors, I had Jarvis write a TypeScript error auto-fixer. It would:
+
+1. Parse build output to extract error messages and file locations
+2. Read the problematic files
+3. Send the code and errors to GPT-4 with fix instructions  
+4. Apply the corrected code automatically
+5. Rebuild and repeat until no errors remained
+
+This worked for about 60% of the errors. The remaining 40% required manual intervention — usually interface design decisions that needed human judgment.
+
+### Cross-Service Configuration Hell
+
+Even after fixing the TypeScript errors, the deployment wasn't functional. Users who signed up received email verification links that pointed to localhost:3000 instead of the production URL.
+
+The problem: 7 different configuration locations across services:
+
+1. Supabase Dashboard: Auth URL configuration
+2. Netlify: Environment variables  
+3. GitHub: Repository secrets
+4. Local config: supabase/config.toml
+5. Application config: Next.js environment detection
+6. DNS: Domain pointing
+7. SSL: Certificate configuration
+
+Each service has its own interface, its own way of handling secrets, its own validation rules. There's no unified configuration management. When something breaks, you debug across multiple dashboards.
+
+This is what I call "the plumbing problem."
+
+## What We Learned
+
+### Building vs Shipping
+
+The AI can generate a complete, working application in hours. But shipping it to real users requires navigating a maze of service configurations, build systems, and deployment pipelines that weren't designed to work together.
+
+The bottleneck isn't code generation. It's infrastructure coordination.
+
+### The 80/20 Rule  
+
+AI automation works for about 80% of TypeScript errors. The remaining 20% require human judgment about interface design, database relationships, and architectural decisions.
+
+This isn't a failure of AI. It's the nature of the problem. Some decisions require context that the AI doesn't have.
+
+### Rate Limits Are Real
+
+Even premium AI subscriptions have usage limits. When you're doing intensive debugging sessions, you hit them. The tools aren't designed for the sustained, iterative work that AI-native development requires.
+
+### Ideas for March
+
+Every frustration became a product idea for the 31-day sprint:
+
+**TypeScript Error Auto-Fixer** (prototype built)
+Automatically detect and fix common TypeScript compilation errors. Integration with CI/CD pipelines. Pattern learning from successful fixes.
+
+**Cross-Service Configuration Orchestrator**  
+Single interface to manage configuration across Netlify, Supabase, Railway, etc. Automatic environment variable synchronization. Production URL propagation.
+
+**Rate Limit Orchestration System**
+Automatic failover across multiple AI providers. Cost-aware task routing (use cheaper models for repetitive tasks). Queue management for sustained workloads.
+
+**Database Schema Consistency Checker**
+Validate TypeScript interfaces against database schema. Catch relationship mismatches before deployment. Auto-generate types from database migrations.
+
+**The Deployment Abstraction Layer**
+One-command deployment that handles all service configuration. Rollback capability when deployments partially fail. Unified secrets management.
+
+## The Pattern
+
+This is the pattern that will define the March sprint: Every challenge in February becomes a product in March.
+
+The goal isn't to avoid deployment hell. It's to build tools that make it systematic and repeatable.
+
+Shipping is hard. But shipping tools that make shipping easier — that's a software factory.
