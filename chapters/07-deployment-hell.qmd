@@ -3,13 +3,13 @@ title: "Deployment Hell"
 subtitle: "February 22–24, 2026 — When building is easy but shipping is hard"
 ---
 
-Building the Secure Sleuths bug bounty platform with Jarvis took one day. Getting it deployed and functional took three days.
+Building the Secure Sleuths bug bounty platform with Jarvis took one day. Getting it deployed took the same day. Getting it functional — that's still in progress.
 
 This wasn't a failure. It was expensive research.
 
-## Day 1: The Build
+## February 24, 2026: Build and Deploy
 
-February 22, 2026. I gave Jarvis a product specification document and asked it to build a complete bug bounty platform. In 6 hours, it generated:
+I gave Jarvis a product specification document and asked it to build a complete bug bounty platform. In 6 hours, it generated:
 
 - 39 files: Complete Next.js application with TypeScript
 - 4 user dashboards: Hunter, Client, Triage, Developer roles  
@@ -20,9 +20,11 @@ The code compiled locally. All tests passed. It looked production-ready.
 
 I was wrong.
 
-## Days 2-3: The Reality
+## The Same Day: Deploy vs. Functional
 
-Deploying to production revealed the gap between "it compiles" and "it works."
+The platform deployed to Netlify successfully the same day. Live URL: https://secure-sleuths-platform.netlify.app
+
+But deployed doesn't mean functional. The gap is between "it deploys" and "it works for real users."
 
 ### The TypeScript Error Cascade
 
@@ -74,7 +76,7 @@ This worked for about 60% of the errors. The remaining 40% required manual inter
 
 ### Cross-Service Configuration Hell
 
-Even after fixing the TypeScript errors, the deployment wasn't functional. Users who signed up received email verification links that pointed to localhost:3000 instead of the production URL.
+Even after deployment succeeded, the platform wasn't functional. Users who signed up received email verification links that pointed to localhost:3000 instead of the production URL.
 
 The problem: 7 different configuration locations across services:
 
@@ -92,11 +94,13 @@ This is what I call "the plumbing problem."
 
 ## What We Learned
 
-### Building vs Shipping
+### Building vs Shipping vs Functional
 
-The AI can generate a complete, working application in hours. But shipping it to real users requires navigating a maze of service configurations, build systems, and deployment pipelines that weren't designed to work together.
+The AI can generate a complete, working application in hours. Deployment pipelines can get it live in hours too. But making it functional for real users requires navigating a maze of service configurations that weren't designed to work together.
 
-The bottleneck isn't code generation. It's infrastructure coordination.
+The bottleneck isn't code generation or deployment. It's cross-service coordination. 
+
+As of this writing, Secure Sleuths is deployed and accessible, but the login flow is broken due to authentication URL mismatches across services. The platform exists, but users can't actually use it.
 
 ### The 80/20 Rule  
 
