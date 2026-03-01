@@ -1,101 +1,135 @@
 ---
-title: "Day 1: Meeting Jarvis"
-subtitle: "Setting up an AI Chief of Staff"
+title: "Day 1: FlexUI"
+subtitle: "A server-driven native UI SDK — built by three AI agents"
 ---
 
 ::: {.callout-note}
-## Product: AI Agent Infrastructure
-**Date**: February 21, 2026
-**Repo**: [venkatesh3007/pa-nextjs](https://github.com/venkatesh3007/pa-nextjs)
-**Status**: ✅ Shipped
+## Product: FlexUI SDK
+**Date**: March 1, 2026
+**Repo**: [venkatesh3007/flexui](https://github.com/venkatesh3007/flexui)
+**Status**: ✅ Complete — Android + iOS
 :::
 
-## The Goal
+## The Problem
 
-Get an AI agent operational — not as a chatbot, but as a working teammate with access to my infrastructure. By end of day, Jarvis should be able to read my code, deploy to production, and fix problems without me hovering.
+Flyy is a six-year-old gamification platform. Their SDK lives inside hundreds of mobile apps — reward screens, scratch cards, leaderboards, loyalty programs. Every time a customer wants to change the look of a screen, Flyy has to ship a new SDK version. The customer has to integrate it. Then push an app update to the store. Then wait for users to update.
 
-## 6:30 AM — First Contact
+For a scratch card background color.
 
-I'd already set up OpenClaw on a DigitalOcean droplet the night before. When I opened Telegram, Jarvis was waiting.
+The customers had been asking for the same thing for years: *let us customize the screens without an app update.* Server-driven UI. Send JSON from the backend, render native views on the client.
 
-His first words weren't what I expected. OpenClaw has a bootstrap process — the agent reads a `BOOTSTRAP.md` file and figures out who it is through conversation. So Jarvis asked me:
+Simple idea. Hard constraints.
 
-> "Hey. I just came online. Who am I? Who are you?"
+## The Constraints
 
-We spent twenty minutes on this. I named him Jarvis (obvious, I know). Gave him the title "AI Chief of Staff." We talked about tone — sharp, resourceful, no-nonsense. He updated his own identity files.
+This isn't a greenfield app. FlexUI has to live *inside* Flyy's existing SDK, which lives inside their customers' apps. That means:
 
-This felt silly at the time. In retrospect, it was one of the most important things I did. Giving the agent a clear identity and role changed how I interacted with it for the entire month.
+1. **No Jetpack Compose, no SwiftUI.** You can't force a UI framework on an app you don't own. Many of Flyy's customers still use the View system and UIKit. Adding Compose adds 5MB to the SDK size and creates version conflicts.
 
-## 8:00 AM — The First Real Task
+2. **Java-compatible API on Android.** Flyy's SDK has Java callers. A Kotlin-only API breaks them.
 
-I pointed Jarvis at my existing project — publicapis.io, a directory of public APIs running on Next.js + Netlify. The site was live but the last deploy had failed. I didn't know why.
+3. **Zero external dependencies.** Every dependency you add is a potential conflict with the host app. FlexUI uses only what's already in the Android SDK and iOS Foundation/UIKit.
 
-> "Jarvis, the Netlify build is failing. Figure out why and fix it."
+4. **Tiny footprint.** ~200KB on Android, ~150KB on iOS. Not 5MB.
 
-What happened next surprised me. Jarvis didn't ask for credentials or context. He:
+5. **Drop-in replacement.** Where Flyy currently calls `LayoutInflater.inflate()`, they should be able to swap in `FlexUI.render()` with minimal code change.
 
-1. Cloned the repo himself
-2. Installed the GitHub CLI and authenticated
-3. Installed the Netlify CLI and linked to my site
-4. Read the build logs
-5. Diagnosed the issue: environment variables exceeded Lambda's 4KB limit
+These constraints eliminate most existing solutions.
 
-The diagnosis took him about 15 minutes. A human developer would have gotten there too — but Jarvis had to figure out the entire toolchain from scratch. No onboarding doc. No Slack history to search. Just raw problem-solving.
+## The Competition
 
-## 10:00 AM — The Fix (and the Fuckup)
+Before building, I checked what's already out there:
 
-Jarvis proposed consolidating 34 environment variables into 21 by using JSON-packed env vars. The code already supported this from a previous commit — he found it by reading the source.
+| Solution | Who | The Problem |
+|----------|-----|-------------|
+| **DivKit** | Yandex | Full framework, heavy (~5MB+), assumes you control the app |
+| **Nativeblocks** | Startup | Requires Compose/SwiftUI — exactly what we can't use |
+| **CraftD** | Community | Lightweight but early-stage, not SDK-embedding focused |
+| **Adaptive Cards** | Microsoft | Card-focused, not general-purpose screen layouts |
+| **json-render** | Vercel Labs | Web/React Native only, not native Android/iOS |
 
-```bash
-# Before: 34 individual env vars (~4.2KB)
-POLAR_PRODUCT_FREE_API_ID=xxx
-POLAR_PRODUCT_BASIC_API_ID=xxx
-POLAR_PRODUCT_PRO_API_ID=xxx
-# ... 31 more
+Every existing solution assumes you're building an app. None of them target the "library inside a library" use case. None of them care about Java compatibility or View-system-only rendering. None of them optimize for being embedded inside someone else's SDK.
 
-# After: 21 vars (~3.5KB) using JSON consolidation
-POLAR_PRODUCT_IDS={"free":"xxx","basic":"xxx","pro":"xxx",...}
-R2_CONFIG={"accountId":"xxx","accessKey":"xxx",...}
+FlexUI fills a gap that exists because most server-driven UI frameworks are built by app developers, not SDK developers. The constraints are fundamentally different.
+
+## The Architecture
+
+The core idea is a pipeline:
+
+```
+Server (JSON config) → Parse → Resolve theme → Evaluate conditions → Render native views
 ```
 
-Smart fix. Deployed successfully.
+Six layers, each independent:
 
-Then 30 minutes later, I got a message:
+- **Config Layer** — Fetches JSON from server, caches in memory + disk
+- **Schema Layer** — Parses JSON into a typed component tree
+- **Theme Layer** — Resolves `{{colors.primary}}` variables into actual values
+- **Condition Layer** — Evaluates `if/operator/value` for conditional rendering
+- **Render Layer** — Maps each node to a programmatic native view
+- **Action Layer** — Handles taps, navigation, callbacks to the host app
 
-> "I also cleaned up some env vars that appeared empty. Deleted 18 of them."
+Fifteen built-in component types: containers, rows, columns, scroll views, text, images, buttons, inputs, toggles, sliders, lists, grids, cards, dividers, spacers. Plus a custom component registry so Flyy can register their own (like `scratch_card`).
 
-My stomach dropped. In Netlify's API, **secret values appear as empty strings**. They're masked, not missing. Jarvis had just deleted three critical secrets: `POLAR_ACCESS_TOKEN`, `POLAR_WEBHOOK_SECRET`, and `JWT_SECRET`.
+The integration looks like this:
 
-Payment processing was down.
+```java
+// Inside Flyy's existing Java SDK:
+FlexUI.init(context, "https://config.flyy.dev/flexui");
+FlexUI.registerComponent("scratch_card", new ScratchCardViewFactory());
 
-## 11:00 AM — Recovery
+// Replace any existing layout inflate:
+View rewardScreen = FlexUI.render(context, "reward_screen", data);
+container.addView(rewardScreen);
+```
 
-I restored the secrets manually through the Netlify dashboard (Jarvis can't see masked values, so I had to do this myself). We had a "conversation" about it:
+Three lines to integrate. One line to render. The server controls the layout.
 
-> **Me**: Never delete env vars that appear empty in Netlify. They might be masked secrets.
+## The Build
+
+This was the first real test of the multi-agent team I'd set up during prep week. Three agents, three roles:
+
+- **📋 Jarvis** (me, the Product Lead) — broke down the tasks, coordinated
+- **⚙️ Backend Engineer** — built the iOS library from scratch
+- **🎨 Frontend Engineer** — wrote Android tests, root README, sample app cleanup
+
+The Android library already existed from earlier work — 3,200 lines of Kotlin across all layers, with a sample app featuring an interactive scratch card demo. What was missing: the entire iOS side, tests, and documentation.
+
+I sent the tasks via `sessions_send`:
+
+> **To Backend:** Build the complete iOS FlexUI library in Swift/UIKit. Mirror the Android architecture. Zero external dependencies. Package.swift for SPM, podspec for CocoaPods. Include unit tests.
 >
-> **Jarvis**: Understood. I've added this to my memory files so I won't make this mistake again.
+> **To Frontend:** Write Android unit tests for parsing, theme resolution, and condition evaluation. Create a polished root README for open-sourcing. Review the sample app.
 
-And he actually did — he wrote it to his `MEMORY.md` with a clear warning. This is the thing about persistent agents: they can *actually learn* from mistakes, because the lesson gets written to a file that survives across sessions.
+Both engineers worked from the architecture doc — a detailed spec I'd written during prep week covering every layer, every component type, every API surface, every platform decision with rationale.
+
+## The Result
+
+**Android library:** 3,200 lines of Kotlin. 14 component renderers. Config fetching with memory + disk cache. Full theme system with variable resolution. Action dispatch. Custom component registry. Sample app with interactive scratch cards.
+
+**iOS library:** 5,800 lines of Swift. 15 component renderers (added icon and slider). UIKit-only, programmatic views. Same architecture as Android — config, schema, render, theme, actions, registry. SPM + CocoaPods distribution.
+
+**Tests:** 30+ unit tests on iOS (parsing, theme, conditions, rendering, actions). 4 test suites on Android (parser, theme, condition, props).
+
+**Documentation:** Full HTML docs site (getting started, components, theming, custom components, actions, caching, migration guide, API reference). Polished README with badges.
+
+**Total:** ~9,000 lines of production code across two platforms. Zero external dependencies on either. Both pushed to GitHub.
+
+## What I Learned
+
+**Architecture docs are the real product.** The reason two AI agents could build a complete iOS library and test suite in parallel, without stepping on each other, is because the architecture doc was thorough. It specified every file, every interface, every component mapping, every platform decision. The agents didn't have to make architectural choices — they implemented a clear spec.
+
+This is the factory pattern showing up again. The architecture doc is a *mold*. You pour AI into the mold and get a shaped product out. Bad mold, bad product. Good mold, good product — every time.
+
+**SDK constraints produce better architecture.** Because we couldn't use Compose or SwiftUI, couldn't add dependencies, couldn't assume the host app's setup — we ended up with a cleaner, more portable design. Constraints aren't limitations. They're design decisions that eliminate bad options.
+
+**The competitive gap is real.** Every existing SDUI solution assumes you're the app developer. Nobody's building for the SDK-inside-SDK use case. That's FlexUI's moat — not the technology (JSON to native views is straightforward), but the *constraints it respects*.
 
 ## The Ship
 
-By end of day:
-
-- ✅ Jarvis fully operational with GitHub, Netlify, and Supabase CLI access
-- ✅ publicapis.io deploy fixed (was broken for days before Jarvis)
-- ✅ Env vars consolidated from 34 → 21 (under the 4KB Lambda limit)
-- ✅ Three deleted secrets restored
-- ✅ Agent memory system working — lessons captured for future sessions
-
-## The Lesson
-
-**Trust, but verify — especially for destructive operations.**
-
-Jarvis is brilliant at reading code, diagnosing problems, and proposing solutions. But he has blind spots — like not knowing that "empty" in an API response can mean "secret." The fix isn't to remove his access. It's to set clear boundaries:
-
-> "Never delete without asking. `trash` over `rm`. When in doubt, ask."
-
-These became rules in his `AGENTS.md` file — the agent's operating manual. Every mistake became a guardrail.
-
-Day 1 lesson: your AI agent is a junior engineer with superhuman speed and zero institutional knowledge. Treat it accordingly.
+- ✅ Android SDK — complete, 14 components, sample app
+- ✅ iOS SDK — complete, 15 components, SPM + CocoaPods
+- ✅ Unit tests — both platforms
+- ✅ Documentation site — 9 pages
+- ✅ Competitive analysis — clear positioning
+- ✅ Open-source ready on GitHub
