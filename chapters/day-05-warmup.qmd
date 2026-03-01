@@ -1,0 +1,120 @@
+---
+title: "The Dev Team Arena"
+subtitle: "February 25, 2026 — Three AI agents walk into a group chat"
+---
+
+::: {.callout-note}
+## Product: Multi-Agent Dev Team
+**Date**: February 25, 2026
+**Repo**: [venkatesh3007/secure-sleuths-platform](https://github.com/venkatesh3007/secure-sleuths-platform)
+**Status**: ✅ Deployed
+:::
+
+## The Goal
+
+Take the Secure Sleuths bug bounty platform we'd built on Day 4 and do something unusual: deploy it using a *team* of AI agents. Not one agent doing everything — three agents with distinct roles, coordinating in a Telegram group chat like a real engineering team.
+
+The idea was simple. If one AI agent could build an entire platform in 33 minutes, what happens when you give it colleagues?
+
+## The Setup
+
+I created three OpenClaw agents, each with its own Telegram bot, its own workspace, and its own identity:
+
+- **📋 Jarvis** (Product Lead) — Claude Opus. Coordinates, breaks down tasks, never writes code.
+- **⚙️ Backend Engineer** — Claude Sonnet. Owns Supabase schema, auth, API routes.
+- **🎨 Frontend Engineer** — Claude Sonnet. Owns Next.js pages, components, UI/UX.
+
+Each agent got a `SOUL.md` defining who it was and how it should behave. Jarvis got instructions to delegate, not build. The engineers got instructions to take tasks from Jarvis and post progress in the group.
+
+Then I added all three bots to a Telegram group called "Dev Team Arena" and typed my first message.
+
+## 11:00 AM — The Coordination Problem
+
+The first thing that happened was chaos.
+
+When I sent a message to the group, all three bots responded simultaneously. Every message triggered three responses — Jarvis tried to coordinate, Backend tried to help, Frontend chimed in with opinions. It was like a meeting where everyone talks at once.
+
+The fix was obvious in retrospect: configure OpenClaw's `mentionPatterns` so each agent only responds when explicitly tagged. `@VenkyJarvisBot` for Jarvis, `@BackendJarvisBot` for Backend, `@FrontendJarvisBot` for Frontend.
+
+One config change. Coordination problem solved. A human team learns this social protocol intuitively — don't talk unless spoken to in a meeting. AI agents need it spelled out.
+
+## 11:15 AM — The Wiring Problem
+
+With mention routing fixed, I told Jarvis to assign tasks. He broke down the auth feature correctly:
+
+**Backend:** Supabase Auth setup, schema migrations, RLS policies, server actions.
+**Frontend:** Login/signup pages, password reset flow, auth middleware, responsive UI.
+
+Clean decomposition. The kind of task breakdown a good tech lead does in their sleep.
+
+Then he tried to send the tasks. And failed.
+
+Jarvis needed `sessions_send` to message the other agents directly — agent-to-agent communication. But the gateway had a token mismatch. His environment had one auth token; the config file had another. The gateway rejected every attempt.
+
+What followed was thirty minutes of debugging:
+
+1. First attempt: `sessions_send` → "gateway token mismatch"
+2. I updated the config → still mismatched (gateway hadn't restarted)
+3. Tried `openclaw gateway restart` from the agent → systemctl wasn't available
+4. Dug into environment variables, found the actual mismatch
+5. I fixed the token on the server → it finally worked
+
+This is the part nobody talks about in AI agent demos. The *infrastructure*. Three agents in a group chat sounds cool in a tweet. Making the message bus actually work requires debugging auth tokens, gateway configs, session visibility permissions, and restart sequences.
+
+## 11:45 AM — First Contact
+
+Once the gateway was fixed, Jarvis sent tasks to both engineers. The messages were delivered (no more auth errors), but the engineers didn't respond within the timeout window.
+
+Turns out, the agents needed to be "woken up" — their sessions weren't active until someone messaged them directly on Telegram. The `sessions_send` delivered to a queue, but nobody was home to process it.
+
+I pinged them directly in the group. They woke up and got to work.
+
+## 12:00 PM — The Build
+
+With all three agents active and tasks assigned, the actual building was the easy part. Backend wrote the Supabase migrations and auth server actions. Frontend built the login, signup, password reset, and email verification pages.
+
+Jarvis didn't write a single line of code. He tracked progress, identified blockers, and made sure Backend's schema work happened before Frontend tried to bind to real data.
+
+## 12:30 PM — Deployment
+
+When the engineers reported done, I told Jarvis to deploy. This is where the Product Lead role shined — he didn't just run `netlify deploy`. He:
+
+1. Found and fixed import errors (Supabase client/server split was wrong)
+2. Fixed TypeScript strict mode issues
+3. Excluded unrelated project folders that were polluting the build
+4. Added dynamic rendering for auth pages that use cookies
+5. Committed everything and force-pushed to GitHub
+6. Created the Netlify site and deployed
+
+**Build result:** All 13 routes compiled. 14 static pages generated. Zero errors.
+
+**Deploy result:** https://secure-sleuths.netlify.app — live in production.
+
+## The Ship
+
+- ✅ Three-agent team operational in a Telegram group
+- ✅ Mention-based routing for clean coordination
+- ✅ Agent-to-agent messaging via `sessions_send`
+- ✅ User authentication feature (login, signup, password reset, email verify)
+- ✅ Deployed to Netlify with all build errors resolved
+- ⏳ Supabase API keys need to be added for full auth functionality
+
+## The Lesson
+
+**Multi-agent systems are 80% plumbing, 20% intelligence.**
+
+The agents were smart from minute one. Claude Opus made a clean task decomposition. Claude Sonnet wrote correct code. The *intelligence* was never the bottleneck.
+
+What took the most time:
+
+- Configuring mention routing so agents don't talk over each other
+- Debugging gateway auth tokens for agent-to-agent messaging
+- Setting session visibility permissions
+- Waking up agent sessions
+- Fixing build errors from multiple projects sharing one workspace
+
+None of this is glamorous. None of it shows up in demos. But it's the difference between "three AI agents in a group chat" as a concept and three AI agents actually shipping code together.
+
+The pattern I'm seeing: every new capability (agents, multi-agent, tool use) follows the same curve. The AI part works surprisingly fast. The infrastructure part takes surprisingly long. And once the infrastructure works, it works forever.
+
+Today's infrastructure debugging means tomorrow's team just... works. That's the factory pattern. You're not building a product — you're building the machine that builds products.

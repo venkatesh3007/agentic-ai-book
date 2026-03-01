@@ -31,6 +31,7 @@ book:
         - chapters/09-planning-the-sprint.qmd
         - chapters/day-02-warmup.qmd
         - chapters/day-03-warmup.qmd
+        - chapters/day-05-warmup.qmd
     - part: "Part II: The Build (March 1–31, 2026)"
       chapters:
         - chapters/day-01.qmd
