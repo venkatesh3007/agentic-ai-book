@@ -1,27 +1,166 @@
 ---
-title: "Day 2: [TBD]"
-subtitle: "[Product name TBD]"
+title: "Day 2: apicompat"
+subtitle: "Catch breaking API changes before your users do"
 ---
 
 ::: {.callout-note}
-## Product: [TBD]
-**Date**: [TBD]
-**Repo**: [TBD]
-**Status**: 🔲 Not started
+## Product: apicompat
+**Date**: March 2, 2026
+**Repo**: [venkatesh3007/apicompat](https://github.com/venkatesh3007/apicompat)
+**Status**: ✅ Complete — CLI + MCP server
 :::
 
-## The Goal
+## The Pain
 
-*[To be written after we build it]*
+At Flyy, we were migrating from Capistrano to Kubernetes. Legacy Ruby monolith, hundreds of API endpoints, three mobile apps consuming them.
+
+During the migration, someone renamed a response field from `avatar_url` to `profile_image_url`. The server deployed fine. The API docs were updated. The staging tests passed — because the staging tests were updated too.
+
+The Android app crashed for 40,000 users. It was still reading `avatar_url`. Nobody checked.
+
+This happens everywhere. Backend team changes an API. Frontend team doesn't know. Mobile app doesn't know. The contract between services breaks silently. You find out from your users.
+
+The tools that exist today don't solve this:
+
+| Tool | What it does | What it doesn't do |
+|------|-------------|-------------------|
+| **Pact** | Consumer-driven contract testing | Requires both teams to write and maintain contracts. Heavy setup. |
+| **Specmatic** | Contract testing from OpenAPI specs | Doesn't scan client code. Doesn't know what your mobile app actually calls. |
+| **openapi-diff** | Compares two OpenAPI specs | Doesn't know if anyone actually uses the changed endpoint. |
+| **TypeScript** | Catches type mismatches at compile time | Only if both sides use TypeScript. Mobile apps often don't. |
+
+Every solution assumes both teams are coordinated. In reality, the backend team pushes a change, the contract breaks, and nobody catches it until production.
+
+## What We Built
+
+apicompat scans three things:
+
+1. **Your OpenAPI spec** — what the API is supposed to look like
+2. **Your server routes** — what the API actually does
+3. **Your client code** — what the consumers actually call
+
+It compares all three and tells you where the contracts are broken.
+
+```bash
+$ apicompat check \
+    --spec api/openapi.yaml \
+    --server src/routes/ \
+    --clients mobile/src/
+
+🔍 Found 4 API compatibility issues
+
+🔴 Removed Endpoint: /api/users/:id/profile
+   Not found in spec or server routes
+   Called from:
+     mobile/src/screens/Profile.tsx:37
+     mobile/src/screens/Settings.tsx:12
+   💡 Did you mean 'GET /api/v2/users/:id/profile'?
+
+🔴 Removed Endpoint: /api/users/:id
+   Path migrated to /api/v2/ but clients still call v1
+   Called from:
+     mobile/src/api/UserClient.tsx:29
+     mobile/src/api/UserClient.tsx:54
+     web/src/services/userService.ts:60
+   💡 Did you mean 'GET /api/v2/users/:id'?
+```
+
+The second command compares two versions of a spec:
+
+```bash
+$ apicompat diff api/openapi-v1.yaml api/openapi-v2.yaml
+
+📊 12 changes detected:
+
+🔴 REMOVED: GET /api/users
+🔴 REMOVED: POST /api/users
+🔴 REMOVED: GET /api/users/{id}
+🔴 REMOVED: PUT /api/users/{id}
+🔴 REMOVED: DELETE /api/users/{id}
+🔴 REMOVED: GET /api/users/{id}/profile
+ℹ️  ADDED:   GET /api/v2/users
+ℹ️  ADDED:   POST /api/v2/users
+ℹ️  ADDED:   GET /api/v2/users/{id}
+ℹ️  ADDED:   PUT /api/v2/users/{id}
+ℹ️  ADDED:   DELETE /api/v2/users/{id}
+ℹ️  ADDED:   GET /api/v2/users/{id}/profile
+```
+
+Six endpoints removed, six added under `/api/v2/`. If any client still calls the old paths — and apicompat scans your client code to find out — it flags them.
+
+## How It Works
+
+The tool has three parsers:
+
+**OpenAPI Parser.** Reads YAML/JSON OpenAPI 3.0 and 3.1 specs. Extracts every path, method, request schema, and response schema. Resolves `$ref` references.
+
+**Server Route Parser.** Scans your backend code for route definitions. Supports Express (`app.get('/api/...')`), Next.js (file-based `app/api/` routes), and Fastify. Extracts the path, method, and any response type information it can find.
+
+**Client Code Parser.** This is the hard one. It scans frontend and mobile code for API calls — `fetch()`, `axios.get()`, `ky.post()`, template literals with URL paths. It extracts the URL, normalizes template variables (`${userId}` → `:param`), and maps them to endpoints. It also reads TypeScript interface definitions that describe response shapes.
+
+The compatibility checker takes the output of all three parsers and cross-references:
+
+- Client calls an endpoint that doesn't exist in the spec → **removed endpoint**
+- Client reads a field that doesn't exist in the response schema → **removed field**
+- Spec adds a required request field that the client doesn't send → **missing required field**
+- Response field type changed → **type change**
+
+When it finds a broken contract, it does fuzzy matching to suggest what the client probably *meant* to call. If `/api/users/:id` is gone but `/api/v2/users/:id` exists, it suggests the migration path.
 
 ## The Build
 
-*[Real-time narrative goes here]*
+Same pattern as Day 1. Three agents, three roles:
+
+- **📋 Product Lead** — defined the spec, coordinated
+- **⚙️ Backend Engineer** — built the core engine: parsers, compatibility checker, CLI
+- **🎨 Frontend Engineer** — built the MCP server, landing page, GitHub Action
+
+The architecture doc was the spec. I described every parser, every detection pattern, every output format. The engineers built to spec.
+
+Total output: 3,700 lines of TypeScript. Three parsers, one compatibility checker, one CLI with three commands (`check`, `diff`, `snapshot`), one MCP server, one landing page, one GitHub Actions workflow.
+
+The hardest part was URL normalization. Client code writes URLs in a dozen ways:
+
+```javascript
+// All of these are the same endpoint:
+fetch(`${API_URL}/api/users/${userId}`)
+fetch('/api/users/' + userId)
+axios.get(`${BASE}/api/users/${id}`)
+client.get('/api/users/:id')
+```
+
+The normalizer has to collapse all of these into `/api/users/:param` and match it against the spec's `/api/users/{id}`. Getting that right took most of the debugging time.
+
+## The Agent Angle
+
+apicompat ships as an MCP server. Any AI coding agent can call it:
+
+```
+Tool: apicompat_check
+Input: { spec: "api/openapi.yaml", clients: "mobile/src/" }
+Output: { issues: [...], summary: { errors: 4, warnings: 2 } }
+```
+
+The use case: an agent is about to deploy a backend change. Before deploying, it calls apicompat to verify no client contracts are broken. If they are, the agent either fixes the issue or blocks the deploy.
+
+Without this, agents deploy blind — just like humans do. With this, the agent has the same check a senior engineer would do manually: "did I break any clients?"
+
+## What I Learned
+
+**The real product isn't the API diff — it's the client scanner.** Every existing tool (Pact, Specmatic, openapi-diff) looks at the API from the server side. None of them ask the question that actually matters: "what do the clients think the API looks like?" The client code IS the contract, whether you wrote it down or not.
+
+**URL normalization is a surprisingly deep problem.** Template literals, string concatenation, base URL variables, query parameters, path parameters in three different formats — client code expresses URLs in endless ways. The normalizer is 100 lines of regex that handle maybe 80% of real-world patterns. The remaining 20% will be an ongoing battle.
+
+**Agents need verification tools more than humans do.** A senior engineer changing an API has context — they know which clients use it, they can grep the codebase, they can ask the mobile team. An AI agent has none of that context. apicompat gives agents the same situational awareness. This is the pattern: build the tool that makes agents as careful as good engineers.
 
 ## The Ship
 
-*[What we actually delivered]*
-
-## The Lesson
-
-*[What I learned]*
+- ✅ CLI with three commands: `check`, `diff`, `snapshot`
+- ✅ OpenAPI 3.0/3.1 parser with $ref resolution
+- ✅ Server route parser (Express, Next.js, Fastify)
+- ✅ Client code parser (fetch, axios, TypeScript interfaces)
+- ✅ Fuzzy endpoint matching with migration suggestions
+- ✅ JSON/text/markdown output formats
+- ✅ MCP server for agent integration
+- ✅ GitHub Actions workflow for CI
+- ✅ Landing page
