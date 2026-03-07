@@ -1,159 +1,159 @@
 ---
-title: "Day 4: Inside the Machine"
-subtitle: "Reverse-engineering OpenClaw to understand how one person outshipped a team"
+title: "Day 4: nginx-gate"
+subtitle: "Request gating and access control for OpenResty, configured in YAML"
 ---
 
 ::: {.callout-note}
-## Product: Research Day — No Shipped Product
-**Date**: March 5, 2026
-**Output**: Four architectural patterns extracted from OpenClaw's 470K-line codebase
-**Status**: 📖 Research complete
+## Product: nginx-gate
+**Date**: March 4, 2026
+**Repo**: [venkatesh3007/nginx-gate](https://github.com/venkatesh3007/nginx-gate)
+**Status**: ✅ Complete — OpenResty plugin + Docker setup
 :::
 
-## Why We Stopped Building
+## The Problem
 
-Four days into a 31-day sprint, we stopped to study someone else's code. That sounds like a mistake. It wasn't.
+Every web application needs a gatekeeper. Block bots. Restrict admin panels to office IPs. Require authentication headers on API routes. Redirect old URLs to new ones. Protect sensitive files.
 
-I'd been using OpenClaw every day — it's the AI agent platform that runs Jarvis, my AI chief of staff. But I'd never looked at how it was built. Peter Steinberger, the creator, claims he built 470,000 lines of production TypeScript in roughly three and a half months. With AI agents writing the code. Without a team.
+The standard approach is to scatter this logic across your application code. An `if` statement here, a middleware there, a `.htaccess` file somewhere else. The rules live in three different languages across five different files. When something goes wrong — and it always does — nobody knows which rule is blocking the request.
 
-If that's true, he's running the exact factory I'm trying to build. And instead of theorizing about what a software factory looks like, I could just look at one.
+The cloud approach is to use AWS WAF or Cloudflare Rules. That works until you need custom logic, or you're running on a VPS, or you don't want your access control policy locked inside a vendor's dashboard.
 
-We cloned the repo and spent the day extracting patterns.
+What I wanted: a single YAML file that defines every access rule. Human-readable. Version-controlled. Hot-reloadable without restarting nginx.
 
-## The Numbers
+## What We Built
 
-```
-Total commits:     16,917 in ~3.5 months
-Peter's commits:   11,365 (67%)
-Peak day:          578 commits in one day
-January average:   146 commits per day
-Test files:        1,722
-Lines of tests:    357,000
-Source files:      2,700+
-```
+nginx-gate is an OpenResty/Lua plugin. You define rules in YAML, and it enforces them at the nginx level — before your application code ever sees the request.
 
-578 commits in one day. That's not a typo. That's one commit every 2.5 minutes for a 24-hour period. No human types that fast. The AI agents are committing. Peter is directing.
+```yaml
+rules:
+  - name: "admin_ip_whitelist"
+    match:
+      path:
+        pattern: "/admin"
+        type: "prefix"
+      ip:
+        allow_list:
+          - "10.0.0.0/8"
+          - "192.168.1.100"
+    action:
+      type: "block"
+      status_code: 403
+      body: "Access denied"
 
-## Pattern #1: CLAUDE.md — The AI Constitution
+  - name: "block_bots"
+    match:
+      headers:
+        - name: "user-agent"
+          operator: "contains"
+          value: "bot"
+    action:
+      type: "block"
+      status_code: 403
 
-At the root of the repo sits a 260-line file called `CLAUDE.md`. It's not documentation for humans. It's the operating manual for AI agents.
-
-Every rule in that file is a lesson learned from an AI mistake:
-
-- "Avoid `any` types" — because an agent once used `any` to shortcut a type error
-- "Keep files under 700 LOC" — because agents lose context in large files
-- "Verify in code; do not guess" — because agents confidently generate wrong code when they don't have enough context
-- "Never edit files in node_modules" — because an agent did exactly that
-- "Run pnpm test before pushing when you touch logic" — because an agent pushed broken code
-
-This file grows. Every AI failure becomes a new rule. The rules aren't enforced by code review or CI — they're injected into the agent's context at the start of every session. The AI reads its own constitution before writing a single line.
-
-This is the factory's quality control layer. Not tests (though those exist too). Not code review (though that happens). The first line of defense is telling the machine what NOT to do, based on everything it's done wrong before.
-
-## Pattern #2: Co-located Tests as Guardrails
-
-Every `foo.ts` has a `foo.test.ts` right next to it. Not in a separate `/tests` folder. Right there. Same directory.
-
-```
-src/
-  gateway/
-    auth.ts
-    auth.test.ts
-    config.ts
-    config.test.ts
-    websocket.ts
-    websocket.test.ts
-```
-
-1,722 test files. 357,000 lines of test code. **50% of Peter's commits touch test files.** The AI writes the code and the tests together, in the same context, in the same commit.
-
-This matters because of how AI agents work. When the agent sees `auth.ts` and `auth.test.ts` side by side, it understands the contract implicitly. The test file IS the specification. Test names read like requirements:
-
-```
-"removes orphaned tool_result when tool_use is dropped"
-"reconnects WebSocket after auth token refresh"
-"truncates message history when context exceeds 180K tokens"
+  - name: "require_api_auth"
+    match:
+      path:
+        pattern: "/api/v2/*"
+        type: "wildcard"
+      headers:
+        - name: "authorization"
+          operator: "exists"
+          negate: true
+    action:
+      type: "block"
+      status_code: 401
+      body: "Authentication required"
 ```
 
-The tests aren't verifying that the code works. They're defining what "works" means. The AI reads the test, understands the intent, and writes code to match. Remove the tests and the AI loses its specification.
+Three rules. Admin panel locked to internal IPs. Bots blocked. API requires auth headers. All in one file that anyone on the team can read and modify.
 
-70% coverage threshold. Not 100%. Critical paths tested rigorously, edge cases tested where they matter, but no dogmatic insistence on testing every getter and setter. This is pragmatic — the factory runs on speed, and testing boilerplate slows the line.
+### Rule matching
 
-## Pattern #3: Small Files, Predictable Names
+The engine supports four path matching modes:
 
-Average file: **173 lines.** 96% of files under 700 lines. This is deliberate.
+- **exact** — `/health` matches only `/health`
+- **prefix** — `/admin` matches `/admin`, `/admin/users`, `/admin/settings`
+- **wildcard** — `/api/v2/*` matches any path under `/api/v2/`
+- **regex** — Lua patterns for complex matching
 
-AI models have context windows. A 5,000-line file overflows the context. The agent can't see the whole file, so it guesses about the parts it can't see. Those guesses become bugs.
+Rules can match on path, headers, query parameters, and IP addresses. All conditions in a rule must match (AND logic). First matching rule wins. If no rules match, the request passes through.
 
-Peter's solution: never let a file get big enough to overflow. When a file approaches 700 lines, split it. Not because humans prefer smaller files (they might), but because AI agents need them.
+### Actions
 
-The naming convention is equally deliberate:
+**Block** — return a status code and body. Done.
 
-```
-bash-tools.exec-host-gateway.ts
-bash-tools.exec-sandbox.ts  
-bash-tools.pty-bridge.ts
-```
+**Redirect** — 301 or 302 to a target URL. For URL migrations.
 
-Hierarchical. Descriptive. The agent can navigate the codebase by name alone. It doesn't need to open a file to know what it does. The name IS the documentation.
+**Pass** — let the request through, but add or remove headers. Useful for injecting `X-Request-ID` or stripping `X-Powered-By`.
 
-This is a subtle but powerful insight: **the codebase is organized for AI navigation, not human reading.** Small files that fit in context windows. Predictable names that serve as documentation. Flat structures over deep class hierarchies. Every organizational choice reduces the probability of an AI mistake.
+### Hot reload
 
-## Pattern #4: Typed Schemas with TypeBox
+Edit the YAML file. The configuration reloads automatically every 5 seconds. No nginx restart. No downtime. Change an IP whitelist at 2 AM without touching the server process.
 
-This is the one that changed how I think about the factory.
+You can also trigger a reload via API:
 
-Peter uses TypeBox — a library that defines a schema once and generates TypeScript types, JSON Schema, and validation from the same definition:
-
-```typescript
-const ToolParams = Type.Object({
-  command: Type.String(),
-  workdir: Type.Optional(Type.String()),
-  timeout: Type.Optional(Type.Number({ minimum: 0 })),
-})
+```bash
+curl -X POST http://localhost:8080/nginx-gate/reload
 ```
 
-From this single definition, you get:
+### Structured logging
 
-- **TypeScript type** — compile-time safety
-- **JSON Schema** — runtime validation
-- **Documentation** — the schema IS the docs
-- **AI constraint** — the agent can only generate code that matches the schema
+Every rule match is logged as JSON:
 
-That last point is the factory breakthrough. When you define the shape of every input, output, and message as a typed schema, you've constrained what the AI can produce. The agent doesn't freestyle a response format — it fills in a schema. If it generates something that doesn't match, the type checker catches it before the code runs.
+```json
+{
+  "timestamp": 1709568000.123,
+  "rule": "admin_ip_whitelist",
+  "action": "block",
+  "request": {
+    "uri": "/admin/dashboard",
+    "method": "GET",
+    "client_ip": "1.2.3.4",
+    "user_agent": "Mozilla/5.0..."
+  }
+}
+```
 
-Peter describes it as: *"The blueprint prevents the machines from producing defective parts."*
+Pipe it to any log aggregator. Grep for blocked requests. Build dashboards. Debug access issues by searching for a specific IP or path.
 
-Schemas flow across the entire stack:
-- Tool parameters → typed schema
-- WebSocket protocol → typed schema
-- Configuration files → typed schema
-- Cross-platform codegen → typed schema
+## The Build
 
-One definition, everywhere. Change the schema, and every consumer updates or breaks at compile time. No silent contract violations. No "the mobile app was still reading the old field name." The schema is the contract, and the contract is enforced.
+743 lines total:
 
-## What This Means for the Factory
+- **`lua/nginx_gate.lua`** (341 lines) — The core engine. Rule loading, YAML parsing, request matching, action execution, IP/CIDR matching, configuration caching.
+- **`config/rules.yaml`** (148 lines) — Example configuration with 12 rules covering common patterns.
+- **`tests/test_nginx_gate.sh`** (141 lines) — Integration tests: path matching, header matching, IP filtering, all action types, config reload.
+- **`tests/verify_setup.sh`** (113 lines) — Setup verification script.
 
-Four patterns. Four layers of the factory:
+Plus Docker Compose for one-command deployment:
 
-1. **CLAUDE.md** — Tell the machines what NOT to do (learned from failures)
-2. **Co-located tests** — Tell the machines what "correct" means (specification by example)
-3. **Small files** — Keep the machines focused (architecture for AI navigation)
-4. **Typed schemas** — Constrain what the machines can produce (blueprints, not freestyle)
+```bash
+docker-compose up -d
+curl http://localhost:8000/health
+```
 
-Stack these four layers and you get something remarkable: an AI that writes code with dramatically fewer mistakes. Not zero mistakes — but few enough that one person can review and ship the output fast enough to produce 578 commits in a day.
+## Why Lua at the nginx Layer
 
-This is the software factory. Not a magical tool. Not a single AI model. A set of **architectural patterns that make AI-generated code reliable enough to ship continuously.**
+This could have been a Node.js middleware. Or a Go reverse proxy. Or a Python WSGI filter. I built it as an OpenResty/Lua plugin for one reason: performance.
 
-## No Product Shipped
+nginx processes requests before they reach your application server. A Lua script running in nginx's event loop adds microseconds of overhead, not milliseconds. No extra network hop. No separate process. No serialization. The gating decision happens in the same process that handles the TCP connection.
 
-We didn't ship a product today. We shipped something more valuable: understanding.
+For a high-traffic API, this matters. For a $24/month VPS running multiple services, it matters even more — you can't afford to waste cycles on a separate proxy layer.
 
-Before today, the factory was a thesis. After today, it's a set of patterns I can implement. The remaining 27 days of this sprint will apply these patterns to everything we build:
+OpenResty is nginx with Lua scripting built in. It's battle-tested at scale (used by Cloudflare, Kong, and Mashape). The Lua ecosystem is tiny but focused. `lua-cjson` for JSON. `lua-resty-yaml` for YAML. That's all you need.
 
-- Every project gets a CLAUDE.md equivalent
-- Every function gets a co-located test
-- Every file stays under 500 lines
-- Every interface gets a typed schema
+## The Factory Pattern
 
-The factory isn't something you buy. It's something you build, one pattern at a time.
+Day 4 reinforced something: the factory produces infrastructure, not just applications.
+
+Days 1-3 built user-facing products — a UI SDK, an API tool, a mock server. Day 4 built plumbing. Nobody tweets about request gating. Nobody writes a blog post about YAML-configured access control. But every application we build for the rest of this sprint will run behind nginx-gate.
+
+The factory doesn't just produce products. It produces the infrastructure that makes future products safer and faster to deploy.
+
+## What I Learned
+
+**YAML is the right format for rules.** Not JSON (too noisy). Not a DSL (too clever). Not a database (too heavy). YAML is readable, diffable, and version-controllable. When the security team asks "what are our access rules?", you show them a file. They can read it. They can propose changes in a pull request. The rules are code-reviewed like any other code.
+
+**Hot reload changes the operations model.** Without hot reload, changing an access rule means: edit config → test → deploy → restart nginx → hope nothing breaks. With hot reload: edit the YAML, wait 5 seconds, done. This makes security response fast. Bot attack at 2 AM? Add a rule, save the file, it's blocked in 5 seconds.
+
+**Infrastructure products are undervalued in sprints.** Nobody counts "I set up request gating" as a product. But it prevents the class of problems that would slow down every future product. Day 4's nginx-gate will save hours across the remaining 27 days.
