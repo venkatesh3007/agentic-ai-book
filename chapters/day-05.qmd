@@ -6,35 +6,11 @@ subtitle: "A Telegram accounting bot that speaks your language"
 ::: {.callout-note}
 ## Product: CashFlow Chat
 **Date**: March 5, 2026
-**Repo**: Private (deployed on production server)
+**Repo**: [venkatesh3007/cashflow-bot](https://github.com/venkatesh3007/cashflow-bot)
 **Status**: ✅ Complete — Telegram bot, running 24/7
 :::
 
-## The Morning: Inside the Machine
-
-Before building anything, we spent the morning studying someone else's code.
-
-I'd been using OpenClaw every day — it's the AI agent platform that runs Jarvis, my AI chief of staff. Peter Steinberger, the creator, claims he built 470,000 lines of production TypeScript in roughly three and a half months. With AI agents writing the code. Without a team.
-
-If that's true, he's running the exact factory I'm trying to build. So we cloned the repo and extracted patterns.
-
-**16,917 commits in 3.5 months.** 578 in a single day. The AI agents commit. Peter directs.
-
-Four patterns emerged:
-
-**Pattern 1: CLAUDE.md** — A 260-line "constitution" for AI agents at the repo root. Every rule is a lesson from an AI failure: "don't use `any` types," "keep files under 700 lines," "verify in code, don't guess." The document grows with every mistake. The factory's quality control.
-
-**Pattern 2: Co-located tests** — Every `foo.ts` has `foo.test.ts` next to it. 1,722 test files. 50% of commits touch tests. The test names ARE the specification: `"removes orphaned tool_result when tool_use is dropped"`. The AI reads the test, understands the intent, writes code to match.
-
-**Pattern 3: Small files, predictable names** — Average file: 173 lines. 96% under 700 lines. Hierarchical names: `bash-tools.exec-host-gateway.ts`. Organized for AI navigation, not human reading. Small files fit in context windows. Predictable names serve as documentation.
-
-**Pattern 4: Typed schemas (TypeBox)** — One schema definition generates TypeScript types + JSON Schema + runtime validation. The schema constrains what the AI can produce. Peter defines shapes, AI fills in implementation. "The blueprint prevents the machines from producing defective parts."
-
-These four patterns — constitution, co-located tests, small files, typed schemas — stack into a system where AI-generated code has dramatically fewer defects. Not zero. But few enough for one person to review and ship 578 commits in a day.
-
-We'd come back to these patterns. But first, we had a product to build.
-
-## The Afternoon: CashFlow Chat
+## The Problem
 
 Every small business in India has the same accounting setup: a mix of Tally, Excel spreadsheets, WhatsApp messages to the CA, and that one notebook where the owner writes things down with a pen. The pen notebook is usually the most accurate.
 
