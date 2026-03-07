@@ -1,27 +1,115 @@
 ---
-title: "Day 3: [TBD]"
-subtitle: "[Product name TBD]"
+title: "Day 3: API Mocker"
+subtitle: "Spin up realistic mock APIs from a spec file in one command"
 ---
 
 ::: {.callout-note}
-## Product: [TBD]
-**Date**: [TBD]
-**Repo**: [TBD]
-**Status**: 🔲 Not started
+## Product: API Mocker
+**Date**: March 3, 2026
+**Repo**: [venkatesh3007/apimocker](https://github.com/venkatesh3007/apimocker)
+**Status**: ✅ Complete — CLI tool
 :::
 
-## The Goal
+## The Problem
 
-*[To be written after we build it]*
+You're a frontend developer. The backend team gave you an OpenAPI spec. The endpoints won't be ready for two weeks. You need to build the UI now.
+
+Your options are bad:
+
+1. **Hardcode mock data.** Works for a day. Falls apart when you need pagination, error states, different data shapes.
+2. **Use Postman mock server.** Requires manual setup for every endpoint. Doesn't generate realistic data. Cloud-hosted, so you need internet.
+3. **Write your own mock server.** Two days of setup for something you'll throw away.
+4. **Wait for the backend.** And miss the sprint deadline.
+
+Every frontend team hits this wall. Every time, someone writes a throwaway Express server with hardcoded JSON responses. That server rots in a corner of the repo, never matching the real API.
+
+## What We Built
+
+One command. Give it a spec, get a working API.
+
+```bash
+apimocker serve petstore.yaml
+```
+
+That's it. The server reads the OpenAPI spec, creates routes for every endpoint, and generates realistic fake data that matches the response schemas. Faker.js generates contextual data — names look like names, emails look like emails, prices look like prices.
+
+```bash
+$ apimocker serve petstore.yaml --port 3001 --delay 200 --errors 0.05 --cors
+
+🚀 API Mocker running on port 3001
+📝 Routes:
+  GET    /api/pets
+  GET    /api/pets/:id
+  POST   /api/pets
+  PUT    /api/pets/:id
+  DELETE /api/pets/:id
+```
+
+Hit the endpoint:
+
+```bash
+$ curl localhost:3001/api/pets
+[
+  {
+    "id": 847,
+    "name": "Luna",
+    "species": "dog",
+    "age": 4,
+    "owner": {
+      "name": "Priya Sharma",
+      "email": "priya.sharma@example.com"
+    }
+  },
+  ...
+]
+```
+
+Every call returns different data. The shapes match the spec. The types are correct. If the spec says `age` is an integer between 0 and 20, the mock returns an integer between 0 and 20.
+
+### The extras that matter
+
+**Latency simulation.** `--delay 200` adds 200ms to every response. Frontend devs need to see what their loading states look like with real network latency, not instant localhost responses.
+
+**Error simulation.** `--errors 0.05` returns 4xx/5xx errors on 5% of requests. Crank it to `--errors 0.4` for chaos testing. Does your UI handle a 500 gracefully? Now you'll find out.
+
+**CORS.** `--cors` adds the headers. Because every frontend dev forgets about CORS until it blocks them at 3 PM on a Friday.
 
 ## The Build
 
-*[Real-time narrative goes here]*
+554 lines of JavaScript across three files:
 
-## The Ship
+- **`bin/apimocker.js`** (41 lines) — CLI entry point, parses arguments
+- **`lib/mock-server.js`** (261 lines) — Express server, reads the spec, creates routes, handles request logging
+- **`lib/fake-data-generator.js`** (252 lines) — The smart part. Reads OpenAPI schema definitions and generates matching fake data using Faker.js
 
-*[What we actually delivered]*
+The fake data generator is where the intelligence lives. It doesn't just return random strings. It reads the schema property names and picks the right Faker method:
 
-## The Lesson
+- Property named `email` → `faker.internet.email()`
+- Property named `phone` → `faker.phone.number()`
+- Property named `avatar` or `image` → `faker.image.url()`
+- Property named `price` or `amount` → `faker.finance.amount()`
+- Property with `format: date-time` → `faker.date.recent().toISOString()`
 
-*[What I learned]*
+This matters because realistic data catches real bugs. When your mock returns `"string"` for every field, your UI looks fine. When it returns `"Venkatesh Ramanathan Subramaniam"` for a name field, you discover your layout breaks on long names. That's the kind of bug you want to find before production.
+
+## The Pattern
+
+Three days in, and a pattern is forming:
+
+| Day | Product | Lines | Time |
+|-----|---------|-------|------|
+| 1 | FlexUI | 2,400 | One afternoon |
+| 2 | apicompat | 3,700 | One afternoon |
+| 3 | API Mocker | 554 | One afternoon |
+
+Day 3 was the leanest build yet. Not every product needs to be thousands of lines. API Mocker does one thing — mock an API from a spec — and does it in 554 lines. The value isn't in the code volume. It's in the idea: give a spec, get a server. One command.
+
+This is what the factory is teaching me. Some products are complex systems (FlexUI with its Android and iOS SDKs). Some are surgical tools (API Mocker with its single command). The factory doesn't care. It produces both at the same speed. The bottleneck is never the code — it's knowing what to build.
+
+## What I Learned
+
+**Small tools have outsized value.** Nobody will write a blog post about a 554-line mock server. But every frontend team in the world needs one. The best developer tools are boring, obvious, and used every day.
+
+**OpenAPI specs are underused.** The spec file already describes every endpoint, every field type, every constraint. Most teams treat it as documentation. We treated it as a runtime input. The spec IS the configuration. No setup, no mock definitions, no maintenance — the mock server is always in sync because it reads the spec directly.
+
+**Chaos testing should be one flag away.** `--errors 0.3` breaks your frontend in ways you didn't expect. Every app should be tested against unreliable backends. Making it a single CLI flag removes the excuse not to.

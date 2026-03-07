@@ -1,27 +1,159 @@
 ---
-title: "Day 4: [TBD]"
-subtitle: "[Product name TBD]"
+title: "Day 4: Inside the Machine"
+subtitle: "Reverse-engineering OpenClaw to understand how one person outshipped a team"
 ---
 
 ::: {.callout-note}
-## Product: [TBD]
-**Date**: [TBD]
-**Repo**: [TBD]
-**Status**: 🔲 Not started
+## Product: Research Day — No Shipped Product
+**Date**: March 5, 2026
+**Output**: Four architectural patterns extracted from OpenClaw's 470K-line codebase
+**Status**: 📖 Research complete
 :::
 
-## The Goal
+## Why We Stopped Building
 
-*[To be written after we build it]*
+Four days into a 31-day sprint, we stopped to study someone else's code. That sounds like a mistake. It wasn't.
 
-## The Build
+I'd been using OpenClaw every day — it's the AI agent platform that runs Jarvis, my AI chief of staff. But I'd never looked at how it was built. Peter Steinberger, the creator, claims he built 470,000 lines of production TypeScript in roughly three and a half months. With AI agents writing the code. Without a team.
 
-*[Real-time narrative goes here]*
+If that's true, he's running the exact factory I'm trying to build. And instead of theorizing about what a software factory looks like, I could just look at one.
 
-## The Ship
+We cloned the repo and spent the day extracting patterns.
 
-*[What we actually delivered]*
+## The Numbers
 
-## The Lesson
+```
+Total commits:     16,917 in ~3.5 months
+Peter's commits:   11,365 (67%)
+Peak day:          578 commits in one day
+January average:   146 commits per day
+Test files:        1,722
+Lines of tests:    357,000
+Source files:      2,700+
+```
 
-*[What I learned]*
+578 commits in one day. That's not a typo. That's one commit every 2.5 minutes for a 24-hour period. No human types that fast. The AI agents are committing. Peter is directing.
+
+## Pattern #1: CLAUDE.md — The AI Constitution
+
+At the root of the repo sits a 260-line file called `CLAUDE.md`. It's not documentation for humans. It's the operating manual for AI agents.
+
+Every rule in that file is a lesson learned from an AI mistake:
+
+- "Avoid `any` types" — because an agent once used `any` to shortcut a type error
+- "Keep files under 700 LOC" — because agents lose context in large files
+- "Verify in code; do not guess" — because agents confidently generate wrong code when they don't have enough context
+- "Never edit files in node_modules" — because an agent did exactly that
+- "Run pnpm test before pushing when you touch logic" — because an agent pushed broken code
+
+This file grows. Every AI failure becomes a new rule. The rules aren't enforced by code review or CI — they're injected into the agent's context at the start of every session. The AI reads its own constitution before writing a single line.
+
+This is the factory's quality control layer. Not tests (though those exist too). Not code review (though that happens). The first line of defense is telling the machine what NOT to do, based on everything it's done wrong before.
+
+## Pattern #2: Co-located Tests as Guardrails
+
+Every `foo.ts` has a `foo.test.ts` right next to it. Not in a separate `/tests` folder. Right there. Same directory.
+
+```
+src/
+  gateway/
+    auth.ts
+    auth.test.ts
+    config.ts
+    config.test.ts
+    websocket.ts
+    websocket.test.ts
+```
+
+1,722 test files. 357,000 lines of test code. **50% of Peter's commits touch test files.** The AI writes the code and the tests together, in the same context, in the same commit.
+
+This matters because of how AI agents work. When the agent sees `auth.ts` and `auth.test.ts` side by side, it understands the contract implicitly. The test file IS the specification. Test names read like requirements:
+
+```
+"removes orphaned tool_result when tool_use is dropped"
+"reconnects WebSocket after auth token refresh"
+"truncates message history when context exceeds 180K tokens"
+```
+
+The tests aren't verifying that the code works. They're defining what "works" means. The AI reads the test, understands the intent, and writes code to match. Remove the tests and the AI loses its specification.
+
+70% coverage threshold. Not 100%. Critical paths tested rigorously, edge cases tested where they matter, but no dogmatic insistence on testing every getter and setter. This is pragmatic — the factory runs on speed, and testing boilerplate slows the line.
+
+## Pattern #3: Small Files, Predictable Names
+
+Average file: **173 lines.** 96% of files under 700 lines. This is deliberate.
+
+AI models have context windows. A 5,000-line file overflows the context. The agent can't see the whole file, so it guesses about the parts it can't see. Those guesses become bugs.
+
+Peter's solution: never let a file get big enough to overflow. When a file approaches 700 lines, split it. Not because humans prefer smaller files (they might), but because AI agents need them.
+
+The naming convention is equally deliberate:
+
+```
+bash-tools.exec-host-gateway.ts
+bash-tools.exec-sandbox.ts  
+bash-tools.pty-bridge.ts
+```
+
+Hierarchical. Descriptive. The agent can navigate the codebase by name alone. It doesn't need to open a file to know what it does. The name IS the documentation.
+
+This is a subtle but powerful insight: **the codebase is organized for AI navigation, not human reading.** Small files that fit in context windows. Predictable names that serve as documentation. Flat structures over deep class hierarchies. Every organizational choice reduces the probability of an AI mistake.
+
+## Pattern #4: Typed Schemas with TypeBox
+
+This is the one that changed how I think about the factory.
+
+Peter uses TypeBox — a library that defines a schema once and generates TypeScript types, JSON Schema, and validation from the same definition:
+
+```typescript
+const ToolParams = Type.Object({
+  command: Type.String(),
+  workdir: Type.Optional(Type.String()),
+  timeout: Type.Optional(Type.Number({ minimum: 0 })),
+})
+```
+
+From this single definition, you get:
+
+- **TypeScript type** — compile-time safety
+- **JSON Schema** — runtime validation
+- **Documentation** — the schema IS the docs
+- **AI constraint** — the agent can only generate code that matches the schema
+
+That last point is the factory breakthrough. When you define the shape of every input, output, and message as a typed schema, you've constrained what the AI can produce. The agent doesn't freestyle a response format — it fills in a schema. If it generates something that doesn't match, the type checker catches it before the code runs.
+
+Peter describes it as: *"The blueprint prevents the machines from producing defective parts."*
+
+Schemas flow across the entire stack:
+- Tool parameters → typed schema
+- WebSocket protocol → typed schema
+- Configuration files → typed schema
+- Cross-platform codegen → typed schema
+
+One definition, everywhere. Change the schema, and every consumer updates or breaks at compile time. No silent contract violations. No "the mobile app was still reading the old field name." The schema is the contract, and the contract is enforced.
+
+## What This Means for the Factory
+
+Four patterns. Four layers of the factory:
+
+1. **CLAUDE.md** — Tell the machines what NOT to do (learned from failures)
+2. **Co-located tests** — Tell the machines what "correct" means (specification by example)
+3. **Small files** — Keep the machines focused (architecture for AI navigation)
+4. **Typed schemas** — Constrain what the machines can produce (blueprints, not freestyle)
+
+Stack these four layers and you get something remarkable: an AI that writes code with dramatically fewer mistakes. Not zero mistakes — but few enough that one person can review and ship the output fast enough to produce 578 commits in a day.
+
+This is the software factory. Not a magical tool. Not a single AI model. A set of **architectural patterns that make AI-generated code reliable enough to ship continuously.**
+
+## No Product Shipped
+
+We didn't ship a product today. We shipped something more valuable: understanding.
+
+Before today, the factory was a thesis. After today, it's a set of patterns I can implement. The remaining 27 days of this sprint will apply these patterns to everything we build:
+
+- Every project gets a CLAUDE.md equivalent
+- Every function gets a co-located test
+- Every file stays under 500 lines
+- Every interface gets a typed schema
+
+The factory isn't something you buy. It's something you build, one pattern at a time.
