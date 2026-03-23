@@ -1,177 +1,107 @@
 ---
-title: "Day 6: AikaaraSpec"
-subtitle: "A contract language for verifying AI-generated code"
+title: "Day 6: ThreadJarvis"
+subtitle: "A Telegram bot that writes and posts Twitter threads"
 ---
 
 ::: {.callout-note}
-## Product: AikaaraSpec
-**Date**: March 6, 2026
-**Repo**: [venkatesh3007/aikaara-spec](https://github.com/venkatesh3007/aikaara-spec)
-**Status**: ✅ Complete — CLI tool, 1,530 lines of Python, 5 contract libraries
+## Product: ThreadJarvis
+**Date**: March 7, 2026
+**Repo**: venkatesh3007/threadjarvis
+**Status**: ⚠️ Telegram bot works, Twitter posting blocked by API setup
 :::
 
-## The Problem
+## What We Built
 
-Yesterday I spent the afternoon inside OpenClaw's source code — 470,000 lines of TypeScript, built by one person who barely writes code himself. Peter Steinberger built it by defining constraints and letting AI fill in the implementation. His CLAUDE.md file is 260 lines of rules. His test files are specifications. His TypeBox schemas define what valid output looks like.
+ThreadJarvis is a Telegram bot. You send it an idea, it generates a Twitter thread using Claude, and you post the whole thread to X with one tap. No copy-pasting tweets one by one. No manually replying to yourself to build a chain.
 
-And I kept thinking: what if you could make that formal?
+The first commit hit at 1:32 PM UTC. By 2:31 PM — about an hour later — v1.0 was done with a landing page.
 
-Not a 260-line markdown file that an AI might follow. Not test files that check after the fact. Something that defines what correct code looks like *before* it's written — a contract between what you want and what the machine produces.
-
-That's where AikaaraSpec came from. Not from a product brainstorm. From studying how a factory actually works and noticing the missing piece: a specification language.
-
-## The Insight
-
-Here's the thing about AI-generated code: it's fast, and it's usually almost right. The "almost" is the problem.
-
-A function that processes payments will work for the happy path. Amount gets deducted, balance gets updated, everyone's happy. But what happens when the payment amount exactly equals the balance? What about negative amounts? What about integer overflow on large transactions?
-
-These aren't hypothetical bugs. They're the bugs that ship to production because the AI generated code that passes the obvious tests and the reviewer — human or automated — doesn't think to check the edges.
-
-What if you could write this:
+2,300 lines of JavaScript across 8 files:
 
 ```
-contract ProcessPayment {
-  inputs {
-    amount: Money
-    balance: Money
-  }
-
-  outputs {
-    new_balance: Money
-    success: Bool
-  }
-
-  requires {
-    amount > ₹0
-    balance >= ₹0
-  }
-
-  ensures {
-    success == true implies new_balance == balance - amount
-    success == false implies new_balance == balance
-    amount > balance implies success == false
-    amount <= balance implies success == true
-    new_balance >= ₹0
-  }
-
-  edge_cases {
-    "exact balance": amount == balance implies success == true
-    "exact balance zero remaining": amount == balance implies new_balance == ₹0
-  }
-}
+index.js    — 948 lines, the bot itself (grammY, commands, inline buttons)
+ai.js       — 364 lines, Claude integration (thread generation, hooks, analysis)
+scorer.js   — 379 lines, virality scoring engine
+viral-knowledge.js — 252 lines, hook templates and algorithm patterns
+db.js       — 128 lines, SQLite for prompts, drafts, history
+twitter.js  —  63 lines, Twitter API posting (reply chains)
 ```
 
-And then point it at any implementation — AI-generated, human-written, whatever — and have it automatically verify that every condition holds?
+### How It Works
 
-That's AikaaraSpec.
-
-## The Build
-
-### The Language
-
-I needed a language that was readable by humans and parseable by machines. Not YAML — too unstructured. Not JSON — too verbose. Not Python — too much syntax noise. Something purpose-built.
-
-An `.aspec` file has four sections:
-
-**`inputs`** — what goes in, with types. Money, Int, Float, String, Bool, List, Map.
-
-**`outputs`** — what comes out.
-
-**`requires`** — preconditions. What must be true *before* the function runs. If the inputs don't satisfy `requires`, the function isn't expected to work at all.
-
-**`ensures`** — postconditions. What must be true *after* the function runs. This is the actual specification. If any `ensures` clause fails, the implementation is wrong.
-
-**`edge_cases`** — named scenarios that must specifically hold. These are the cases humans forget and AI never thinks to check.
-
-The syntax is intentionally simple. `>=`, `<=`, `implies`, `==`. No curly-brace logic, no lambda expressions, no inheritance. You should be able to read a contract and understand what the code is supposed to do without knowing how to program.
-
-### The Parser
-
-1,530 lines of Python, split across a lexer, parser, AST, verifier, and CLI.
-
-The lexer tokenizes `.aspec` files into a stream: keywords (`contract`, `inputs`, `requires`), operators (`>=`, `implies`), literals (`₹0`, `true`), and identifiers. It handles the `₹` symbol natively — Indian money is a first-class concept, not an afterthought.
-
-The parser builds an abstract syntax tree. Each contract becomes an AST node with typed inputs, outputs, preconditions, postconditions, and edge cases. The parser validates structure: you can't have `ensures` without `outputs`, you can't reference variables that aren't declared in `inputs` or `outputs`.
+You message the bot:
 
 ```
-src/parser/lexer.py      — 278 lines
-src/parser/parser.py     — 349 lines
-src/parser/ast_nodes.py  — 158 lines
-src/verifier/verifier.py — 309 lines
-src/cli.py               — 185 lines
+The shift from writing code to architecting systems
 ```
 
-### The Verifier
+The bot sends your idea to Claude with a system prompt you control. Claude returns an array of tweets. The bot displays them with inline buttons: 🚀 Post to Twitter, 🔄 Regenerate, ❌ Cancel.
 
-This is the core. Given a `.aspec` contract and a Python implementation, the verifier:
+Hit Post, and the bot calls the Twitter API. It posts the first tweet, gets the ID back, posts the second as a reply to the first, gets that ID, posts the third as a reply to the second. Proper reply chain. One tap.
 
-1. **Extracts** the function signature from the Python file
-2. **Generates** test inputs using property-based testing (Hypothesis library)
-3. **Filters** inputs that satisfy `requires` (skip invalid preconditions)
-4. **Runs** the function with those inputs
-5. **Checks** every `ensures` clause against the actual outputs
-6. **Reports** which clauses pass, which fail, and with what inputs
+### The System Prompt
 
-The key insight: property-based testing, not example-based testing. Instead of writing "test that payment of 100 from balance 500 gives 400", the verifier generates hundreds of random valid inputs and checks that *all* of them satisfy the contract. It finds the edge cases you didn't think of.
+The most important file in the bot is the prompt. Not the code — the prompt. You set it with `/setprompt` and it controls everything about how threads get written.
 
-### The Demo
+I set mine to write like me — @venkatesh3007. Short sentences. First person. Real numbers. No hashtags. No emoji spam. Arguments, not stories.
 
-I wrote two implementations of `ProcessPayment`. One correct, one buggy.
+The prompt is stored in SQLite. Change it anytime. The bot remembers.
 
-The buggy one has a subtle error: it doesn't handle the exact-balance case properly. When `amount == balance`, it returns `success = false` instead of `success = true`.
+### The Virality Scorer
 
-```bash
-$ aikaara-spec verify demo/payment.aspec demo/payment_correct.py
-✅ ProcessPayment: All 7 clauses verified (200 test cases)
+Every generated thread gets a score. The scorer checks five dimensions:
 
-$ aikaara-spec verify demo/payment.aspec demo/payment_buggy.py
-❌ ProcessPayment: 2 clauses failed
-  - ensures[4]: "amount <= balance implies success == true"
-    Counter-example: amount=₹500, balance=₹500
-  - edge_cases[1]: "exact balance": amount == balance implies success == true
-    Counter-example: amount=₹1, balance=₹1
-```
+- **Hook** (30% weight) — Does the first tweet stop the scroll?
+- **Structure** (25%) — Does momentum build across tweets?
+- **Engagement triggers** (25%) — Curiosity gaps, pattern interrupts, social proof?
+- **Readability** (10%) — Short sentences, clear language?
+- **CTA** (10%) — Does the last tweet drive action?
 
-The verifier doesn't just say "failed." It gives you the exact inputs that broke the contract. That counter-example is what you hand back to the AI: "Fix this. When amount equals balance, the payment should succeed."
+The `viral-knowledge.js` file has the cheat sheet — hook templates (contrarian, story, stat, question, bold claim), algorithm factors, engagement patterns. All baked into the scoring engine so you know before you post whether a thread has a chance.
 
-### The Contract Library
+### The Commands
 
-Five domains, built as starter templates:
+| Command | What it does |
+|---------|-------------|
+| Send any message | Bot generates a thread from your idea |
+| `/thread [idea]` | Same thing, explicit |
+| `/tweet [idea]` | Single tweet, not a thread |
+| `/edit 3 new text` | Replace tweet #3 in the draft |
+| `/post` | Post the latest draft to Twitter |
+| `/regenerate` | New version of the same idea |
+| `/prompt` | View current system prompt |
+| `/setprompt [text]` | Change the prompt |
+| `/hook [idea]` | Generate 5 hook options |
+| `/structure [idea]` | Outline before writing |
+| `/analyze [thread]` | Score an existing thread |
+| `/rewrite [text]` | Turn any text into a thread |
 
-```
-contracts/
-├── auth/session.aspec
-├── data/pagination.aspec
-├── ecommerce/pricing.aspec
-├── finance/money_arithmetic.aspec
-└── payments/transaction.aspec
-```
+### Private by Default
 
-Session contracts verify that login produces valid tokens, that expired tokens fail authentication, that logout invalidates sessions. Pagination contracts verify that page sizes are respected, that total counts are consistent, that empty pages return empty results. Money arithmetic contracts verify that addition is commutative, that rounding is consistent, that currency conversion preserves value within tolerance.
+First person to message the bot becomes the owner. Everyone else gets "🔒 This bot is private." No config needed. Just start the bot and send a message.
 
-These aren't toy examples. They're the contracts I'd want if I were reviewing AI-generated code for TaxBuddy or Centrum Broking — real client work where a bug in payment processing or session management costs real money.
+There's also a nudge system — if you haven't sent anything in 90 minutes, the bot pings you asking if you have any ideas. Configurable via `NUDGE_INTERVAL_MINUTES` in `.env`.
 
-## The Deeper Idea
+## What Went Wrong
 
-AikaaraSpec isn't just a testing tool. It's a protocol.
+Twitter API.
 
-Think about what happens in an AI-native workflow. You describe what you want. The AI generates code. Someone (or something) reviews it. It ships.
+The bot generates threads fine. Editing works. Scoring works. The Telegram side is solid. But when you hit Post, you get a 403 from Twitter.
 
-The weak link is the review. A human reviewer gets tired, misses edge cases, and can only review so many PRs per day. An AI reviewer can check more, but it's checking against vibes — "does this look right?" — not against a formal specification.
+The problem: the Twitter/X API requires your app to be attached to a Project on console.x.com. Not just created — attached to a Project. And the API is pay-per-usage now. No free tier. You load credits into your developer account before any posting works.
 
-AikaaraSpec is the formal specification. The contract sits between the intent ("I want a payment processor") and the implementation (500 lines of Python). It's the agreement about what "correct" means.
+We regenerated consumer keys. Regenerated access tokens. Set permissions to "Read and write." Still 403. The missing piece was the Project attachment, and the console.x.com UI is login-walled — I couldn't fix it from the server side.
 
-Write the contract once. Generate the implementation as many times as you want — with different AI models, different languages, different architectures. The contract tells you if the result is correct.
+So Day 6 shipped a thread bot that generates and scores threads but can't post them. The Telegram-to-Claude pipeline works. The Twitter pipeline is blocked on a console configuration that needs a human with a browser.
 
-This is what Peter Steinberger does intuitively with his CLAUDE.md rules and co-located tests. AikaaraSpec makes it explicit, portable, and machine-verifiable.
+## The Stack
+
+Node.js, grammY (Telegram), twitter-api-v2, Anthropic Claude API, better-sqlite3. Running as a systemd service on the same $24/month DigitalOcean droplet. Thread generation costs about $0.01-0.05 per thread with Claude Opus.
 
 ## What I Learned
 
-**Specification is a product.** The hardest part of software isn't writing the code — it's knowing what the code should do. A language that forces you to be precise about inputs, outputs, preconditions, and postconditions is more valuable than the code itself. The code is replaceable. The spec is institutional knowledge.
+**The API is never the hard part. The API *setup* is.** Writing the Twitter integration was 63 lines. Getting the credentials, permissions, project attachment, and billing right — that took longer than building the entire bot. This is true for every third-party API. The code is trivial. The console is where you lose hours.
 
-**Property-based testing beats example-based testing.** One contract clause, verified against 200 random inputs, catches more bugs than 20 hand-written test cases. The computer is better at generating edge cases than I am. My job is to define what "correct" means. The machine's job is to find violations.
+**System prompts are products.** The difference between a generic thread bot and a useful one is entirely in the prompt. Same code, different prompt, completely different output. The prompt is the product. The code is plumbing.
 
-**The ₹ symbol matters.** Building for India means building Indian concepts into the foundation, not bolting them on afterward. When your type system understands `Money` and your literals support `₹`, the contracts read naturally: `amount > ₹0`. It's a small thing. It changes how people think about the tool.
-
-**Day 6 was the first day I built infrastructure instead of a product.** Days 1-5 were products — things you can use, things that do something visible. AikaaraSpec is plumbing. It's a tool for building better tools. That felt different. Less immediately satisfying, but more important. The factory doesn't just make products. It makes the machines that verify the products.
+**Ship what works, block what doesn't.** The bot generates, scores, edits, and drafts threads through Telegram. That works today. Twitter posting doesn't. Rather than hold everything back, the bot ships with the working pieces and the posting gets unblocked when the API setup is sorted. Not ideal. But real.
