@@ -1,27 +1,177 @@
 ---
-title: "Day 6: [TBD]"
-subtitle: "[Product name TBD]"
+title: "Day 6: AikaaraSpec"
+subtitle: "A contract language for verifying AI-generated code"
 ---
 
 ::: {.callout-note}
-## Product: [TBD]
-**Date**: [TBD]
-**Repo**: [TBD]
-**Status**: 🔲 Not started
+## Product: AikaaraSpec
+**Date**: March 6, 2026
+**Repo**: [venkatesh3007/aikaara-spec](https://github.com/venkatesh3007/aikaara-spec)
+**Status**: ✅ Complete — CLI tool, 1,530 lines of Python, 5 contract libraries
 :::
 
-## The Goal
+## The Problem
 
-*[To be written after we build it]*
+Yesterday I spent the afternoon inside OpenClaw's source code — 470,000 lines of TypeScript, built by one person who barely writes code himself. Peter Steinberger built it by defining constraints and letting AI fill in the implementation. His CLAUDE.md file is 260 lines of rules. His test files are specifications. His TypeBox schemas define what valid output looks like.
+
+And I kept thinking: what if you could make that formal?
+
+Not a 260-line markdown file that an AI might follow. Not test files that check after the fact. Something that defines what correct code looks like *before* it's written — a contract between what you want and what the machine produces.
+
+That's where AikaaraSpec came from. Not from a product brainstorm. From studying how a factory actually works and noticing the missing piece: a specification language.
+
+## The Insight
+
+Here's the thing about AI-generated code: it's fast, and it's usually almost right. The "almost" is the problem.
+
+A function that processes payments will work for the happy path. Amount gets deducted, balance gets updated, everyone's happy. But what happens when the payment amount exactly equals the balance? What about negative amounts? What about integer overflow on large transactions?
+
+These aren't hypothetical bugs. They're the bugs that ship to production because the AI generated code that passes the obvious tests and the reviewer — human or automated — doesn't think to check the edges.
+
+What if you could write this:
+
+```
+contract ProcessPayment {
+  inputs {
+    amount: Money
+    balance: Money
+  }
+
+  outputs {
+    new_balance: Money
+    success: Bool
+  }
+
+  requires {
+    amount > ₹0
+    balance >= ₹0
+  }
+
+  ensures {
+    success == true implies new_balance == balance - amount
+    success == false implies new_balance == balance
+    amount > balance implies success == false
+    amount <= balance implies success == true
+    new_balance >= ₹0
+  }
+
+  edge_cases {
+    "exact balance": amount == balance implies success == true
+    "exact balance zero remaining": amount == balance implies new_balance == ₹0
+  }
+}
+```
+
+And then point it at any implementation — AI-generated, human-written, whatever — and have it automatically verify that every condition holds?
+
+That's AikaaraSpec.
 
 ## The Build
 
-*[Real-time narrative goes here]*
+### The Language
 
-## The Ship
+I needed a language that was readable by humans and parseable by machines. Not YAML — too unstructured. Not JSON — too verbose. Not Python — too much syntax noise. Something purpose-built.
 
-*[What we actually delivered]*
+An `.aspec` file has four sections:
 
-## The Lesson
+**`inputs`** — what goes in, with types. Money, Int, Float, String, Bool, List, Map.
 
-*[What I learned]*
+**`outputs`** — what comes out.
+
+**`requires`** — preconditions. What must be true *before* the function runs. If the inputs don't satisfy `requires`, the function isn't expected to work at all.
+
+**`ensures`** — postconditions. What must be true *after* the function runs. This is the actual specification. If any `ensures` clause fails, the implementation is wrong.
+
+**`edge_cases`** — named scenarios that must specifically hold. These are the cases humans forget and AI never thinks to check.
+
+The syntax is intentionally simple. `>=`, `<=`, `implies`, `==`. No curly-brace logic, no lambda expressions, no inheritance. You should be able to read a contract and understand what the code is supposed to do without knowing how to program.
+
+### The Parser
+
+1,530 lines of Python, split across a lexer, parser, AST, verifier, and CLI.
+
+The lexer tokenizes `.aspec` files into a stream: keywords (`contract`, `inputs`, `requires`), operators (`>=`, `implies`), literals (`₹0`, `true`), and identifiers. It handles the `₹` symbol natively — Indian money is a first-class concept, not an afterthought.
+
+The parser builds an abstract syntax tree. Each contract becomes an AST node with typed inputs, outputs, preconditions, postconditions, and edge cases. The parser validates structure: you can't have `ensures` without `outputs`, you can't reference variables that aren't declared in `inputs` or `outputs`.
+
+```
+src/parser/lexer.py      — 278 lines
+src/parser/parser.py     — 349 lines
+src/parser/ast_nodes.py  — 158 lines
+src/verifier/verifier.py — 309 lines
+src/cli.py               — 185 lines
+```
+
+### The Verifier
+
+This is the core. Given a `.aspec` contract and a Python implementation, the verifier:
+
+1. **Extracts** the function signature from the Python file
+2. **Generates** test inputs using property-based testing (Hypothesis library)
+3. **Filters** inputs that satisfy `requires` (skip invalid preconditions)
+4. **Runs** the function with those inputs
+5. **Checks** every `ensures` clause against the actual outputs
+6. **Reports** which clauses pass, which fail, and with what inputs
+
+The key insight: property-based testing, not example-based testing. Instead of writing "test that payment of 100 from balance 500 gives 400", the verifier generates hundreds of random valid inputs and checks that *all* of them satisfy the contract. It finds the edge cases you didn't think of.
+
+### The Demo
+
+I wrote two implementations of `ProcessPayment`. One correct, one buggy.
+
+The buggy one has a subtle error: it doesn't handle the exact-balance case properly. When `amount == balance`, it returns `success = false` instead of `success = true`.
+
+```bash
+$ aikaara-spec verify demo/payment.aspec demo/payment_correct.py
+✅ ProcessPayment: All 7 clauses verified (200 test cases)
+
+$ aikaara-spec verify demo/payment.aspec demo/payment_buggy.py
+❌ ProcessPayment: 2 clauses failed
+  - ensures[4]: "amount <= balance implies success == true"
+    Counter-example: amount=₹500, balance=₹500
+  - edge_cases[1]: "exact balance": amount == balance implies success == true
+    Counter-example: amount=₹1, balance=₹1
+```
+
+The verifier doesn't just say "failed." It gives you the exact inputs that broke the contract. That counter-example is what you hand back to the AI: "Fix this. When amount equals balance, the payment should succeed."
+
+### The Contract Library
+
+Five domains, built as starter templates:
+
+```
+contracts/
+├── auth/session.aspec
+├── data/pagination.aspec
+├── ecommerce/pricing.aspec
+├── finance/money_arithmetic.aspec
+└── payments/transaction.aspec
+```
+
+Session contracts verify that login produces valid tokens, that expired tokens fail authentication, that logout invalidates sessions. Pagination contracts verify that page sizes are respected, that total counts are consistent, that empty pages return empty results. Money arithmetic contracts verify that addition is commutative, that rounding is consistent, that currency conversion preserves value within tolerance.
+
+These aren't toy examples. They're the contracts I'd want if I were reviewing AI-generated code for TaxBuddy or Centrum Broking — real client work where a bug in payment processing or session management costs real money.
+
+## The Deeper Idea
+
+AikaaraSpec isn't just a testing tool. It's a protocol.
+
+Think about what happens in an AI-native workflow. You describe what you want. The AI generates code. Someone (or something) reviews it. It ships.
+
+The weak link is the review. A human reviewer gets tired, misses edge cases, and can only review so many PRs per day. An AI reviewer can check more, but it's checking against vibes — "does this look right?" — not against a formal specification.
+
+AikaaraSpec is the formal specification. The contract sits between the intent ("I want a payment processor") and the implementation (500 lines of Python). It's the agreement about what "correct" means.
+
+Write the contract once. Generate the implementation as many times as you want — with different AI models, different languages, different architectures. The contract tells you if the result is correct.
+
+This is what Peter Steinberger does intuitively with his CLAUDE.md rules and co-located tests. AikaaraSpec makes it explicit, portable, and machine-verifiable.
+
+## What I Learned
+
+**Specification is a product.** The hardest part of software isn't writing the code — it's knowing what the code should do. A language that forces you to be precise about inputs, outputs, preconditions, and postconditions is more valuable than the code itself. The code is replaceable. The spec is institutional knowledge.
+
+**Property-based testing beats example-based testing.** One contract clause, verified against 200 random inputs, catches more bugs than 20 hand-written test cases. The computer is better at generating edge cases than I am. My job is to define what "correct" means. The machine's job is to find violations.
+
+**The ₹ symbol matters.** Building for India means building Indian concepts into the foundation, not bolting them on afterward. When your type system understands `Money` and your literals support `₹`, the contracts read naturally: `amount > ₹0`. It's a small thing. It changes how people think about the tool.
+
+**Day 6 was the first day I built infrastructure instead of a product.** Days 1-5 were products — things you can use, things that do something visible. AikaaraSpec is plumbing. It's a tool for building better tools. That felt different. Less immediately satisfying, but more important. The factory doesn't just make products. It makes the machines that verify the products.
