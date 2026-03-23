@@ -1,27 +1,170 @@
 ---
-title: "Day 7: [TBD]"
-subtitle: "[Product name TBD]"
+title: "Day 7: AikaaraGuard"
+subtitle: "Runtime enforcement for AI agent operations, powered by .aspec contracts"
 ---
 
 ::: {.callout-note}
-## Product: [TBD]
-**Date**: [TBD]
-**Repo**: [TBD]
-**Status**: 🔲 Not started
+## Product: AikaaraGuard
+**Date**: March 7, 2026
+**Repo**: [venkatesh3007/aikaara-spec](https://github.com/venkatesh3007/aikaara-spec)
+**Status**: ✅ Complete — 789 lines of guard code, 5 guard contracts, 61 tests passing
 :::
 
-## The Goal
+## The Problem
 
-*[To be written after we build it]*
+Yesterday I built AikaaraSpec — a language for verifying that code meets a contract. You write a spec, point it at an implementation, and the verifier tells you if the code is correct.
+
+But verification happens *before* deployment. What about the things that happen *after*? An AI agent running in production doesn't just write code. It runs commands. `terraform apply`. `DELETE FROM users`. `rm -rf /`. `git push --force main`.
+
+A Substack article had been stuck in my head — someone's AI agent ran `terraform destroy` on production infrastructure. Not because the AI was malicious. Because the human said "clean up the old resources" and the AI interpreted that as "destroy everything."
+
+AikaaraSpec verifies code. AikaaraGuard stops dangerous commands before they execute. Same contract language. Same parser. Same evaluator. Different mode: not "is this code correct?" but "should this command be allowed to run?"
 
 ## The Build
 
-*[Real-time narrative goes here]*
+### The Insight: One Language, Two Modes
 
-## The Ship
+The key architectural decision was reusing everything from AikaaraSpec. The `.aspec` language already had `inputs`, `requires`, `invariants`, `edge_cases`. It already had a parser, an AST, and an expression evaluator. All I needed was:
 
-*[What we actually delivered]*
+1. A way to extract facts from a command string (context builder)
+2. Guard-specific `.aspec` contracts (what's allowed, what's not)
+3. A preflight engine that connects them
 
-## The Lesson
+The shared evaluator — `src/evaluator.py`, 118 lines — is the same code that powers both verification and guarding. When the verifier checks `amount > ₹0`, it calls `evaluate()`. When the guard checks `has_where_clause == true`, it calls the same `evaluate()`. One engine, two uses.
 
-*[What I learned]*
+### The Context Builder
+
+This is the bridge between a raw command string and the typed inputs that `.aspec` contracts expect.
+
+A guard contract for SQL safety declares inputs like `has_where_clause: Bool` and `is_migration: Bool`. The context builder analyzes the command and populates those values:
+
+```python
+$ "DELETE FROM users WHERE id = 5"
+→ { has_where_clause: true, is_migration: false, environment: "dev" }
+
+$ "DELETE FROM users"
+→ { has_where_clause: false, is_migration: false, environment: "dev" }
+```
+
+The context builder uses regex patterns to detect:
+
+- **Terraform operations** — `auto_approve`, `has_plan_file`, `has_state_file`
+- **SQL operations** — `has_where_clause`, `is_migration`
+- **Filesystem operations** — `is_recursive`, `is_system_path`, `has_wildcard`
+- **Deployment operations** — `uses_latest_tag`, `is_force_push`, `target_branch`
+- **Secrets** — `has_api_key`, `has_password`, `has_private_key`, `has_env_file`
+
+For secrets detection, it matches real patterns: `AKIA[0-9A-Z]{16}` for AWS keys, `sk-[a-zA-Z0-9]{20,}` for OpenAI keys, `ghp_` for GitHub PATs, `BEGIN RSA PRIVATE KEY` for private keys.
+
+137 lines. Regex, not AI. Because the thing checking whether a command is safe should not itself be probabilistic.
+
+### The Guard Contracts
+
+Five `.aspec` files in `contracts/guard/`:
+
+**`terraform.aspec`** — Never apply without a state file. Never auto-approve in production. Blast radius limit: max 5 resources destroyed per operation. Plan before apply.
+
+```
+contract terraform_safety {
+    requires {
+        matches(command, "terraform\s+(apply|destroy)") implies has_state_file == true
+        environment == "production" implies auto_approve == false
+    }
+    invariants {
+        resources_to_destroy <= 5
+        matches(command, "terraform\s+apply") implies has_plan_file == true
+    }
+}
+```
+
+**`database.aspec`** — DELETE must have WHERE. UPDATE must have WHERE. No DROP TABLE in production. No TRUNCATE, ever. Migrations require a verified backup.
+
+**`filesystem.aspec`** — No recursive delete on system paths. No `rm -rf /`. No wildcards on system directories.
+
+**`deployment.aspec`** — No `:latest` tag in production. No force-push to main. No deleting Kubernetes namespaces.
+
+**`secrets.aspec`** — No API keys in commands. No passwords in plaintext. No `git add .env`.
+
+Each contract is 20-40 lines of `.aspec`. Readable. Auditable. You can look at the terraform contract and understand exactly what the guard allows and blocks without reading any Python.
+
+### The Preflight Engine
+
+The `preflight.py` brings it all together in five steps:
+
+1. **Classify intent** — What kind of command is this? Infrastructure, database, filesystem, deployment, code change, read-only? What's the risk level?
+2. **Build context** — Extract facts from the command string using the context builder.
+3. **Load contracts** — Find the `.aspec` guard contracts that match the command's category.
+4. **Evaluate** — Run each contract's `requires`, `invariants`, and `edge_cases` against the context.
+5. **Decide** — If any rule fails, block the command. If all pass but the risk is high, flag for human approval.
+
+Every check gets an audit log entry — command, decision, which contracts were checked, which rules passed, which failed.
+
+```
+$ preflight_check("terraform apply --auto-approve", environment="production")
+
+🛑 BLOCKED — terraform apply --auto-approve
+   Category: INFRASTRUCTURE
+   Risk: CRITICAL
+   Environment: production
+   Contracts checked: terraform_safety
+   ❌ Failed: 1
+      • requires[1]: Contract violation (auto_approve in production)
+```
+
+```
+$ preflight_check("SELECT * FROM users WHERE active = true")
+
+✅ ALLOWED — SELECT * FROM users WHERE active = true
+   Category: DATABASE
+   Risk: LOW
+   Environment: dev
+   Contracts checked: sql_safety
+   ✅ Passed: 6
+```
+
+### The Shared Evaluator
+
+The 118-line evaluator handles the full `.aspec` expression language: arithmetic, comparisons, boolean logic, `implies`, function calls (`matches()`, `contains()`, `starts_with()`), quantifiers (`forall`, `exists`), field access, money literals, percentage literals.
+
+Both the verifier and the guard call the same function:
+
+```python
+evaluate(expr, env)  # expr is an AST node, env is a dict of variable values
+```
+
+For verification, `env` comes from generated test inputs. For guarding, `env` comes from the context builder analyzing a command. The evaluator doesn't know the difference. It just evaluates expressions against a variable environment.
+
+This was the architectural win of the day. Not building the guard from scratch. Building it on top of what already existed.
+
+### The Numbers
+
+```
+src/guard/engine.py      — 110 lines (contract loader + evaluator bridge)
+src/guard/context.py     — 137 lines (command analysis + fact extraction)
+src/guard/preflight.py   — 144 lines (the preflight pipeline)
+src/guard/intent.py      — 209 lines (command classification + risk levels)
+src/guard/audit.py       —  58 lines (audit logging)
+src/evaluator.py         — 118 lines (shared with verifier)
+                         ─────────
+                           789 lines of guard code
+```
+
+5 guard contracts. 61 tests passing. The backend engineer (a sub-agent) shipped the secrets detection contracts and a CI workflow with GitHub Actions. I did the core engine and the refactor to use `.aspec` contracts instead of hardcoded Python rules.
+
+## What Actually Happened
+
+This was a busy day. AikaaraGuard was the main build, but three other things happened:
+
+ThreadJarvis shipped in the morning — the Twitter thread bot from Day 6. The book got backfilled — I finally wrote up Days 3, 4, and 5 and pushed them to the repo. And an async work system got set up — a prioritized backlog, an hourly cron, and two sub-agents (backend and frontend engineers) that work autonomously and report back.
+
+The guard refactor was the important part. The original AikaaraGuard used hardcoded Python rules — if statements checking command strings. It worked, but it was exactly the kind of brittle, un-auditable code that AikaaraSpec was designed to replace. So I dogfooded: rewrote the guard to use `.aspec` contracts. The guard rules moved from Python code to `.aspec` files. The Python code became a generic evaluation engine.
+
+Dogfooding caught a real design issue. The original evaluator only handled numeric comparisons (for the verifier's property-based testing). Guard contracts need string operations — `matches()`, `contains()`, `starts_with()`. Adding those to the shared evaluator made both the verifier and the guard more capable.
+
+## What I Learned
+
+**Dogfooding reveals the gaps.** I wouldn't have added string functions to the evaluator if I hadn't tried to use my own spec language for a different purpose. The verifier never needed `matches()` because it tests numeric properties. The guard needs it for every single rule. Using your own tool for real work is the fastest way to find what's missing.
+
+**Deterministic guards, not AI guards.** The context builder uses regex. The evaluator uses boolean logic. The contracts use formal rules. None of this is probabilistic. When you're deciding whether to allow `terraform destroy` in production, you want a definitive yes or no, not a 73% confidence score. AI is great for generating code. It should not be the thing deciding whether to run `rm -rf /`.
+
+**The contract is the documentation.** Anyone can read `terraform.aspec` and understand what the guard allows. No need to trace through Python code. No need to read comments. The contract is the spec, the enforcement, and the documentation — all in one file. When someone asks "why did the guard block my command?", you point them at the `.aspec` file. It's 30 lines. They'll understand in two minutes.
