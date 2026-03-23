@@ -7,7 +7,7 @@ subtitle: "A Telegram bot that writes and posts Twitter threads"
 ## Product: ThreadJarvis
 **Date**: March 7, 2026
 **Repo**: venkatesh3007/threadjarvis
-**Status**: ⚠️ Telegram bot works, Twitter posting blocked by API setup
+**Status**: ✅ Complete — Telegram bot + Twitter posting, running 24/7
 :::
 
 ## What We Built
@@ -92,7 +92,9 @@ The problem: the Twitter/X API requires your app to be attached to a Project on 
 
 We regenerated consumer keys. Regenerated access tokens. Set permissions to "Read and write." Still 403. The missing piece was the Project attachment, and the console.x.com UI is login-walled — I couldn't fix it from the server side.
 
-So Day 6 shipped a thread bot that generates and scores threads but can't post them. The Telegram-to-Claude pipeline works. The Twitter pipeline is blocked on a console configuration that needs a human with a browser.
+So Day 6 shipped a thread bot that generates and scores threads but couldn't post them yet. The Telegram-to-Claude pipeline worked. The Twitter pipeline was blocked on a console configuration that needed a human with a browser.
+
+I fixed the Project attachment the next day. Once the app was properly attached to a Project on console.x.com and the access tokens were regenerated with Read+Write permissions, posting worked immediately. The 63 lines of Twitter code didn't need a single change. The problem was never the code.
 
 ## The Stack
 
@@ -104,4 +106,4 @@ Node.js, grammY (Telegram), twitter-api-v2, Anthropic Claude API, better-sqlite3
 
 **System prompts are products.** The difference between a generic thread bot and a useful one is entirely in the prompt. Same code, different prompt, completely different output. The prompt is the product. The code is plumbing.
 
-**Ship what works, block what doesn't.** The bot generates, scores, edits, and drafts threads through Telegram. That works today. Twitter posting doesn't. Rather than hold everything back, the bot ships with the working pieces and the posting gets unblocked when the API setup is sorted. Not ideal. But real.
+**Ship what works, fix the rest tomorrow.** The bot generated, scored, edited, and drafted threads on Day 6. Twitter posting was broken. Rather than debug the console for hours, I shipped what worked and fixed the API setup the next morning. It took five minutes once I knew what was wrong. The bot has been fully operational since — generating and posting threads to @venkatesh3007.
