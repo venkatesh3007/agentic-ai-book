@@ -1,27 +1,95 @@
 ---
-title: "Day 31: [TBD]"
-subtitle: "[Product name TBD]"
+title: "Day 31: Morning Build Session"
+subtitle: "Turning an empty placeholder into honest book progress"
 ---
 
 ::: {.callout-note}
-## Product: [TBD]
-**Date**: [TBD]
-**Repo**: [TBD]
-**Status**: 🔲 Not started
+## Product: Book infrastructure cleanup
+**Date**: April 6, 2026
+**Repo**: `agentic-ai-book`
+**Status**: 🟡 In progress, but real
 :::
 
 ## The Goal
 
-*[To be written after we build it]*
+This morning was not a glamorous shipping session.
+
+There was no shiny new product to announce, no fake launch tweet to write, and no honest way to pretend Day 31 was finished. The repo still had an empty placeholder chapter, and the project status file was frozen in February even though the git history clearly showed much newer work.
+
+So the goal for this session became narrower and more useful: do the maintenance work that keeps the book trustworthy.
+
+That meant three things:
+
+1. Update the project status so the repo reflects reality.
+2. Replace the empty Day 31 template with a truthful account of what this session actually was.
+3. Re-render the book before claiming progress.
+
+It is not as dramatic as shipping a full product, but this is exactly what a real AI-native build process looks like. Sometimes the factory does output cleanup instead of output theatre.
 
 ## The Build
 
-*[Real-time narrative goes here]*
+The first thing I noticed was the mismatch between story and state.
+
+`STATUS.md` still said the book had last been updated on February 23, 2026. That was obviously wrong. The repo history showed newer commits for the later build days, including AikaaraSpec and AikaaraGuard. If someone landed on the repo today, the status page would make the whole project look abandoned or broken.
+
+That kind of drift matters.
+
+An AI-native workflow can move very fast, but fast systems also decay quickly when no one cleans up the meta-layer. Documentation lags. Placeholder chapters survive longer than they should. Project summaries stop matching the git log. Then the artifact starts feeling less like a book and more like a pile of drafts.
+
+So I treated this session like factory maintenance:
+
+- bring the status file back in sync,
+- convert the placeholder chapter into a real entry,
+- and make sure the published book still renders.
+
+The most important editorial decision was *not* to invent a completed Day 31 narrative.
+
+That would have been easy. I could have written a dramatic final-day chapter full of clean arcs and decisive conclusions. But the repo did not earn that chapter yet. At the moment this session started, Day 31 was still a shell.
+
+So this chapter documents the truth instead: the final-day slot was used for infrastructure cleanup and narrative integrity work. That sounds smaller because it is smaller. But it is also more real, and reality compounds better than fiction.
+
+There is a deeper lesson hiding inside that choice.
+
+When people talk about AI-assisted building, they focus on generation — code generation, content generation, design generation. But the more important capability is often *correction*. Can the system notice drift? Can it repair stale context? Can it refuse to claim completion when the artifact is still unfinished?
+
+That is what this session was testing.
+
+## What Actually Changed
+
+Here is the honest scope of work from this morning session:
+
+- `STATUS.md` was rewritten so the overall state of the book reflects April rather than February.
+- This chapter was rewritten from an empty template into a real account of the maintenance session.
+- The book render was intended to be the test gate, but the environment blocked it because the `quarto` CLI was not installed.
+
+That is deliberately boring in the best way.
+
+The point of a software factory is not to make every day look heroic. The point is to leave behind artifacts that still hold up when someone else opens the repo later.
 
 ## The Ship
 
-*[What we actually delivered]*
+The ship target for this session is modest but concrete:
+
+- the status page is current,
+- Day 31 is no longer fake-empty,
+- and the Quarto build acts as the proof step.
+
+If the render passes, this session earns a clean verification note.
+
+If the render cannot run, then that limitation becomes part of the story.
+
+That is the rule I want the book itself to enforce.
 
 ## The Lesson
 
-*[What I learned]*
+A factory needs janitorial discipline as much as creative momentum.
+
+The seductive version of AI-native work is that the machine keeps producing new things forever. The real version is messier. Systems accumulate stale context. Summaries get old. Placeholder files quietly become lies. A credible factory has to repair its own edges, not just celebrate its newest output.
+
+So the lesson from this morning is simple:
+
+**Honest infrastructure work is still build work.**
+
+If a session makes the artifact more truthful, more testable, and more publishable, it counts.
+
+Not every day needs fireworks. Some days the win is that the book tells the truth, and when the tooling is missing, the missing tooling gets written down instead of hidden.
