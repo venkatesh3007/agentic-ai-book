@@ -21,15 +21,19 @@
 
 ## Current Session Focus
 
-April 6 shifted into book-integrity cleanup work:
-- Replace stale project-status metadata
-- Turn empty placeholder material into truthful narrative or explicit continuity gaps
-- Attempt a Quarto render before claiming the update is fully verified
+April 8 shifted into book-integrity infrastructure work:
+- Add a repo-local validation script for manuscript structure
+- Verify every `_quarto.yml` chapter reference resolves to a real file
+- Surface which day chapters are still empty `[TBD]` shells so future sessions can clean them intentionally
+- Keep `quarto render` as the publication gate when Quarto is available
 
 ### Verification Note
 
+- ✅ Added `scripts/validate-book.js` and `npm run validate` as a repo-local integrity check
+- ✅ Validation runs successfully enough to enumerate real remaining gaps
+- ⚠️ The validator currently reports **22 placeholder day chapters** (`day-08.qmd` through `day-29.qmd`, excluding the already-cleaned files) that still need honest rewrites
 - ⚠️ `quarto render` still cannot be executed in this environment because the `quarto` CLI is not installed (`/bin/bash: quarto: command not found`)
-- The latest honest cleanup work is real, but full render verification is still pending until Quarto is available
+- The latest infrastructure work is real and tested; full render verification is still pending until Quarto is available
 
 ## Daily Updates
 

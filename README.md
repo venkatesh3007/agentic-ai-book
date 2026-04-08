@@ -30,6 +30,20 @@ It's written in the open. You're watching the book get written in real-time.
 - [OpenClaw](https://github.com/openclaw/openclaw) — AI agent platform
 - [Claude](https://anthropic.com) — The AI model behind Jarvis
 
+## Local Validation
+
+Before claiming a build session improved the manuscript, run the repo-local validator:
+
+```bash
+npm run validate
+```
+
+What it checks right now:
+- every chapter referenced in `_quarto.yml` exists,
+- and daily build chapters are flagged if they are still empty `[TBD]` templates.
+
+This is not a substitute for `quarto render`, but it gives the repo a real integrity gate even on machines where Quarto is not installed.
+
 ## Author
 
 **Venkatesh Rao** — Founder of [Aikaara](https://aikaara.com), an AI-native holding company building "the machine that builds software factories."
