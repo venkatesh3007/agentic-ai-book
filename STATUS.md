@@ -30,10 +30,12 @@ April 8 shifted into book-integrity infrastructure work:
 ### Verification Note
 
 - ✅ Added `scripts/validate-book.js` and `npm run validate` as a repo-local integrity check
-- ✅ Validator now also writes `PLACEHOLDER_CHAPTERS.md`, giving future sessions a concrete rewrite backlog inside the repo
+- ✅ Validator now writes both `PLACEHOLDER_CHAPTERS.md` and `placeholder-chapters.json`, giving future sessions a concrete rewrite backlog in both human-readable and machine-readable forms
+- ✅ The audit now prioritizes the next five chapter rewrites automatically (`day-08` through `day-12`)
 - ✅ Validation runs successfully enough to enumerate real remaining gaps
 - ⚠️ The validator currently reports **22 placeholder day chapters** (`day-08.qmd` through `day-29.qmd`, excluding the already-cleaned files) that still need honest rewrites
 - ⚠️ `quarto render` still cannot be executed in this environment because the `quarto` CLI is not installed (`/bin/bash: quarto: command not found`)
+- ⚠️ During this session, the git remote was found to contain an embedded GitHub token in the URL; the remote was sanitized locally to remove the credential, but the token itself should still be treated as exposed and rotated outside this repo
 - The latest infrastructure work is real and tested; full render verification is still pending until Quarto is available
 
 ## Daily Updates

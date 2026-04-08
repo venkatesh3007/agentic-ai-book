@@ -41,7 +41,8 @@ npm run validate
 What it checks right now:
 - every chapter referenced in `_quarto.yml` exists,
 - daily build chapters are flagged if they are still empty `[TBD]` templates,
-- and it writes a repo-local audit report to `PLACEHOLDER_CHAPTERS.md`.
+- it writes a human-readable audit report to `PLACEHOLDER_CHAPTERS.md`,
+- and it writes machine-readable output to `placeholder-chapters.json` for future automation.
 
 Useful commands:
 

@@ -5,6 +5,7 @@ const path = require('path');
 const repoRoot = process.cwd();
 const quartoPath = path.join(repoRoot, '_quarto.yml');
 const reportPath = path.join(repoRoot, 'PLACEHOLDER_CHAPTERS.md');
+const jsonPath = path.join(repoRoot, 'placeholder-chapters.json');
 
 let failed = false;
 let warned = false;
@@ -29,7 +30,7 @@ if (!fs.existsSync(quartoPath)) {
 }
 
 const quarto = fs.readFileSync(quartoPath, 'utf8');
-const chapterMatches = [...quarto.matchAll(/-\s+(chapters\/[A-Za-z0-9._\/-]+\.qmd)/g)].map(m => m[1]);
+const chapterMatches = [...quarto.matchAll(/-\s+(chapters\/[A-Za-z0-9._\/-]+\.qmd)/g)].map((m) => m[1]);
 const uniqueChapters = [...new Set(chapterMatches)];
 
 if (!uniqueChapters.length) {
@@ -62,14 +63,19 @@ for (const rel of uniqueChapters) {
   ok(`Chapter exists: ${rel}`);
 
   const text = fs.readFileSync(full, 'utf8');
-  const isDayChapter = /chapters\/day-\d+\.qmd$/.test(rel);
+  const isDayChapter = /chapters\/day-(\d+)\.qmd$/.test(rel);
   if (!isDayChapter) continue;
 
+  const match = rel.match(/chapters\/day-(\d+)\.qmd$/);
+  const dayNumber = match ? Number(match[1]) : null;
   const isPlaceholder = templatePhrases.some((phrase) => text.includes(phrase)) || /\[TBD\]/.test(text);
   if (isPlaceholder) {
-    placeholderDayChapters.push(rel);
+    placeholderDayChapters.push({ path: rel, day: dayNumber });
   }
 }
+
+placeholderDayChapters.sort((a, b) => a.day - b.day);
+const nextPriority = placeholderDayChapters.slice(0, 5);
 
 const report = [
   '# Placeholder Chapter Audit',
@@ -88,21 +94,43 @@ if (missingChapters.length) {
   report.push('');
 }
 
-report.push('## Placeholder Day Chapters', '');
+report.push('## Next Priority Rewrites', '');
+if (nextPriority.length) {
+  for (const item of nextPriority) report.push(`- Day ${String(item.day).padStart(2, '0')} — \`${item.path}\``);
+} else {
+  report.push('- None');
+}
+
+report.push('', '## Placeholder Day Chapters', '');
 if (placeholderDayChapters.length) {
-  for (const rel of placeholderDayChapters) report.push(`- \`${rel}\``);
+  for (const item of placeholderDayChapters) report.push(`- Day ${String(item.day).padStart(2, '0')} — \`${item.path}\``);
 } else {
   report.push('- None');
 }
 report.push('', '## Notes', '', '- This audit is a manuscript-integrity check, not a render check.', '- `quarto render` is still the publication gate when Quarto is available.', '- Exit code `0` = clean, `1` = broken references, `2` = references resolve but placeholder day chapters remain.', '');
 
 fs.writeFileSync(reportPath, report.join('\n'));
+fs.writeFileSync(
+  jsonPath,
+  JSON.stringify(
+    {
+      generatedAt: new Date().toISOString(),
+      chapterCount: uniqueChapters.length,
+      missingChapters,
+      placeholderDayChapters,
+      nextPriority
+    },
+    null,
+    2
+  ) + '\n'
+);
 ok(`Wrote report: ${path.basename(reportPath)}`);
+ok(`Wrote report: ${path.basename(jsonPath)}`);
 
 if (placeholderDayChapters.length) {
   warn(`Placeholder day chapters still present (${placeholderDayChapters.length}):`);
-  for (const rel of placeholderDayChapters) {
-    console.warn(`WARN:   - ${rel}`);
+  for (const item of placeholderDayChapters) {
+    console.warn(`WARN:   - Day ${String(item.day).padStart(2, '0')}: ${item.path}`);
   }
 }
 

@@ -1,0 +1,117 @@
+{
+  "generatedAt": "2026-04-08T10:30:47.330Z",
+  "chapterCount": 46,
+  "missingChapters": [],
+  "placeholderDayChapters": [
+    {
+      "path": "chapters/day-08.qmd",
+      "day": 8
+    },
+    {
+      "path": "chapters/day-09.qmd",
+      "day": 9
+    },
+    {
+      "path": "chapters/day-10.qmd",
+      "day": 10
+    },
+    {
+      "path": "chapters/day-11.qmd",
+      "day": 11
+    },
+    {
+      "path": "chapters/day-12.qmd",
+      "day": 12
+    },
+    {
+      "path": "chapters/day-13.qmd",
+      "day": 13
+    },
+    {
+      "path": "chapters/day-14.qmd",
+      "day": 14
+    },
+    {
+      "path": "chapters/day-15.qmd",
+      "day": 15
+    },
+    {
+      "path": "chapters/day-16.qmd",
+      "day": 16
+    },
+    {
+      "path": "chapters/day-17.qmd",
+      "day": 17
+    },
+    {
+      "path": "chapters/day-18.qmd",
+      "day": 18
+    },
+    {
+      "path": "chapters/day-19.qmd",
+      "day": 19
+    },
+    {
+      "path": "chapters/day-20.qmd",
+      "day": 20
+    },
+    {
+      "path": "chapters/day-21.qmd",
+      "day": 21
+    },
+    {
+      "path": "chapters/day-22.qmd",
+      "day": 22
+    },
+    {
+      "path": "chapters/day-23.qmd",
+      "day": 23
+    },
+    {
+      "path": "chapters/day-24.qmd",
+      "day": 24
+    },
+    {
+      "path": "chapters/day-25.qmd",
+      "day": 25
+    },
+    {
+      "path": "chapters/day-26.qmd",
+      "day": 26
+    },
+    {
+      "path": "chapters/day-27.qmd",
+      "day": 27
+    },
+    {
+      "path": "chapters/day-28.qmd",
+      "day": 28
+    },
+    {
+      "path": "chapters/day-29.qmd",
+      "day": 29
+    }
+  ],
+  "nextPriority": [
+    {
+      "path": "chapters/day-08.qmd",
+      "day": 8
+    },
+    {
+      "path": "chapters/day-09.qmd",
+      "day": 9
+    },
+    {
+      "path": "chapters/day-10.qmd",
+      "day": 10
+    },
+    {
+      "path": "chapters/day-11.qmd",
+      "day": 11
+    },
+    {
+      "path": "chapters/day-12.qmd",
+      "day": 12
+    }
+  ]
+}
