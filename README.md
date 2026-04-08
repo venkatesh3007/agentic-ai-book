@@ -40,7 +40,15 @@ npm run validate
 
 What it checks right now:
 - every chapter referenced in `_quarto.yml` exists,
-- and daily build chapters are flagged if they are still empty `[TBD]` templates.
+- daily build chapters are flagged if they are still empty `[TBD]` templates,
+- and it writes a repo-local audit report to `PLACEHOLDER_CHAPTERS.md`.
+
+Useful commands:
+
+```bash
+npm run validate
+npm run audit:placeholders
+```
 
 This is not a substitute for `quarto render`, but it gives the repo a real integrity gate even on machines where Quarto is not installed.
 

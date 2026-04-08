@@ -2,6 +2,7 @@
   "name": "agentic-ai-book",
   "private": true,
   "scripts": {
-    "validate": "node scripts/validate-book.js"
+    "validate": "node scripts/validate-book.js",
+    "audit:placeholders": "node scripts/validate-book.js"
   }
 }
