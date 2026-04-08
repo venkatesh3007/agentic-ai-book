@@ -31,6 +31,8 @@ April 8 shifted into book-integrity infrastructure work:
 
 - ✅ Added `scripts/validate-book.js` and `npm run validate` as a repo-local integrity check
 - ✅ Validator now writes both `PLACEHOLDER_CHAPTERS.md` and `placeholder-chapters.json`, giving future sessions a concrete rewrite backlog in both human-readable and machine-readable forms
+- ✅ Added `scripts/end-of-day-wrapup.js` and `npm run wrapup:eod` to generate an honest `END_OF_DAY_WRAPUP.md` summary at the close of a session
+- ✅ The wrap-up script reruns the placeholder audit, reports whether Quarto render tooling is actually available, and refuses to create a local milestone tag unless `--tag` is requested on a clean working tree
 - ✅ The audit now prioritizes the next five chapter rewrites automatically (`day-08` through `day-12`)
 - ✅ Validation runs successfully enough to enumerate real remaining gaps
 - ⚠️ The validator currently reports **22 placeholder day chapters** (`day-08.qmd` through `day-29.qmd`, excluding the already-cleaned files) that still need honest rewrites

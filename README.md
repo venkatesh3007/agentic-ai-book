@@ -49,7 +49,11 @@ Useful commands:
 ```bash
 npm run validate
 npm run audit:placeholders
+npm run wrapup:eod
+node scripts/end-of-day-wrapup.js --tag
 ```
+
+The end-of-day wrap-up script writes `END_OF_DAY_WRAPUP.md`, reruns the placeholder audit, reports whether Quarto render tooling is actually available, and only creates a local git tag when `--tag` is explicitly requested and the working tree is clean.
 
 This is not a substitute for `quarto render`, but it gives the repo a real integrity gate even on machines where Quarto is not installed.
 
