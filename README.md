@@ -86,6 +86,11 @@ This is not a substitute for `quarto render`, but it gives the repo a real integ
 
 The command exits non-zero if any internal link or anchor is broken, giving us a cheap but honest integrity signal even when Quarto is unavailable.
 
+
+### Image asset audit
+
+`npm run audit:images` runs `scripts/check-image-assets.js`, which scans every Markdown and QMD file for Markdown/HTML image references, verifies that the referenced files live inside this repository, and fails fast when an image is missing or uses a non-image extension. Results are written to `reports/image-audit-report.{md,json}` so future sessions can spot regressions without needing Quarto.
+
 ## Author
 
 **Venkatesh Rao** — Founder of [Aikaara](https://aikaara.com), an AI-native holding company building "the machine that builds software factories."
