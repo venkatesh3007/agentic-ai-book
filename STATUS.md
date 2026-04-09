@@ -26,7 +26,8 @@ April 8 shifted into book-integrity infrastructure work:
 - Verify every `_quarto.yml` chapter reference resolves to a real file
 - Surface which day chapters are still empty `[TBD]` shells so future sessions can clean them intentionally
 - Keep `quarto render` as the publication gate when Quarto is available
-- New for April 9: add a render-environment doctor that reports which dependencies are actually installed on the current machine and saves the findings to `reports/render-environment-report.{md,json}`
+- New for April 9 (morning): add a render-environment doctor that reports which dependencies are actually installed on the current machine and saves the findings to `reports/render-environment-report.{md,json}`
+- New for April 9 (afternoon): add a Markdown/QMD internal link audit so broken cross-references are caught locally and logged to `reports/link-check-report.{md,json}`
 
 ### Verification Note
 
@@ -37,8 +38,10 @@ April 8 shifted into book-integrity infrastructure work:
 - ✅ The audit now prioritizes the next five chapter rewrites automatically (`day-08` through `day-12`)
 - ✅ Validation runs successfully enough to enumerate real remaining gaps
 - ✅ Added `scripts/render-environment-doctor.js` plus `npm run doctor:render`, which inspects the local machine for book-render dependencies and writes the findings to `reports/render-environment-report.{md,json}`
+- ✅ Added `scripts/check-internal-links.js` plus `npm run audit:links`, which scan every Markdown/QMD file for broken relative links and anchors, and export the findings to `reports/link-check-report.{md,json}`
 - ⚠️ The validator currently reports **22 placeholder day chapters** (`day-08.qmd` through `day-29.qmd`, excluding the already-cleaned files) that still need honest rewrites
 - ⚠️ The latest doctor run fails its required checks because the `quarto` CLI is still not installed here; the report documents this explicitly for future sessions
+- ✅ The fresh link audit (20 links checked) currently passes, so any future breakage will show up as a regression in `reports/link-check-report.md`
 - ⚠️ During this session, the git remote was found to contain an embedded GitHub token in the URL; the remote was sanitized locally to remove the credential, but the token itself should still be treated as exposed and rotated outside this repo
 - The latest infrastructure work is real and tested; full render verification is still pending until Quarto is available
 

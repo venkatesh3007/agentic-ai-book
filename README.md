@@ -44,11 +44,20 @@ What it checks right now:
 - it writes a human-readable audit report to `PLACEHOLDER_CHAPTERS.md`,
 - and it writes machine-readable output to `placeholder-chapters.json` for future automation.
 
+For cross-file integrity, run the internal link audit:
+
+```bash
+npm run audit:links
+```
+
+This inspects every `.md` and `.qmd` file for internal Markdown links, verifies that relative paths resolve to real files, and ensures any `#anchor` fragments actually exist in the target document. Results are saved to `reports/link-check-report.md` plus a JSON copy for downstream tooling.
+
 Useful commands:
 
 ```bash
 npm run validate
 npm run audit:placeholders
+npm run audit:links
 npm run wrapup:eod
 node scripts/end-of-day-wrapup.js --tag
 npm run doctor:render
@@ -66,6 +75,16 @@ The end-of-day wrap-up script writes `END_OF_DAY_WRAPUP.md`, reruns the placehol
 - exits with status `1` if required tooling is missing, or `2` when only optional warnings remain.
 
 This is not a substitute for `quarto render`, but it gives the repo a real integrity gate even on machines where Quarto is not installed.
+
+### Internal link audit
+
+`npm run audit:links` runs `scripts/check-internal-links.js`, which performs a repo-local Markdown/QMD link check. The audit:
+- scans every tracked `.md` and `.qmd` file, skipping generated artifacts like `_book/`,
+- verifies that relative links resolve to real files within the repository,
+- confirms that same-file and cross-file `#anchor` fragments match real headings, and
+- records its findings in `reports/link-check-report.md` plus a JSON copy for automation or dashboards.
+
+The command exits non-zero if any internal link or anchor is broken, giving us a cheap but honest integrity signal even when Quarto is unavailable.
 
 ## Author
 
