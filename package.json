@@ -4,6 +4,7 @@
   "scripts": {
     "validate": "node scripts/validate-book.js",
     "audit:placeholders": "node scripts/validate-book.js",
-    "wrapup:eod": "node scripts/end-of-day-wrapup.js"
+    "wrapup:eod": "node scripts/end-of-day-wrapup.js",
+    "doctor:render": "node scripts/render-environment-doctor.js"
   }
 }

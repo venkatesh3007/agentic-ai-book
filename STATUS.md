@@ -1,6 +1,6 @@
 # AI-Native Book - Current Status
 
-**Last Updated**: April 6, 2026
+**Last Updated**: April 9, 2026
 
 ## Progress
 
@@ -26,6 +26,7 @@ April 8 shifted into book-integrity infrastructure work:
 - Verify every `_quarto.yml` chapter reference resolves to a real file
 - Surface which day chapters are still empty `[TBD]` shells so future sessions can clean them intentionally
 - Keep `quarto render` as the publication gate when Quarto is available
+- New for April 9: add a render-environment doctor that reports which dependencies are actually installed on the current machine and saves the findings to `reports/render-environment-report.{md,json}`
 
 ### Verification Note
 
@@ -35,8 +36,9 @@ April 8 shifted into book-integrity infrastructure work:
 - ✅ The wrap-up script reruns the placeholder audit, reports whether Quarto render tooling is actually available, and refuses to create a local milestone tag unless `--tag` is requested on a clean working tree
 - ✅ The audit now prioritizes the next five chapter rewrites automatically (`day-08` through `day-12`)
 - ✅ Validation runs successfully enough to enumerate real remaining gaps
+- ✅ Added `scripts/render-environment-doctor.js` plus `npm run doctor:render`, which inspects the local machine for book-render dependencies and writes the findings to `reports/render-environment-report.{md,json}`
 - ⚠️ The validator currently reports **22 placeholder day chapters** (`day-08.qmd` through `day-29.qmd`, excluding the already-cleaned files) that still need honest rewrites
-- ⚠️ `quarto render` still cannot be executed in this environment because the `quarto` CLI is not installed (`/bin/bash: quarto: command not found`)
+- ⚠️ The latest doctor run fails its required checks because the `quarto` CLI is still not installed here; the report documents this explicitly for future sessions
 - ⚠️ During this session, the git remote was found to contain an embedded GitHub token in the URL; the remote was sanitized locally to remove the credential, but the token itself should still be treated as exposed and rotated outside this repo
 - The latest infrastructure work is real and tested; full render verification is still pending until Quarto is available
 

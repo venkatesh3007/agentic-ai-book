@@ -1,0 +1,71 @@
+{
+  "generatedAt": "2026-04-09T04:32:32.982Z",
+  "exitCode": 1,
+  "host": {
+    "platform": "linux 6.8.0-107-generic",
+    "arch": "x64",
+    "cpu": "DO-Regular",
+    "cores": 2,
+    "memoryGb": "3.82",
+    "timezone": "UTC"
+  },
+  "checks": [
+    {
+      "name": "Node.js runtime",
+      "required": true,
+      "status": "pass",
+      "detail": "Detected v22.22.0, required ≥ v18.0.0",
+      "recommendation": ""
+    },
+    {
+      "name": "npm CLI",
+      "required": true,
+      "status": "pass",
+      "detail": "Detected v10.9.4",
+      "recommendation": ""
+    },
+    {
+      "name": "git",
+      "required": true,
+      "status": "pass",
+      "detail": "Detected v2.43.0",
+      "recommendation": ""
+    },
+    {
+      "name": "Quarto CLI",
+      "required": true,
+      "status": "fail",
+      "detail": "Command `quarto` was not found in PATH.",
+      "recommendation": "Install Quarto from https://quarto.org/docs/get-started/ for local renders."
+    },
+    {
+      "name": "Pandoc",
+      "required": false,
+      "status": "warn",
+      "detail": "Command `pandoc` was not found in PATH.",
+      "recommendation": "Install Pandoc 3.1+ or rely on the copy bundled with Quarto."
+    },
+    {
+      "name": "LaTeX engine (tectonic/pdflatex)",
+      "required": false,
+      "status": "warn",
+      "detail": "Command `tectonic` was not found in PATH.",
+      "recommendation": "Install Tectonic (preferred) or TeX Live to enable PDF output."
+    },
+    {
+      "name": "Quarto user config directory",
+      "required": false,
+      "status": "warn",
+      "detail": "Not found. Quarto usually initializes this on first run.",
+      "recommendation": "Run `quarto check` after installation so the user config directory is created."
+    }
+  ],
+  "requiredFailures": [
+    "Quarto CLI"
+  ],
+  "warnings": [
+    "Pandoc",
+    "LaTeX engine (tectonic/pdflatex)",
+    "Quarto user config directory"
+  ]
+}
