@@ -1,30 +1,25 @@
-# End-of-Day Wrap-Up
+# Repository Healthcheck Report
 
-Generated: 2026-04-09T13:33:38.717Z
+- Generated: 2026-04-09T13:33:38.695Z
+- Overall status: **FAIL** (❌ FAIL)
+- Checks run: 4
+- Exit code: 1
 
-Git HEAD: 328f643
+## Check Results
 
-## Summary
+### Placeholder Audit — ⚠️ WARN
 
-- Overall result: not fully green.
-- Validation found placeholder day chapters still needing honest rewrites (22 remaining).
-- Quarto CLI is not available in this environment, so a render check could not be performed.
+- Description: Validates _quarto.yml references and flags day chapters that are still placeholder templates.
+- Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/validate-book.js`
+- Exit code: 2
+- Duration: 70 ms
+- Reports:
+  - `PLACEHOLDER_CHAPTERS.md`
+  - `placeholder-chapters.json`
 
-## Manuscript Integrity
+<details>
+<summary>Output</summary>
 
-- Referenced chapter files missing: 0
-- Placeholder day chapters remaining: 22
-- Next priority rewrites:
-  - Day 08 — `chapters/day-08.qmd`
-  - Day 09 — `chapters/day-09.qmd`
-  - Day 10 — `chapters/day-10.qmd`
-  - Day 11 — `chapters/day-11.qmd`
-  - Day 12 — `chapters/day-12.qmd`
-
-## Validation Command
-
-- Command: `/usr/bin/node scripts/validate-book.js`
-- Exit status: 2
 ```text
 OK: Found 46 chapter entries in _quarto.yml
 OK: Chapter exists: chapters/01-what-is-agentic-ai.qmd
@@ -100,56 +95,77 @@ WARN:   - Day 27: chapters/day-27.qmd
 WARN:   - Day 28: chapters/day-28.qmd
 WARN:   - Day 29: chapters/day-29.qmd
 ```
+</details>
 
-## Combined Healthcheck
+### Internal Link Audit — ✅ PASS
 
-- Command: `/usr/bin/node scripts/run-healthcheck.js`
-- Exit status: 1
-- Overall status: FAIL (exit 1)
-- Checks:
-  - Placeholder Audit: WARN (exit 2, 70 ms)
-  - Internal Link Audit: PASS (exit 0, 66 ms)
-  - Image Asset Audit: PASS (exit 0, 73 ms)
-  - Render Environment Doctor: FAIL (exit 1, 233 ms)
+- Description: Scans Markdown/QMD files for broken repo-local links and missing anchors.
+- Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-internal-links.js`
+- Exit code: 0
+- Duration: 66 ms
 - Reports:
-  - `reports/healthcheck-report.md`
-  - `reports/healthcheck-report.json`
+  - `reports/link-check-report.md`
+  - `reports/link-check-report.json`
+
+<details>
+<summary>Output</summary>
+
 ```text
-Healthcheck FAIL (exit 1). Report written to reports/healthcheck-report.md
+Scanned 58 files with Markdown/QMD content
+Found 20 links to inspect
+Internal link check passed.
 ```
+</details>
 
-## Render Check
+### Image Asset Audit — ✅ PASS
 
-- Render check not run: `quarto` command not found.
+- Description: Ensures every referenced image exists inside the repository with a valid extension.
+- Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-image-assets.js`
+- Exit code: 0
+- Duration: 73 ms
+- Reports:
+  - `reports/image-audit-report.md`
+  - `reports/image-audit-report.json`
+
+<details>
+<summary>Output</summary>
+
 ```text
-quarto: command not found
+Scanned 58 content files
+Found 0 image reference(s)
+Image asset audit passed.
 ```
+</details>
 
-## Git Working Tree
+### Render Environment Doctor — ❌ FAIL
 
-- Working tree dirty at wrap-up time: yes
+- Description: Checks the local machine for the tools required to run a trustworthy `quarto render`.
+- Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/render-environment-doctor.js`
+- Exit code: 1
+- Duration: 233 ms
+- Reports:
+  - `reports/render-environment-report.md`
+  - `reports/render-environment-report.json`
+
+<details>
+<summary>Output</summary>
+
 ```text
-M README.md
- M STATUS.md
- M package.json
- M placeholder-chapters.json
- M reports/image-audit-report.json
- M reports/image-audit-report.md
- M reports/link-check-report.json
- M reports/link-check-report.md
- M reports/render-environment-report.json
- M reports/render-environment-report.md
- M scripts/end-of-day-wrapup.js
-?? reports/healthcheck-report.json
-?? reports/healthcheck-report.md
-?? scripts/run-healthcheck.js
+[OK] Node.js runtime — Detected v22.22.0, required ≥ v18.0.0
+[OK] npm CLI — Detected v10.9.4
+[OK] git — Detected v2.43.0
+[FAIL] Quarto CLI — Command `quarto` was not found in PATH.
+      ↳ Install Quarto from https://quarto.org/docs/get-started/ for local renders.
+[WARN] Pandoc — Command `pandoc` was not found in PATH.
+      ↳ Install Pandoc 3.1+ or rely on the copy bundled with Quarto.
+[WARN] LaTeX engine (tectonic/pdflatex) — Command `tectonic` was not found in PATH.
+      ↳ Install Tectonic (preferred) or TeX Live to enable PDF output.
+[WARN] Quarto user config directory — Not found. Quarto usually initializes this on first run.
+      ↳ Run `quarto check` after installation so the user config directory is created.
+Reports written to: reports/render-environment-report.md and reports/render-environment-report.json
 ```
+</details>
 
-## Tagging
+---
 
-- No tag requested.
-
-## Notes
-
-- This wrap-up is intentionally honest: placeholder chapters or missing render tooling keep the day from being marked fully green.
-- No network operations are performed by this script.
+*This combined healthcheck runs entirely repo-local audits without invoking Quarto render.*

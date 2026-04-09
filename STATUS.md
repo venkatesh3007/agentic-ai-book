@@ -40,6 +40,8 @@ April 8 shifted into book-integrity infrastructure work:
 - ✅ Added `scripts/render-environment-doctor.js` plus `npm run doctor:render`, which inspects the local machine for book-render dependencies and writes the findings to `reports/render-environment-report.{md,json}`
 - ✅ Added `scripts/check-internal-links.js` plus `npm run audit:links`, which scan every Markdown/QMD file for broken relative links and anchors, and export the findings to `reports/link-check-report.{md,json}`
 - ✅ Added `scripts/check-image-assets.js` plus `npm run audit:images`, which audits Markdown/QMD image references, blocks missing assets, and writes findings to `reports/image-audit-report.{md,json}`
+- ✅ Added `scripts/run-healthcheck.js` plus `npm run audit:health`, which orchestrates every repo-local audit, captures their logs, and writes a summary to `reports/healthcheck-report.{md,json}` for dashboards and wrap-ups
+- ✅ The end-of-day wrap-up script now runs the combined healthcheck automatically and embeds its results so milestone tags can see the exact audit surface area that passed or failed
 - ⚠️ The validator currently reports **22 placeholder day chapters** (`day-08.qmd` through `day-29.qmd`, excluding the already-cleaned files) that still need honest rewrites
 - ⚠️ The latest doctor run fails its required checks because the `quarto` CLI is still not installed here; the report documents this explicitly for future sessions
 - ✅ The fresh link audit (20 links checked) currently passes, so any future breakage will show up as a regression in `reports/link-check-report.md`

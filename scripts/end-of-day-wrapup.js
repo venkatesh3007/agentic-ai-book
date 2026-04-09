@@ -5,8 +5,10 @@ const { spawnSync } = require('child_process');
 
 const repoRoot = process.cwd();
 const validateScript = path.join(repoRoot, 'scripts', 'validate-book.js');
+const healthcheckScript = path.join(repoRoot, 'scripts', 'run-healthcheck.js');
 const summaryPath = path.join(repoRoot, 'END_OF_DAY_WRAPUP.md');
 const placeholderJsonPath = path.join(repoRoot, 'placeholder-chapters.json');
+const healthcheckJsonPath = path.join(repoRoot, 'reports', 'healthcheck-report.json');
 
 const args = process.argv.slice(2);
 const wantsTag = args.includes('--tag');
@@ -51,7 +53,22 @@ if (!fs.existsSync(validateScript)) {
 }
 
 const validationCommand = formatCommand(process.execPath, [path.relative(repoRoot, validateScript)]);
+const healthcheckCommand = formatCommand(process.execPath, [path.relative(repoRoot, healthcheckScript)]);
 const validation = run(process.execPath, [validateScript]);
+
+const hasHealthcheckScript = fs.existsSync(healthcheckScript);
+let healthcheck = null;
+let healthSummary = null;
+if (hasHealthcheckScript) {
+  healthcheck = run(process.execPath, [healthcheckScript]);
+  if (fs.existsSync(healthcheckJsonPath)) {
+    try {
+      healthSummary = JSON.parse(fs.readFileSync(healthcheckJsonPath, 'utf8'));
+    } catch (error) {
+      console.warn('WARN: Failed to parse healthcheck report JSON:', error.message);
+    }
+  }
+}
 
 let placeholderData = null;
 if (fs.existsSync(placeholderJsonPath)) {
@@ -122,6 +139,37 @@ summary.push(...section('Validation Command', [
   ...codeBlock([validation.stdout, validation.stderr].filter(Boolean).join('\n'))
 ]));
 
+const healthLines = [];
+if (!hasHealthcheckScript) {
+  healthLines.push('- Combined healthcheck script not found; skipping.');
+} else {
+  healthLines.push(`- Command: \`${healthcheckCommand}\``);
+  const exitValue = typeof healthcheck?.status === 'number' ? healthcheck.status : 'unknown';
+  healthLines.push(`- Exit status: ${exitValue}`);
+  if (healthSummary) {
+    const overall = (healthSummary.overallStatus || 'unknown').toString().toUpperCase();
+    healthLines.push(`- Overall status: ${overall} (exit ${healthSummary.exitCode ?? 'unknown'})`);
+    if (Array.isArray(healthSummary.checks) && healthSummary.checks.length) {
+      healthLines.push('- Checks:');
+      for (const check of healthSummary.checks) {
+        const title = check.title || check.id || 'Untitled';
+        const status = (check.status || 'unknown').toString().toUpperCase();
+        const exitCode = typeof check.exitCode === 'number' ? check.exitCode : 'n/a';
+        const duration = typeof check.durationMs === 'number' ? `${Math.round(check.durationMs)} ms` : 'n/a';
+        healthLines.push(`  - ${title}: ${status} (exit ${exitCode}, ${duration})`);
+      }
+    }
+    healthLines.push('- Reports:');
+    healthLines.push('  - `reports/healthcheck-report.md`');
+    healthLines.push('  - `reports/healthcheck-report.json`');
+  } else {
+    healthLines.push('- Healthcheck JSON summary is missing or unreadable.');
+  }
+  const healthOutput = [healthcheck?.stdout || '', healthcheck?.stderr || ''].filter(Boolean).join('\n');
+  healthLines.push(...codeBlock(healthOutput));
+}
+summary.push(...section('Combined Healthcheck', healthLines));
+
 const renderLines = [];
 if (!quartoAvailable) {
   renderLines.push('- Render check not run: `quarto` command not found.');
@@ -166,10 +214,23 @@ fs.writeFileSync(summaryPath, summary.join('\n'));
 console.log(`Wrote ${path.basename(summaryPath)}`);
 console.log(cleanText(tagMessage).replace(/^-\s*/, ''));
 
+let exitCode = 0;
 if (validation.status === 1) {
-  process.exit(1);
+  exitCode = 1;
+} else if (validation.status === 2) {
+  exitCode = Math.max(exitCode, 2);
 }
-if (validation.status === 2 || !quartoAvailable || (renderAttempt && renderAttempt.status !== 0)) {
-  process.exit(2);
+
+if (!quartoAvailable || (renderAttempt && renderAttempt.status !== 0)) {
+  exitCode = Math.max(exitCode, 2);
 }
-process.exit(0);
+
+if (healthcheck && typeof healthcheck.status === 'number') {
+  if (healthcheck.status === 1) {
+    exitCode = 1;
+  } else if (healthcheck.status === 2) {
+    exitCode = Math.max(exitCode, 2);
+  }
+}
+
+process.exit(exitCode);
