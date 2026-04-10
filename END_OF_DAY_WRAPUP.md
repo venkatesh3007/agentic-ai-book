@@ -1,8 +1,8 @@
 # End-of-Day Wrap-Up
 
-Generated: 2026-04-09T13:33:38.717Z
+Generated: 2026-04-10T13:30:32.515Z
 
-Git HEAD: 328f643
+Git HEAD: 1d4ef27
 
 ## Summary
 
@@ -107,10 +107,11 @@ WARN:   - Day 29: chapters/day-29.qmd
 - Exit status: 1
 - Overall status: FAIL (exit 1)
 - Checks:
-  - Placeholder Audit: WARN (exit 2, 70 ms)
-  - Internal Link Audit: PASS (exit 0, 66 ms)
-  - Image Asset Audit: PASS (exit 0, 73 ms)
-  - Render Environment Doctor: FAIL (exit 1, 233 ms)
+  - Placeholder Audit: WARN (exit 2, 58 ms)
+  - Internal Link Audit: PASS (exit 0, 67 ms)
+  - Image Asset Audit: PASS (exit 0, 60 ms)
+  - Frontmatter Audit: WARN (exit 2, 73 ms)
+  - Render Environment Doctor: FAIL (exit 1, 243 ms)
 - Reports:
   - `reports/healthcheck-report.md`
   - `reports/healthcheck-report.json`
@@ -129,20 +130,14 @@ quarto: command not found
 
 - Working tree dirty at wrap-up time: yes
 ```text
-M README.md
- M STATUS.md
- M package.json
- M placeholder-chapters.json
+M placeholder-chapters.json
+ M reports/frontmatter-audit-report.json
+ M reports/healthcheck-report.json
+ M reports/healthcheck-report.md
  M reports/image-audit-report.json
- M reports/image-audit-report.md
  M reports/link-check-report.json
- M reports/link-check-report.md
  M reports/render-environment-report.json
  M reports/render-environment-report.md
- M scripts/end-of-day-wrapup.js
-?? reports/healthcheck-report.json
-?? reports/healthcheck-report.md
-?? scripts/run-healthcheck.js
 ```
 
 ## Tagging
