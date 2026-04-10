@@ -1,8 +1,8 @@
 # End-of-Day Wrap-Up
 
-Generated: 2026-04-10T13:30:32.515Z
+Generated: 2026-04-10T13:30:50.963Z
 
-Git HEAD: 1d4ef27
+Git HEAD: b4267f7
 
 ## Summary
 
@@ -107,11 +107,11 @@ WARN:   - Day 29: chapters/day-29.qmd
 - Exit status: 1
 - Overall status: FAIL (exit 1)
 - Checks:
-  - Placeholder Audit: WARN (exit 2, 58 ms)
-  - Internal Link Audit: PASS (exit 0, 67 ms)
-  - Image Asset Audit: PASS (exit 0, 60 ms)
+  - Placeholder Audit: WARN (exit 2, 74 ms)
+  - Internal Link Audit: PASS (exit 0, 82 ms)
+  - Image Asset Audit: PASS (exit 0, 68 ms)
   - Frontmatter Audit: WARN (exit 2, 73 ms)
-  - Render Environment Doctor: FAIL (exit 1, 243 ms)
+  - Render Environment Doctor: FAIL (exit 1, 220 ms)
 - Reports:
   - `reports/healthcheck-report.md`
   - `reports/healthcheck-report.json`
@@ -142,7 +142,7 @@ M placeholder-chapters.json
 
 ## Tagging
 
-- No tag requested.
+- Tag request skipped: working tree is dirty, so local tag `eod-2026-04-10` was not created.
 
 ## Notes
 
