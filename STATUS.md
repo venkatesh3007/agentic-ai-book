@@ -22,24 +22,21 @@
 
 ## Current Session Focus
 
-April 10 afternoon work extended the repo-local integrity tooling again, this time into book metadata:
-- add a frontmatter audit for QMD files so metadata debt is visible before prose review
-- wire that audit into the combined healthcheck
-- test whether the new check finds real problems instead of decorative ones
-- update repo docs so future sessions know what the new command does
+April 10 evening work polished the metadata tooling added earlier in the day instead of inventing new manuscript content:
+- extend the frontmatter audit so it can also catch duplicate chapter titles
+- verify whether the current manuscript has any title collisions in the actual TOC
+- keep the healthcheck output honest by reporting the result either way
+- update repo docs to reflect the broader coverage
 
 ### Verification Note
 
-- ✅ Added `scripts/check-frontmatter.js` plus `npm run audit:frontmatter` as a dedicated metadata audit for the manuscript
-- ✅ The new audit scans 49 `.qmd` source files and skips generated artifacts like `_book/` and `reports/`
-- ✅ It fails on missing frontmatter or missing `title`, and warns on day-chapter placeholder metadata such as `[TBD]`
-- ✅ The first run surfaced real issues immediately, which is a good sign: it confirmed that Day 08 through Day 29 still carry placeholder frontmatter even before reading their body text
-- ✅ Tightened the audit after the first pass so it warns only on day-chapter subtitle gaps, not on every non-day chapter that intentionally has a simpler frontmatter block
-- ✅ After that tightening, `npm run audit:frontmatter` exits with status `2` for honest warnings only, matching the known placeholder backlog of 22 unfinished day chapters
-- ✅ Added the new audit to `npm run audit:health`, so the combined report now covers structure, links, images, metadata, and render-environment readiness in one place
-- ⚠️ `npm run audit:health` still exits with status `1`, but the failure remains honest: Quarto is still missing locally, and placeholder-heavy day chapters still exist
-- ⚠️ `npm run validate` still exits with status `2` because those same 22 day chapters remain structurally unfinished
-- ✅ README documentation has been updated so future sessions can run and understand the new audit without spelunking through the scripts directory
+- ✅ Extended `scripts/check-frontmatter.js` so it now inspects 46 actual book chapter entries from `_quarto.yml`, not just raw `.qmd` presence
+- ✅ The audit now records duplicate-title drift in addition to missing frontmatter, missing titles, missing day subtitles, day-title format, and `[TBD]` placeholder metadata
+- ✅ The current manuscript passes the new duplicate-title check: no chapter title collisions were found across the book TOC
+- ✅ `npm run audit:frontmatter` still exits with status `2`, but only because Day 08 through Day 29 remain honest placeholder chapters with `[TBD]` metadata
+- ✅ `npm run audit:health` was rerun after the enhancement, so the combined healthcheck report now reflects the expanded metadata coverage
+- ⚠️ Overall healthcheck status remains **FAIL** because the repo still has two known blockers: 22 placeholder day chapters and a missing local Quarto install
+- ✅ README documentation now explains that the frontmatter audit also checks for duplicate chapter titles, not just missing fields and placeholders
 
 ## Daily Updates
 
@@ -54,4 +51,4 @@ This book is updated from real build sessions. Every meaningful change should sh
 - **Future readers**: Use git history to track exactly when chapters changed
 - **Rule**: No retrospective hero fiction — if something was unfinished, the text should say so
 
-**Next Update**: After either Quarto is installed locally or one of the placeholder day chapters is rewritten enough to clear both content and frontmatter warnings
+**Next Update**: After either Quarto is installed locally or one of the placeholder day chapters is rewritten enough to clear both content and metadata warnings

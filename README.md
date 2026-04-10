@@ -100,7 +100,8 @@ The command exits non-zero if any internal link or anchor is broken, giving us a
 `npm run audit:frontmatter` runs `scripts/check-frontmatter.js`, which audits the manuscript's QMD frontmatter for metadata drift. The audit:
 - scans every `.qmd` source file while skipping generated artifacts like `_book/` and `reports/`,
 - fails if a QMD file is missing frontmatter or a required `title`,
-- warns when day chapters still contain `[TBD]` placeholder metadata, and
+- warns when day chapters still contain `[TBD]` placeholder metadata,
+- warns when two or more book chapters reuse the same title, and
 - writes its findings to `reports/frontmatter-audit-report.{md,json}` for future cleanup passes.
 
 This is especially useful for catching book-specific debt that link and image checks cannot see, such as day chapters that still look structurally unfinished before you even read the body text.

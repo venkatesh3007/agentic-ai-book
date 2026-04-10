@@ -1,6 +1,6 @@
 # Repository Healthcheck Report
 
-- Generated: 2026-04-10T07:31:09.554Z
+- Generated: 2026-04-10T10:30:53.294Z
 - Overall status: **FAIL** (❌ FAIL)
 - Checks run: 5
 - Exit code: 1
@@ -12,7 +12,7 @@
 - Description: Validates _quarto.yml references and flags day chapters that are still placeholder templates.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/validate-book.js`
 - Exit code: 2
-- Duration: 53 ms
+- Duration: 59 ms
 - Reports:
   - `PLACEHOLDER_CHAPTERS.md`
   - `placeholder-chapters.json`
@@ -97,12 +97,12 @@ WARN:   - Day 29: chapters/day-29.qmd
 ```
 </details>
 
-### Internal Link Audit — ❌ FAIL
+### Internal Link Audit — ✅ PASS
 
 - Description: Scans Markdown/QMD files for broken repo-local links and missing anchors.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-internal-links.js`
-- Exit code: 1
-- Duration: 63 ms
+- Exit code: 0
+- Duration: 69 ms
 - Reports:
   - `reports/link-check-report.md`
   - `reports/link-check-report.json`
@@ -112,19 +112,17 @@ WARN:   - Day 29: chapters/day-29.qmd
 
 ```text
 Scanned 54 files with Markdown/QMD content
-Found 21 links to inspect
-
-ERROR [missing-file] STATUS.md:35 → target — Referenced file does not exist: target
-Internal link check failed with 1 issue(s). See reports/link-check-report.md for details.
+Found 20 links to inspect
+Internal link check passed.
 ```
 </details>
 
-### Image Asset Audit — ❌ FAIL
+### Image Asset Audit — ✅ PASS
 
 - Description: Ensures every referenced image exists inside the repository with a valid extension.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-image-assets.js`
-- Exit code: 1
-- Duration: 59 ms
+- Exit code: 0
+- Duration: 55 ms
 - Reports:
   - `reports/image-audit-report.md`
   - `reports/image-audit-report.json`
@@ -134,10 +132,8 @@ Internal link check failed with 1 issue(s). See reports/link-check-report.md for
 
 ```text
 Scanned 54 content files
-Found 1 image reference(s)
-
-ERROR [missing-file] STATUS.md:35 → path — Referenced image does not exist: path
-Image asset audit failed with 1 issue(s). See reports/image-audit-report.md for details.
+Found 0 image reference(s)
+Image asset audit passed.
 ```
 </details>
 
@@ -146,7 +142,7 @@ Image asset audit failed with 1 issue(s). See reports/image-audit-report.md for 
 - Description: Checks QMD frontmatter for required metadata and placeholder leftovers.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-frontmatter.js`
 - Exit code: 2
-- Duration: 68 ms
+- Duration: 70 ms
 - Reports:
   - `reports/frontmatter-audit-report.md`
   - `reports/frontmatter-audit-report.json`
@@ -156,6 +152,7 @@ Image asset audit failed with 1 issue(s). See reports/image-audit-report.md for 
 
 ```text
 Scanned 49 QMD file(s)
+Inspected 46 chapter frontmatter block(s)
 Found 0 error(s) and 22 warning(s)
 
 WARN [placeholder-metadata] chapters/day-08.qmd — Frontmatter still contains [TBD] placeholder text
@@ -189,7 +186,7 @@ Frontmatter audit completed with warnings. See reports/frontmatter-audit-report.
 - Description: Checks the local machine for the tools required to run a trustworthy `quarto render`.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/render-environment-doctor.js`
 - Exit code: 1
-- Duration: 221 ms
+- Duration: 261 ms
 - Reports:
   - `reports/render-environment-report.md`
   - `reports/render-environment-report.json`
