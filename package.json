@@ -6,6 +6,7 @@
     "audit:placeholders": "node scripts/validate-book.js",
     "audit:links": "node scripts/check-internal-links.js",
     "audit:images": "node scripts/check-image-assets.js",
+    "audit:frontmatter": "node scripts/check-frontmatter.js",
     "audit:health": "node scripts/run-healthcheck.js",
     "wrapup:eod": "node scripts/end-of-day-wrapup.js",
     "doctor:render": "node scripts/render-environment-doctor.js"

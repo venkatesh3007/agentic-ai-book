@@ -36,6 +36,15 @@ const checks = [
     reportPaths: ['reports/image-audit-report.md', 'reports/image-audit-report.json']
   },
   {
+    id: 'frontmatter-audit',
+    title: 'Frontmatter Audit',
+    description: 'Checks QMD frontmatter for required metadata and placeholder leftovers.',
+    command: process.execPath,
+    args: [path.join(repoRoot, 'scripts', 'check-frontmatter.js')],
+    reportPaths: ['reports/frontmatter-audit-report.md', 'reports/frontmatter-audit-report.json'],
+    warnOn: new Set([2])
+  },
+  {
     id: 'render-doctor',
     title: 'Render Environment Doctor',
     description: 'Checks the local machine for the tools required to run a trustworthy `quarto render`.',

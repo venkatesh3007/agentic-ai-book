@@ -59,6 +59,7 @@ npm run validate
 npm run audit:placeholders
 npm run audit:links
 npm run audit:images
+npm run audit:frontmatter
 npm run audit:health
 npm run wrapup:eod
 node scripts/end-of-day-wrapup.js --tag
@@ -94,9 +95,19 @@ The command exits non-zero if any internal link or anchor is broken, giving us a
 
 `npm run audit:images` runs `scripts/check-image-assets.js`, which scans every Markdown and QMD file for Markdown/HTML image references, skips generated artifacts like `_book/` and `reports/`, verifies that the referenced files live inside this repository, and fails fast when an image is missing or uses a non-image extension. Results are written to `reports/image-audit-report.{md,json}` so future sessions can spot regressions without needing Quarto.
 
+### Frontmatter audit
+
+`npm run audit:frontmatter` runs `scripts/check-frontmatter.js`, which audits the manuscript's QMD frontmatter for metadata drift. The audit:
+- scans every `.qmd` source file while skipping generated artifacts like `_book/` and `reports/`,
+- fails if a QMD file is missing frontmatter or a required `title`,
+- warns when day chapters still contain `[TBD]` placeholder metadata, and
+- writes its findings to `reports/frontmatter-audit-report.{md,json}` for future cleanup passes.
+
+This is especially useful for catching book-specific debt that link and image checks cannot see, such as day chapters that still look structurally unfinished before you even read the body text.
+
 ### Combined healthcheck
 
-`npm run audit:health` runs `scripts/run-healthcheck.js`, which chains the placeholder audit, internal link audit, image audit, and render-environment doctor into one command. It records every command's exit code, duration, and trimmed output, writes the combined summary to `reports/healthcheck-report.md` plus a JSON twin, and exits with `0`/`1`/`2` depending on whether the repo is clean, failed, or merely warning-laden. This makes end-of-day wrap-ups honest even when Quarto itself is unavailable.
+`npm run audit:health` runs `scripts/run-healthcheck.js`, which chains the placeholder audit, internal link audit, image audit, frontmatter audit, and render-environment doctor into one command. It records every command's exit code, duration, and trimmed output, writes the combined summary to `reports/healthcheck-report.md` plus a JSON twin, and exits with `0`/`1`/`2` depending on whether the repo is clean, failed, or merely warning-laden. This makes end-of-day wrap-ups honest even when Quarto itself is unavailable.
 
 ## Author
 

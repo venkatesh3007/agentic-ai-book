@@ -22,24 +22,24 @@
 
 ## Current Session Focus
 
-April 10 morning work focused on infrastructure hardening for manuscript integrity rather than new prose generation:
-- expand repo-local audits so they understand more real Markdown/HTML patterns
-- verify that stronger checks do not create false confidence
-- document actual environment limits instead of pretending the render passed
-- keep the book homepage aligned with the current state of the repo
+April 10 afternoon work extended the repo-local integrity tooling again, this time into book metadata:
+- add a frontmatter audit for QMD files so metadata debt is visible before prose review
+- wire that audit into the combined healthcheck
+- test whether the new check finds real problems instead of decorative ones
+- update repo docs so future sessions know what the new command does
 
 ### Verification Note
 
-- ✅ `npm run audit:links` passes after hardening the parser to also understand HTML anchor tags
-- ✅ `npm run audit:images` passes after hardening the parser to also understand HTML image tags
-- ✅ While strengthening those parsers, the session exposed a real bug: the audits were scanning their own generated reports and treating example snippets like `[label](target)` and `![alt](path)` as manuscript content
-- ✅ Fixed that bug by excluding generated `reports/` artifacts from audit inputs, which brought the checks back to honest repo-local coverage instead of self-referential false failures
-- ✅ The fresh link audit now checks 20 repo-local links across 54 Markdown/QMD files and currently reports zero broken internal links
-- ✅ The fresh image audit scans the same 54 content files and currently reports zero repo-local image references; that is boring, but now the checker is ready for both Markdown and HTML image syntax when assets get added
-- ⚠️ `npm run validate` still exits with status `2` because 22 day chapters (`day-08.qmd` through `day-29.qmd`) remain placeholder-heavy; this is a known content backlog, not a broken audit
-- ⚠️ `npm run doctor:render` still exits with status `1` because the `quarto` CLI is not installed on this machine; Pandoc, Tectonic, and the Quarto user config directory are also absent
-- ⚠️ `npm run audit:health` therefore remains **FAIL** overall, but for honest reasons: unfinished chapters plus missing render tooling, not hidden link/image regressions
-- ✅ `index.qmd` has been updated so the book landing page no longer claims the project is frozen in the pre-sprint setup phase
+- ✅ Added `scripts/check-frontmatter.js` plus `npm run audit:frontmatter` as a dedicated metadata audit for the manuscript
+- ✅ The new audit scans 49 `.qmd` source files and skips generated artifacts like `_book/` and `reports/`
+- ✅ It fails on missing frontmatter or missing `title`, and warns on day-chapter placeholder metadata such as `[TBD]`
+- ✅ The first run surfaced real issues immediately, which is a good sign: it confirmed that Day 08 through Day 29 still carry placeholder frontmatter even before reading their body text
+- ✅ Tightened the audit after the first pass so it warns only on day-chapter subtitle gaps, not on every non-day chapter that intentionally has a simpler frontmatter block
+- ✅ After that tightening, `npm run audit:frontmatter` exits with status `2` for honest warnings only, matching the known placeholder backlog of 22 unfinished day chapters
+- ✅ Added the new audit to `npm run audit:health`, so the combined report now covers structure, links, images, metadata, and render-environment readiness in one place
+- ⚠️ `npm run audit:health` still exits with status `1`, but the failure remains honest: Quarto is still missing locally, and placeholder-heavy day chapters still exist
+- ⚠️ `npm run validate` still exits with status `2` because those same 22 day chapters remain structurally unfinished
+- ✅ README documentation has been updated so future sessions can run and understand the new audit without spelunking through the scripts directory
 
 ## Daily Updates
 
@@ -54,4 +54,4 @@ This book is updated from real build sessions. Every meaningful change should sh
 - **Future readers**: Use git history to track exactly when chapters changed
 - **Rule**: No retrospective hero fiction — if something was unfinished, the text should say so
 
-**Next Update**: After either Quarto is installed locally or another placeholder day chapter is converted into a real entry
+**Next Update**: After either Quarto is installed locally or one of the placeholder day chapters is rewritten enough to clear both content and frontmatter warnings
