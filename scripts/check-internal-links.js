@@ -8,13 +8,16 @@ const reportJsonPath = path.join(reportDir, 'link-check-report.json');
 const reportMarkdownPath = path.join(reportDir, 'link-check-report.md');
 
 const allowedExtensions = new Set(['.md', '.qmd']);
-const ignoredDirectories = new Set(['.git', 'node_modules', '_book']);
-
+const ignoredDirectories = new Set(['.git', 'node_modules', '_book', 'reports']);
 const externalSchemes = ['http://', 'https://', 'mailto:', 'tel:', 'data:', 'javascript:', 'ftp://'];
 
 const fileMetadata = new Map();
 const issues = [];
 let totalLinks = 0;
+
+function toPosix(value) {
+  return value.split(path.sep).join('/');
+}
 
 function slugify(text) {
   return text
@@ -42,22 +45,47 @@ function extractAnchors(content) {
   return anchors;
 }
 
+function readLineNumber(content, index) {
+  return content.slice(0, index).split(/\r?\n/).length;
+}
+
+function normalizeTarget(rawTarget) {
+  let target = String(rawTarget || '').trim();
+  if (!target) return '';
+
+  if (target.startsWith('<') && target.endsWith('>')) {
+    target = target.slice(1, -1).trim();
+  }
+
+  target = target.replace(/\s+("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')\s*$/, '').trim();
+  return target;
+}
+
 function extractLinks(content) {
   const links = [];
-  const regex = /\[([^\]]+)\]\(([^)]+)\)/g;
-  const matches = content.matchAll(regex);
+  const patterns = [
+    /\[([^\]]+)\]\(([^)]+)\)/g,
+    /<a\s+[^>]*href=["']([^"']+)["'][^>]*>(.*?)<\/a>/gis
+  ];
 
-  for (const match of matches) {
-    const index = match.index ?? 0;
-    const precedingChar = index > 0 ? content[index - 1] : '';
-    if (precedingChar === '!') continue; // skip images
+  for (const regex of patterns) {
+    for (const match of content.matchAll(regex)) {
+      const index = match.index ?? 0;
+      const full = match[0];
+      const precedingChar = index > 0 ? content[index - 1] : '';
+      if (precedingChar === '!') continue;
 
-    const label = match[1];
-    const targetRaw = match[2].trim();
-    const before = content.slice(0, index);
-    const line = before.split(/\r?\n/).length;
-    links.push({ label, target: targetRaw, line });
+      const targetRaw = regex.source.startsWith('\\[') ? match[2] : match[1];
+      const label = regex.source.startsWith('\\[') ? match[1] : match[2];
+      links.push({
+        label,
+        target: normalizeTarget(targetRaw),
+        line: readLineNumber(content, index),
+        raw: full
+      });
+    }
   }
+
   return links;
 }
 
@@ -71,7 +99,7 @@ function walkDir(dirPath) {
     } else if (entry.isFile()) {
       const ext = path.extname(entry.name).toLowerCase();
       if (!allowedExtensions.has(ext)) continue;
-      const relPath = path.relative(repoRoot, fullPath);
+      const relPath = toPosix(path.relative(repoRoot, fullPath));
       const content = fs.readFileSync(fullPath, 'utf8');
       const anchors = extractAnchors(content);
       const links = extractLinks(content);
@@ -90,6 +118,28 @@ function recordIssue({ file, line, target, type, message }) {
   console.error(`ERROR [${type}] ${file}:${line} → ${target} — ${message}`);
 }
 
+function resolveRepoPath(baseFile, targetPath) {
+  if (targetPath.startsWith('/')) {
+    return path.resolve(repoRoot, targetPath.slice(1));
+  }
+  return path.resolve(path.dirname(baseFile), targetPath);
+}
+
+function getTargetMeta(resolvedPath) {
+  const relPosix = toPosix(path.relative(repoRoot, resolvedPath));
+  let meta = fileMetadata.get(relPosix);
+  if (meta) return meta;
+
+  const content = fs.readFileSync(resolvedPath, 'utf8');
+  meta = {
+    fullPath: resolvedPath,
+    anchors: extractAnchors(content),
+    links: extractLinks(content)
+  };
+  fileMetadata.set(relPosix, meta);
+  return meta;
+}
+
 function validateLinks() {
   for (const [relPath, meta] of fileMetadata.entries()) {
     for (const link of meta.links) {
@@ -97,9 +147,8 @@ function validateLinks() {
       if (!target || isExternal(target)) continue;
 
       if (target.startsWith('#')) {
-        const anchor = target.slice(1);
-        const slug = slugify(anchor);
-        if (!slug) {
+        const anchorSlug = slugify(target.slice(1));
+        if (!anchorSlug) {
           recordIssue({
             file: relPath,
             line: link.line,
@@ -109,7 +158,7 @@ function validateLinks() {
           });
           continue;
         }
-        if (!meta.anchors.has(slug)) {
+        if (!meta.anchors.has(anchorSlug)) {
           recordIssue({
             file: relPath,
             line: link.line,
@@ -121,15 +170,12 @@ function validateLinks() {
         continue;
       }
 
-      const [pathPartRaw, anchorPartRaw] = target.split('#');
+      const [pathPartRaw, ...anchorRest] = target.split('#');
       const pathPart = pathPartRaw.trim();
-      let resolvedPath;
-      if (pathPart.startsWith('/')) {
-        resolvedPath = path.resolve(repoRoot, pathPart.slice(1));
-      } else {
-        resolvedPath = path.resolve(path.dirname(meta.fullPath), pathPart);
-      }
+      const anchorPartRaw = anchorRest.join('#').trim();
+      if (!pathPart) continue;
 
+      const resolvedPath = resolveRepoPath(meta.fullPath, pathPart);
       if (!resolvedPath.startsWith(repoRoot)) {
         recordIssue({
           file: relPath,
@@ -141,10 +187,7 @@ function validateLinks() {
         continue;
       }
 
-      const normalizedRel = path.relative(repoRoot, resolvedPath);
-      const normalizedRelPosix = normalizedRel.split(path.sep).join('/');
-      const targetMeta = fileMetadata.get(normalizedRel) || fileMetadata.get(normalizedRelPosix);
-
+      const normalizedRelPosix = toPosix(path.relative(repoRoot, resolvedPath));
       if (!fs.existsSync(resolvedPath)) {
         recordIssue({
           file: relPath,
@@ -156,53 +199,41 @@ function validateLinks() {
         continue;
       }
 
-      if (anchorPartRaw) {
-        const anchorSlug = slugify(anchorPartRaw);
-        if (!anchorSlug) {
-          recordIssue({
-            file: relPath,
-            line: link.line,
-            target,
-            type: 'invalid-anchor',
-            message: 'Linked anchor could not be slugified'
-          });
-          continue;
-        }
+      if (!anchorPartRaw) continue;
 
-        const targetExt = path.extname(resolvedPath).toLowerCase();
-        if (!allowedExtensions.has(targetExt)) {
-          recordIssue({
-            file: relPath,
-            line: link.line,
-            target,
-            type: 'unsupported-anchor-target',
-            message: 'Anchor references a file type that cannot expose headings'
-          });
-          continue;
-        }
+      const targetExt = path.extname(resolvedPath).toLowerCase();
+      if (!allowedExtensions.has(targetExt)) {
+        recordIssue({
+          file: relPath,
+          line: link.line,
+          target,
+          type: 'unsupported-anchor-target',
+          message: 'Anchor references a file type that cannot expose headings'
+        });
+        continue;
+      }
 
-        let anchors;
-        if (targetMeta) {
-          anchors = targetMeta.anchors;
-        } else {
-          const targetContent = fs.readFileSync(resolvedPath, 'utf8');
-          anchors = extractAnchors(targetContent);
-          fileMetadata.set(normalizedRelPosix, {
-            fullPath: resolvedPath,
-            anchors,
-            links: extractLinks(targetContent)
-          });
-        }
+      const anchorSlug = slugify(anchorPartRaw);
+      if (!anchorSlug) {
+        recordIssue({
+          file: relPath,
+          line: link.line,
+          target,
+          type: 'invalid-anchor',
+          message: 'Linked anchor could not be slugified'
+        });
+        continue;
+      }
 
-        if (!anchors.has(anchorSlug)) {
-          recordIssue({
-            file: relPath,
-            line: link.line,
-            target,
-            type: 'missing-anchor',
-            message: 'Anchor not found in target file'
-          });
-        }
+      const targetMeta = getTargetMeta(resolvedPath);
+      if (!targetMeta.anchors.has(anchorSlug)) {
+        recordIssue({
+          file: relPath,
+          line: link.line,
+          target,
+          type: 'missing-anchor',
+          message: 'Anchor not found in target file'
+        });
       }
     }
   }
@@ -220,7 +251,7 @@ function writeReports() {
     generatedAt: new Date().toISOString(),
     scannedFiles: fileMetadata.size,
     checkedLinks: totalLinks,
-    issues: issues
+    issues
   };
   fs.writeFileSync(reportJsonPath, JSON.stringify(summary, null, 2) + '\n');
 
@@ -234,15 +265,16 @@ function writeReports() {
   if (issues.length) {
     md.push('## Issues', '');
     for (const issue of issues) {
-      md.push(`- **${issue.type}** — \
-  File: \
-\`${issue.file}\` (line ${issue.line}) → Target: \
-\`${issue.target}\` \
-  — ${issue.message}`);
+      md.push(`- **${issue.type}** — File \`${issue.file}\` (line ${issue.line}) → Target: \`${issue.target}\` — ${issue.message}`);
     }
   } else {
     md.push('## Issues', '', '- None 🎉');
   }
+
+  md.push('', '## Coverage Notes', '');
+  md.push('- Markdown links like `[label](target)` are checked.');
+  md.push('- HTML links like `<a href="target">` are also checked.');
+  md.push('- External links are skipped; this is a repo-local integrity audit only.');
   md.push('', '---', '', '*This is a manuscript-integrity check, not a render check.*');
   fs.writeFileSync(reportMarkdownPath, md.join('\n') + '\n');
 }

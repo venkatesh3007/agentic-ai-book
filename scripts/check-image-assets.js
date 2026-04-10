@@ -9,13 +9,17 @@ const reportMarkdownPath = path.join(reportDir, 'image-audit-report.md');
 
 const allowedContentExtensions = new Set(['.md', '.qmd']);
 const allowedImageExtensions = new Set(['.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.avif']);
-const ignoredDirectories = new Set(['.git', 'node_modules', '_book']);
+const ignoredDirectories = new Set(['.git', 'node_modules', '_book', 'reports']);
 const externalSchemes = ['http://', 'https://', 'data:', 'mailto:', 'tel:', 'ftp://'];
 
 const filesScanned = new Set();
 const imageReferences = [];
 const issues = [];
 let externalImages = 0;
+
+function toPosix(value) {
+  return value.split(path.sep).join('/');
+}
 
 function ensureReportDir() {
   if (!fs.existsSync(reportDir)) {
@@ -24,21 +28,18 @@ function ensureReportDir() {
 }
 
 function readFileLinesBeforeIndex(content, index) {
-  const before = content.slice(0, index);
-  return before.split(/\r?\n/).length;
+  return content.slice(0, index).split(/\r?\n/).length;
 }
 
-function normalizeMarkdownTarget(rawTarget) {
-  let target = rawTarget.trim();
+function normalizeTarget(rawTarget) {
+  let target = String(rawTarget || '').trim();
   if (!target) return '';
 
   if (target.startsWith('<') && target.endsWith('>')) {
     target = target.slice(1, -1).trim();
   }
 
-  // Strip optional markdown title: path "caption" or path 'caption'
   target = target.replace(/\s+("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')\s*$/, '').trim();
-
   return target;
 }
 
@@ -71,7 +72,7 @@ function walkDir(dirPath) {
     } else if (entry.isFile()) {
       const ext = path.extname(entry.name).toLowerCase();
       if (!allowedContentExtensions.has(ext)) continue;
-      const relPath = path.relative(repoRoot, fullPath);
+      const relPath = toPosix(path.relative(repoRoot, fullPath));
       filesScanned.add(relPath);
       const content = fs.readFileSync(fullPath, 'utf8');
       extractImageReferences({ relPath, fullPath, content });
@@ -83,11 +84,10 @@ function extractImageReferences({ relPath, fullPath, content }) {
   const markdownRegex = /!\[[^\]]*\]\(([^)]+)\)/g;
   for (const match of content.matchAll(markdownRegex)) {
     const targetRaw = match[1];
-    const line = readFileLinesBeforeIndex(content, match.index ?? 0);
     imageReferences.push({
       file: relPath,
       fileAbsolute: fullPath,
-      line,
+      line: readFileLinesBeforeIndex(content, match.index ?? 0),
       rawTarget: targetRaw,
       type: 'markdown'
     });
@@ -96,11 +96,10 @@ function extractImageReferences({ relPath, fullPath, content }) {
   const htmlRegex = /<img\s+[^>]*src=["']([^"']+)["'][^>]*>/gi;
   for (const match of content.matchAll(htmlRegex)) {
     const targetRaw = match[1];
-    const line = readFileLinesBeforeIndex(content, match.index ?? 0);
     imageReferences.push({
       file: relPath,
       fileAbsolute: fullPath,
-      line,
+      line: readFileLinesBeforeIndex(content, match.index ?? 0),
       rawTarget: targetRaw,
       type: 'html'
     });
@@ -108,7 +107,7 @@ function extractImageReferences({ relPath, fullPath, content }) {
 }
 
 function validateImageReference(ref) {
-  let normalized = normalizeMarkdownTarget(ref.rawTarget || '');
+  let normalized = normalizeTarget(ref.rawTarget);
   if (!normalized) {
     recordIssue({
       file: ref.file,
@@ -121,7 +120,6 @@ function validateImageReference(ref) {
   }
 
   normalized = normalized.replace(/\\/g, '/');
-
   if (isExternal(normalized)) {
     externalImages += 1;
     return;
@@ -139,13 +137,9 @@ function validateImageReference(ref) {
     return;
   }
 
-  const baseDir = path.dirname(ref.fileAbsolute);
-  let resolved;
-  if (stripped.startsWith('/')) {
-    resolved = path.join(repoRoot, stripped.replace(/^\/+/g, ''));
-  } else {
-    resolved = path.resolve(baseDir, stripped);
-  }
+  const resolved = stripped.startsWith('/')
+    ? path.join(repoRoot, stripped.replace(/^\/+/, ''))
+    : path.resolve(path.dirname(ref.fileAbsolute), stripped);
 
   if (!resolved.startsWith(repoRoot)) {
     recordIssue({
@@ -170,13 +164,12 @@ function validateImageReference(ref) {
   }
 
   if (!fs.existsSync(resolved)) {
-    const rel = path.relative(repoRoot, resolved).split(path.sep).join('/');
     recordIssue({
       file: ref.file,
       line: ref.line,
       target: normalized,
       type: 'missing-file',
-      message: `Referenced image does not exist: ${rel}`
+      message: `Referenced image does not exist: ${toPosix(path.relative(repoRoot, resolved))}`
     });
     return;
   }
@@ -216,6 +209,10 @@ function writeReports() {
     }
   }
 
+  md.push('', '## Coverage Notes', '');
+  md.push('- Markdown images like `![alt](path)` are checked.');
+  md.push('- HTML images like `<img src="path">` are also checked.');
+  md.push('- External image URLs are skipped; this audit only verifies repo-local assets.');
   md.push('', '---', '', '*This audit checks that every referenced image exists inside the repository, but it does not render the manuscript.*');
   fs.writeFileSync(reportMarkdownPath, md.join('\n') + '\n');
 }

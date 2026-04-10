@@ -1,6 +1,6 @@
 # AI-Native Book - Current Status
 
-**Last Updated**: April 9, 2026
+**Last Updated**: April 10, 2026
 
 ## Progress
 
@@ -14,6 +14,7 @@
 - ✅ Latest documented shipped work includes AikaaraSpec and AikaaraGuard in the current git history
 - ✅ Day 31 has been converted from a placeholder into an honest maintenance-session note
 - ✅ Day 30 has been converted from an empty template into an explicit continuity-gap chapter rather than fabricated progress
+- ⚠️ Days 08-29 still contain placeholder material and need honest rewrites rather than synthetic summaries
 
 ### Part III: The Lessons - OUTLINE STAGE
 - ✅ Skeleton lesson chapters exist (`patterns`, `failures`, `factory`)
@@ -21,38 +22,29 @@
 
 ## Current Session Focus
 
-April 8 shifted into book-integrity infrastructure work:
-- Add a repo-local validation script for manuscript structure
-- Verify every `_quarto.yml` chapter reference resolves to a real file
-- Surface which day chapters are still empty `[TBD]` shells so future sessions can clean them intentionally
-- Keep `quarto render` as the publication gate when Quarto is available
-- New for April 9 (morning): add a render-environment doctor that reports which dependencies are actually installed on the current machine and saves the findings to `reports/render-environment-report.{md,json}`
-- New for April 9 (afternoon): add a Markdown/QMD internal link audit so broken cross-references are caught locally and logged to `reports/link-check-report.{md,json}`
+April 10 morning work focused on infrastructure hardening for manuscript integrity rather than new prose generation:
+- expand repo-local audits so they understand more real Markdown/HTML patterns
+- verify that stronger checks do not create false confidence
+- document actual environment limits instead of pretending the render passed
+- keep the book homepage aligned with the current state of the repo
 
 ### Verification Note
 
-- ✅ Added `scripts/validate-book.js` and `npm run validate` as a repo-local integrity check
-- ✅ Validator now writes both `PLACEHOLDER_CHAPTERS.md` and `placeholder-chapters.json`, giving future sessions a concrete rewrite backlog in both human-readable and machine-readable forms
-- ✅ Added `scripts/end-of-day-wrapup.js` and `npm run wrapup:eod` to generate an honest `END_OF_DAY_WRAPUP.md` summary at the close of a session
-- ✅ The wrap-up script reruns the placeholder audit, reports whether Quarto render tooling is actually available, and refuses to create a local milestone tag unless `--tag` is requested on a clean working tree
-- ✅ The audit now prioritizes the next five chapter rewrites automatically (`day-08` through `day-12`)
-- ✅ Validation runs successfully enough to enumerate real remaining gaps
-- ✅ Added `scripts/render-environment-doctor.js` plus `npm run doctor:render`, which inspects the local machine for book-render dependencies and writes the findings to `reports/render-environment-report.{md,json}`
-- ✅ Added `scripts/check-internal-links.js` plus `npm run audit:links`, which scan every Markdown/QMD file for broken relative links and anchors, and export the findings to `reports/link-check-report.{md,json}`
-- ✅ Added `scripts/check-image-assets.js` plus `npm run audit:images`, which audits Markdown/QMD image references, blocks missing assets, and writes findings to `reports/image-audit-report.{md,json}`
-- ✅ Added `scripts/run-healthcheck.js` plus `npm run audit:health`, which orchestrates every repo-local audit, captures their logs, and writes a summary to `reports/healthcheck-report.{md,json}` for dashboards and wrap-ups
-- ✅ The end-of-day wrap-up script now runs the combined healthcheck automatically and embeds its results so milestone tags can see the exact audit surface area that passed or failed
-- ⚠️ The validator currently reports **22 placeholder day chapters** (`day-08.qmd` through `day-29.qmd`, excluding the already-cleaned files) that still need honest rewrites
-- ⚠️ The latest doctor run fails its required checks because the `quarto` CLI is still not installed here; the report documents this explicitly for future sessions
-- ✅ The fresh link audit (20 links checked) currently passes, so any future breakage will show up as a regression in `reports/link-check-report.md`
-- ✅ The new image audit currently reports zero referenced images, so it passes but will catch any missing assets the moment someone links to a file that is absent or mis-typed.
-- ⚠️ During this session, the git remote was found to contain an embedded GitHub token in the URL; the remote was sanitized locally to remove the credential, but the token itself should still be treated as exposed and rotated outside this repo
-- The latest infrastructure work is real and tested; full render verification is still pending until Quarto is available
+- ✅ `npm run audit:links` passes after hardening the parser to also understand HTML anchor tags
+- ✅ `npm run audit:images` passes after hardening the parser to also understand HTML image tags
+- ✅ While strengthening those parsers, the session exposed a real bug: the audits were scanning their own generated reports and treating example snippets like `[label](target)` and `![alt](path)` as manuscript content
+- ✅ Fixed that bug by excluding generated `reports/` artifacts from audit inputs, which brought the checks back to honest repo-local coverage instead of self-referential false failures
+- ✅ The fresh link audit now checks 20 repo-local links across 54 Markdown/QMD files and currently reports zero broken internal links
+- ✅ The fresh image audit scans the same 54 content files and currently reports zero repo-local image references; that is boring, but now the checker is ready for both Markdown and HTML image syntax when assets get added
+- ⚠️ `npm run validate` still exits with status `2` because 22 day chapters (`day-08.qmd` through `day-29.qmd`) remain placeholder-heavy; this is a known content backlog, not a broken audit
+- ⚠️ `npm run doctor:render` still exits with status `1` because the `quarto` CLI is not installed on this machine; Pandoc, Tectonic, and the Quarto user config directory are also absent
+- ⚠️ `npm run audit:health` therefore remains **FAIL** overall, but for honest reasons: unfinished chapters plus missing render tooling, not hidden link/image regressions
+- ✅ `index.qmd` has been updated so the book landing page no longer claims the project is frozen in the pre-sprint setup phase
 
 ## Daily Updates
 
 This book is updated from real build sessions. Every meaningful change should ship with:
-- a working render,
+- a working render when the environment supports it,
 - honest notes about what succeeded or failed,
 - and a real git commit.
 
@@ -62,4 +54,4 @@ This book is updated from real build sessions. Every meaningful change should sh
 - **Future readers**: Use git history to track exactly when chapters changed
 - **Rule**: No retrospective hero fiction — if something was unfinished, the text should say so
 
-**Next Update**: After the current morning build session is rendered and committed
+**Next Update**: After either Quarto is installed locally or another placeholder day chapter is converted into a real entry

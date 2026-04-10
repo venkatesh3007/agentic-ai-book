@@ -1,6 +1,6 @@
 # Repository Healthcheck Report
 
-- Generated: 2026-04-09T13:33:38.695Z
+- Generated: 2026-04-10T04:31:49.976Z
 - Overall status: **FAIL** (❌ FAIL)
 - Checks run: 4
 - Exit code: 1
@@ -12,7 +12,7 @@
 - Description: Validates _quarto.yml references and flags day chapters that are still placeholder templates.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/validate-book.js`
 - Exit code: 2
-- Duration: 70 ms
+- Duration: 57 ms
 - Reports:
   - `PLACEHOLDER_CHAPTERS.md`
   - `placeholder-chapters.json`
@@ -102,7 +102,7 @@ WARN:   - Day 29: chapters/day-29.qmd
 - Description: Scans Markdown/QMD files for broken repo-local links and missing anchors.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-internal-links.js`
 - Exit code: 0
-- Duration: 66 ms
+- Duration: 62 ms
 - Reports:
   - `reports/link-check-report.md`
   - `reports/link-check-report.json`
@@ -111,7 +111,7 @@ WARN:   - Day 29: chapters/day-29.qmd
 <summary>Output</summary>
 
 ```text
-Scanned 58 files with Markdown/QMD content
+Scanned 54 files with Markdown/QMD content
 Found 20 links to inspect
 Internal link check passed.
 ```
@@ -122,7 +122,7 @@ Internal link check passed.
 - Description: Ensures every referenced image exists inside the repository with a valid extension.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-image-assets.js`
 - Exit code: 0
-- Duration: 73 ms
+- Duration: 54 ms
 - Reports:
   - `reports/image-audit-report.md`
   - `reports/image-audit-report.json`
@@ -131,7 +131,7 @@ Internal link check passed.
 <summary>Output</summary>
 
 ```text
-Scanned 58 content files
+Scanned 54 content files
 Found 0 image reference(s)
 Image asset audit passed.
 ```
@@ -142,7 +142,7 @@ Image asset audit passed.
 - Description: Checks the local machine for the tools required to run a trustworthy `quarto render`.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/render-environment-doctor.js`
 - Exit code: 1
-- Duration: 233 ms
+- Duration: 214 ms
 - Reports:
   - `reports/render-environment-report.md`
   - `reports/render-environment-report.json`

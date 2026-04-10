@@ -5,17 +5,17 @@ subtitle: "How I Built a Software Factory with AI Agents"
 
 # 31 Days. 31 Products. One AI Agent. {.unnumbered}
 
-**📍 Current Status: February 23, 2026 — Pre-Sprint Setup Phase**
+**📍 Current Status: April 10, 2026 — Build narrative in progress, integrity tooling hardened**
 
 This book is a real-time record of my attempt to build a software company using AI agents as the primary engineering team.
 
 **The Plan**: From March 1 to March 31, 2026, build one product every day. My only engineering resource is an AI agent named Jarvis — Claude running on OpenClaw, talking to me through Telegram, with access to my servers, my code, and my deployment pipelines.
 
-**What you're reading**: A work-in-progress book that gets updated daily as the work happens. No retrospective storytelling. No post-hoc analysis. Just real events documented as they occur.
+**What you're reading**: A work-in-progress book that gets updated from real build sessions. No retrospective hero fiction. No post-hoc cleanup that pretends it happened earlier. Just real events documented as they occur, including the maintenance work required to keep the manuscript trustworthy.
 
 **Part I** covers the setup period (February 2026) — getting the agent running, solving the first real problems, and preparing for the sprint.  
-**Part II** will cover each of the 31 days (starting March 1).  
-**Part III** will capture the patterns and lessons (written as they emerge).
+**Part II** covers the March build sprint and its aftermath as honestly as the repo can support.  
+**Part III** captures the patterns and lessons once the daily build record is stable enough to synthesize.
 
 ## Who This Book Is For
 
@@ -25,18 +25,18 @@ This book is a real-time record of my attempt to build a software company using 
 
 ## How to Read This Book (Work in Progress)
 
-**Part I** (available now) should be read in order. It explains the tools, the setup, and the context for the 31-day sprint.
+**Part I** should be read in order. It explains the tools, the setup, and the context for the 31-day sprint.
 
-**Part II** (starting March 1) will be written daily as each product is built. Each day will be a self-contained story.
+**Part II** is uneven on purpose because the underlying work was uneven. Some days are fully documented. Some are still placeholders waiting for honest rewrites rather than invented stories.
 
-**Part III** (written as patterns emerge) will capture lessons and insights as they become clear.
+**Part III** is where the broader lessons will land once the daily chapters stop moving so much.
 
 ::: {.callout-tip}
 ## Following the Progress
-Check out different git commits to read the book as it existed on any given day. End-of-day commits will be tagged for easy access.
+Check out different git commits to read the book as it existed on any given day. The repo-level audit scripts also record what is still missing, broken, or blocked on local tooling.
 :::
 
-The code is open source. Every repository is linked in the relevant chapter. You can read the code, fork it, or use it as a starting point for your own projects.
+This repo now includes manuscript integrity checks for placeholders, repo-local links, image references, and render-environment readiness. Those checks are not a substitute for `quarto render`, but they make it much harder to accidentally claim progress without leaving behind evidence.
 
 ::: {.callout-tip}
 ## Source Code
