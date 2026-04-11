@@ -1,25 +1,25 @@
 # End-of-Day Wrap-Up
 
-Generated: 2026-04-10T13:30:50.963Z
+Generated: 2026-04-11T13:30:13.840Z
 
-Git HEAD: b4267f7
+Git HEAD: af2ae96
 
 ## Summary
 
 - Overall result: not fully green.
-- Validation found placeholder day chapters still needing honest rewrites (22 remaining).
+- Validation found placeholder day chapters still needing honest rewrites (21 remaining).
 - Quarto CLI is not available in this environment, so a render check could not be performed.
 
 ## Manuscript Integrity
 
 - Referenced chapter files missing: 0
-- Placeholder day chapters remaining: 22
+- Placeholder day chapters remaining: 21
 - Next priority rewrites:
-  - Day 08 — `chapters/day-08.qmd`
   - Day 09 — `chapters/day-09.qmd`
   - Day 10 — `chapters/day-10.qmd`
   - Day 11 — `chapters/day-11.qmd`
   - Day 12 — `chapters/day-12.qmd`
+  - Day 13 — `chapters/day-13.qmd`
 
 ## Validation Command
 
@@ -76,8 +76,7 @@ OK: Chapter exists: chapters/factory.qmd
 OK: Wrote report: PLACEHOLDER_CHAPTERS.md
 OK: Wrote report: placeholder-chapters.json
 
-WARN: Placeholder day chapters still present (22):
-WARN:   - Day 08: chapters/day-08.qmd
+WARN: Placeholder day chapters still present (21):
 WARN:   - Day 09: chapters/day-09.qmd
 WARN:   - Day 10: chapters/day-10.qmd
 WARN:   - Day 11: chapters/day-11.qmd
@@ -107,11 +106,11 @@ WARN:   - Day 29: chapters/day-29.qmd
 - Exit status: 1
 - Overall status: FAIL (exit 1)
 - Checks:
-  - Placeholder Audit: WARN (exit 2, 74 ms)
-  - Internal Link Audit: PASS (exit 0, 82 ms)
-  - Image Asset Audit: PASS (exit 0, 68 ms)
-  - Frontmatter Audit: WARN (exit 2, 73 ms)
-  - Render Environment Doctor: FAIL (exit 1, 220 ms)
+  - Placeholder Audit: WARN (exit 2, 67 ms)
+  - Internal Link Audit: PASS (exit 0, 74 ms)
+  - Image Asset Audit: PASS (exit 0, 62 ms)
+  - Frontmatter Audit: WARN (exit 2, 91 ms)
+  - Render Environment Doctor: FAIL (exit 1, 241 ms)
 - Reports:
   - `reports/healthcheck-report.md`
   - `reports/healthcheck-report.json`
@@ -142,7 +141,7 @@ M placeholder-chapters.json
 
 ## Tagging
 
-- Tag request skipped: working tree is dirty, so local tag `eod-2026-04-10` was not created.
+- Tag request skipped: working tree is dirty, so local tag `eod-2026-04-11` was not created.
 
 ## Notes
 
