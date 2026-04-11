@@ -61,6 +61,7 @@ npm run audit:links
 npm run audit:images
 npm run audit:frontmatter
 npm run audit:health
+npm run audit:dashboard
 npm run wrapup:eod
 node scripts/end-of-day-wrapup.js --tag
 npm run doctor:render
@@ -109,6 +110,10 @@ This is especially useful for catching book-specific debt that link and image ch
 ### Combined healthcheck
 
 `npm run audit:health` runs `scripts/run-healthcheck.js`, which chains the placeholder audit, internal link audit, image audit, frontmatter audit, and render-environment doctor into one command. It records every command's exit code, duration, and trimmed output, writes the combined summary to `reports/healthcheck-report.md` plus a JSON twin, and exits with `0`/`1`/`2` depending on whether the repo is clean, failed, or merely warning-laden. This makes end-of-day wrap-ups honest even when Quarto itself is unavailable.
+
+### Status dashboard
+
+`npm run audit:dashboard` runs `scripts/build-status-dashboard.js`, which reads the existing JSON audit outputs and compiles a compact repo dashboard. It summarizes current wins, active blockers, the next priority day-chapter rewrites, and the latest per-audit status lines in `reports/status-dashboard.{md,json}`. This is useful when you want a quick “what changed and what still hurts?” view without opening every raw report.
 
 ## Author
 
