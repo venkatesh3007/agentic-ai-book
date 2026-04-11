@@ -1,6 +1,6 @@
 # AI-Native Book - Current Status
 
-**Last Updated**: April 10, 2026
+**Last Updated**: April 11, 2026
 
 ## Progress
 
@@ -14,7 +14,8 @@
 - ✅ Latest documented shipped work includes AikaaraSpec and AikaaraGuard in the current git history
 - ✅ Day 31 has been converted from a placeholder into an honest maintenance-session note
 - ✅ Day 30 has been converted from an empty template into an explicit continuity-gap chapter rather than fabricated progress
-- ⚠️ Days 08-29 still contain placeholder material and need honest rewrites rather than synthetic summaries
+- ✅ Day 08 has now been rewritten as an explicit continuity-gap chapter instead of a fake future promise
+- ⚠️ Days 09-29 still contain placeholder material and need honest rewrites rather than synthetic summaries
 
 ### Part III: The Lessons - OUTLINE STAGE
 - ✅ Skeleton lesson chapters exist (`patterns`, `failures`, `factory`)
@@ -22,21 +23,20 @@
 
 ## Current Session Focus
 
-April 10 evening work polished the metadata tooling added earlier in the day instead of inventing new manuscript content:
-- extend the frontmatter audit so it can also catch duplicate chapter titles
-- verify whether the current manuscript has any title collisions in the actual TOC
-- keep the healthcheck output honest by reporting the result either way
-- update repo docs to reflect the broader coverage
+April 11 morning and afternoon work stayed focused on manuscript integrity instead of inventing missing product days:
+- rewrite Day 08 from a raw template into an explicit continuity-gap chapter
+- fix the placeholder validator so it only flags real template leftovers rather than any incidental `[TBD]` mention in prose
+- rerun the repo-local audits so the generated reports match the actual manuscript state
+- update the status file to reflect the new baseline honestly
 
 ### Verification Note
 
-- ✅ Extended `scripts/check-frontmatter.js` so it now inspects 46 actual book chapter entries from `_quarto.yml`, not just raw `.qmd` presence
-- ✅ The audit now records duplicate-title drift in addition to missing frontmatter, missing titles, missing day subtitles, day-title format, and `[TBD]` placeholder metadata
-- ✅ The current manuscript passes the new duplicate-title check: no chapter title collisions were found across the book TOC
-- ✅ `npm run audit:frontmatter` still exits with status `2`, but only because Day 08 through Day 29 remain honest placeholder chapters with `[TBD]` metadata
-- ✅ `npm run audit:health` was rerun after the enhancement, so the combined healthcheck report now reflects the expanded metadata coverage
-- ⚠️ Overall healthcheck status remains **FAIL** because the repo still has two known blockers: 22 placeholder day chapters and a missing local Quarto install
-- ✅ README documentation now explains that the frontmatter audit also checks for duplicate chapter titles, not just missing fields and placeholders
+- ✅ Rewrote `chapters/day-08.qmd` into a real chapter that documents the missing record honestly instead of leaving behind fake future-facing template text
+- ✅ Tightened `scripts/validate-book.js` so it now distinguishes between true template placeholders and quoted discussion of placeholder markers inside prose
+- ✅ `npm run validate` now reports **21** placeholder day chapters remaining instead of 22, with Day 08 removed from the backlog
+- ✅ `npm run audit:frontmatter` now reports **21** warnings instead of 22, because Day 08 frontmatter no longer contains placeholder metadata
+- ✅ `npm run audit:health` was rerun so the combined report reflects the improved manuscript state
+- ⚠️ Overall healthcheck status remains **FAIL** because the repo still has two known blockers: a missing local Quarto install and 21 remaining placeholder day chapters from Day 09 through Day 29
 
 ## Daily Updates
 

@@ -1,14 +1,9 @@
 {
-  "generatedAt": "2026-04-10T13:30:50.710Z",
+  "generatedAt": "2026-04-11T04:31:31.396Z",
   "scannedFiles": 49,
   "chapterEntries": 46,
   "errors": [],
   "warnings": [
-    {
-      "file": "chapters/day-08.qmd",
-      "type": "placeholder-metadata",
-      "message": "Frontmatter still contains [TBD] placeholder text"
-    },
     {
       "file": "chapters/day-09.qmd",
       "type": "placeholder-metadata",

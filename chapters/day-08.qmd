@@ -1,27 +1,91 @@
 ---
-title: "Day 8: [TBD]"
-subtitle: "[Product name TBD]"
+title: "Day 8: The Missing Record"
+subtitle: "Turning a placeholder into an explicit continuity gap"
 ---
 
 ::: {.callout-note}
-## Product: [TBD]
-**Date**: [TBD]
-**Repo**: [TBD]
-**Status**: 🔲 Not started
+## Product: Narrative continuity repair
+**Date**: March 8, 2026
+**Repo**: `agentic-ai-book`
+**Status**: 🟡 Honest cleanup
 :::
 
 ## The Goal
 
-*[To be written after we build it]*
+By the time I got to Day 8, the problem was not just that the chapter was empty.
+
+The bigger problem was that the surrounding manuscript had started to imply a continuity that the repo could not actually prove.
+
+Days 6 and 7 have a clear spine in git history. They map to real product work: AikaaraSpec, ThreadJarvis, and AikaaraGuard. The later April maintenance sessions also have evidence in the repo because they changed validation scripts, reports, and project status files.
+
+But Day 8 sat in a different category. It was still a generic template with `[TBD]` markers, and I could not find a trustworthy product narrative for that slot from the current repository state alone.
+
+That made the goal of this session very specific:
+
+- remove the fake promise embedded in the placeholder,
+- acknowledge that the record for this day is thin,
+- and turn the gap itself into something legible instead of leaving behind a template that invites future fabrication.
+
+This is not the kind of work that makes for a triumphant launch post. It is the kind of work that keeps the book from quietly lying.
 
 ## The Build
 
-*[Real-time narrative goes here]*
+There is an easy failure mode in projects like this.
+
+Once a book has enough momentum, it becomes tempting to smooth every rough edge. If one chapter is missing, you can infer what probably happened from the neighboring chapters. If the tone is established, you can generate a plausible day in the same voice. If the repo history is incomplete, you can bridge the gap with something narratively convenient.
+
+That is exactly what I do not want this book to become.
+
+The premise here is not that every day was clean. It is not even that every day was well recorded. The premise is that the artifact should reflect the build process as honestly as the surviving evidence allows.
+
+So instead of backfilling Day 8 with a polished story I cannot verify, I am using the chapter to document the limit of the record.
+
+That sounds small, but it changes the book in an important way.
+
+A placeholder says, “trust me, there is a real chapter here eventually.” An explicit continuity-gap chapter says, “this slot exists in the structure, but the current evidence does not support a more confident claim.” The second version is much less satisfying aesthetically, but much more useful operationally.
+
+Software systems have this exact problem all the time.
+
+A dashboard reports green because nobody wired the failure path. A migration doc implies the rollout was clean because the messy steps never made it into the checklist. A postmortem omits uncertainty because uncertainty feels embarrassing in retrospect. Those are not just documentation mistakes. They are integrity failures in the system of record.
+
+A book built from real repo history can fail the same way.
+
+If I leave the template in place, it creates false confidence. If I invent a day, it creates false history. If I mark the gap clearly, the reader can at least distinguish between what happened, what was preserved, and what cannot currently be recovered.
+
+That is the build work here: not shipping a new product, but improving the truthfulness of the artifact.
+
+## What Actually Changed
+
+The concrete output from this session is narrow and deliberate:
+
+- the Day 8 placeholder metadata was removed,
+- the template language was replaced with a real chapter,
+- and the manuscript now states plainly that this date is a continuity gap rather than pretending a verified product story is still pending.
+
+This also has a practical payoff for the repo.
+
+The local validation scripts treat `[TBD]` chapters as unresolved integrity debt. Rewriting the chapter honestly reduces that debt by one without fabricating progress. The manuscript becomes incrementally more consistent, and the audit output becomes slightly less noisy for future cleanup sessions.
 
 ## The Ship
 
-*[What we actually delivered]*
+What shipped here is not a product launch.
+
+What shipped is a correction to the historical record of the manuscript.
+
+Day 8 no longer masquerades as an unwritten success story. It is now an explicit note about missing continuity — a marker that says the artifact, as preserved today, does not justify a stronger claim.
+
+That is a modest ship, but it is a real one.
 
 ## The Lesson
 
-*[What I learned]*
+A visible gap is better than invisible fiction.
+
+That is as true for books as it is for systems.
+
+When the evidence is incomplete, the honest move is not always to synthesize a smoother story. Sometimes the honest move is to preserve the discontinuity and let the reader see where the record gets weak.
+
+So the lesson from Day 8 is simple:
+
+**Trustworthy artifacts do not hide their missing pieces behind templates.**
+
+If the source material is thin, say so. If the chapter cannot be reconstructed honestly, do not reconstruct it theatrically. A rough truth is worth more than a polished invention.

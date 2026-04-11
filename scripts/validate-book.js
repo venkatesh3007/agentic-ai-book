@@ -68,7 +68,18 @@ for (const rel of uniqueChapters) {
 
   const match = rel.match(/chapters\/day-(\d+)\.qmd$/);
   const dayNumber = match ? Number(match[1]) : null;
-  const isPlaceholder = templatePhrases.some((phrase) => text.includes(phrase)) || /\[TBD\]/.test(text);
+
+  const frontmatterMatch = text.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  const frontmatterText = frontmatterMatch ? frontmatterMatch[1] : '';
+  const bodyText = frontmatterMatch ? text.slice(frontmatterMatch[0].length) : text;
+
+  const hasPlaceholderFrontmatter = /\[TBD\]/.test(frontmatterText);
+  const hasTemplateBody = templatePhrases
+    .filter((phrase) => !phrase.startsWith('subtitle:') && !phrase.startsWith('## Product:') && !phrase.startsWith('**Date**:') && !phrase.startsWith('**Repo**:'))
+    .some((phrase) => bodyText.includes(phrase));
+  const hasTemplateCallout = ['## Product: [TBD]', '**Date**: [TBD]', '**Repo**: [TBD]'].some((phrase) => bodyText.includes(phrase));
+
+  const isPlaceholder = hasPlaceholderFrontmatter || hasTemplateCallout || hasTemplateBody;
   if (isPlaceholder) {
     placeholderDayChapters.push({ path: rel, day: dayNumber });
   }
