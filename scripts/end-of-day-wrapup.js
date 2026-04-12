@@ -6,9 +6,11 @@ const { spawnSync } = require('child_process');
 const repoRoot = process.cwd();
 const validateScript = path.join(repoRoot, 'scripts', 'validate-book.js');
 const healthcheckScript = path.join(repoRoot, 'scripts', 'run-healthcheck.js');
+const localRenderScript = path.join(repoRoot, 'scripts', 'render-with-local-quarto.js');
 const summaryPath = path.join(repoRoot, 'END_OF_DAY_WRAPUP.md');
 const placeholderJsonPath = path.join(repoRoot, 'placeholder-chapters.json');
 const healthcheckJsonPath = path.join(repoRoot, 'reports', 'healthcheck-report.json');
+const localRenderJsonPath = path.join(repoRoot, 'reports', 'local-render-report.json');
 
 const args = process.argv.slice(2);
 const wantsTag = args.includes('--tag');
@@ -47,6 +49,16 @@ function codeBlock(text) {
   return ['```text', cleaned, '```'];
 }
 
+function readJsonIfExists(filePath) {
+  if (!fs.existsSync(filePath)) return null;
+  try {
+    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  } catch (error) {
+    console.warn(`WARN: Failed to parse ${path.relative(repoRoot, filePath)}: ${error.message}`);
+    return null;
+  }
+}
+
 if (!fs.existsSync(validateScript)) {
   console.error(`ERROR: Missing validator script at ${path.relative(repoRoot, validateScript)}`);
   process.exit(1);
@@ -54,6 +66,8 @@ if (!fs.existsSync(validateScript)) {
 
 const validationCommand = formatCommand(process.execPath, [path.relative(repoRoot, validateScript)]);
 const healthcheckCommand = formatCommand(process.execPath, [path.relative(repoRoot, healthcheckScript)]);
+const localRenderCommand = formatCommand(process.execPath, [path.relative(repoRoot, localRenderScript), '.', '--to', 'html']);
+
 const validation = run(process.execPath, [validateScript]);
 
 const hasHealthcheckScript = fs.existsSync(healthcheckScript);
@@ -61,44 +75,36 @@ let healthcheck = null;
 let healthSummary = null;
 if (hasHealthcheckScript) {
   healthcheck = run(process.execPath, [healthcheckScript]);
-  if (fs.existsSync(healthcheckJsonPath)) {
-    try {
-      healthSummary = JSON.parse(fs.readFileSync(healthcheckJsonPath, 'utf8'));
-    } catch (error) {
-      console.warn('WARN: Failed to parse healthcheck report JSON:', error.message);
-    }
-  }
+  healthSummary = readJsonIfExists(healthcheckJsonPath);
 }
 
-let placeholderData = null;
-if (fs.existsSync(placeholderJsonPath)) {
-  placeholderData = JSON.parse(fs.readFileSync(placeholderJsonPath, 'utf8'));
-}
-
+const placeholderData = readJsonIfExists(placeholderJsonPath);
 const placeholderCount = placeholderData?.placeholderDayChapters?.length ?? null;
 const missingCount = placeholderData?.missingChapters?.length ?? null;
 const nextPriority = placeholderData?.nextPriority ?? [];
 
-const quartoCheck = run('quarto', ['--version']);
-const quartoAvailable = quartoCheck.status === 0;
-
-let renderAttempt = null;
-if (quartoAvailable) {
-  renderAttempt = run('quarto', ['render']);
+const hasLocalRenderScript = fs.existsSync(localRenderScript);
+let localRender = null;
+let localRenderSummary = null;
+if (hasLocalRenderScript) {
+  localRender = run(process.execPath, [localRenderScript, '.', '--to', 'html']);
+  localRenderSummary = readJsonIfExists(localRenderJsonPath);
 }
 
 const gitHead = run('git', ['rev-parse', '--short', 'HEAD']);
-const gitStatus = run('git', ['status', '--short']);
-const dirtyTree = cleanText(gitStatus.stdout).length > 0;
+const gitStatusBeforeTag = run('git', ['status', '--short']);
+const dirtyTreeBeforeTag = cleanText(gitStatusBeforeTag.stdout).length > 0;
 
 const summary = [];
 summary.push('# End-of-Day Wrap-Up', '');
 summary.push(`Generated: ${new Date().toISOString()}`, '');
 summary.push(`Git HEAD: ${cleanText(gitHead.stdout) || 'unknown'}`, '');
 
+const localRenderPassed = localRenderSummary?.status === 'pass' || localRender?.status === 0;
+
 const overallStatus = [];
-if (validation.status === 0 && quartoAvailable && renderAttempt?.status === 0) {
-  overallStatus.push('- Overall result: local validation passed and Quarto render passed.');
+if (validation.status === 0 && localRenderPassed) {
+  overallStatus.push('- Overall result: manuscript validation passed and local HTML render passed.');
 } else {
   overallStatus.push('- Overall result: not fully green.');
   if (validation.status === 1) {
@@ -111,12 +117,12 @@ if (validation.status === 0 && quartoAvailable && renderAttempt?.status === 0) {
     overallStatus.push('- Validation passed.');
   }
 
-  if (!quartoAvailable) {
-    overallStatus.push('- Quarto CLI is not available in this environment, so a render check could not be performed.');
-  } else if (renderAttempt && renderAttempt.status !== 0) {
-    overallStatus.push(`- Quarto render ran but failed with status ${renderAttempt.status}.`);
-  } else if (renderAttempt && renderAttempt.status === 0) {
-    overallStatus.push('- Quarto render passed.');
+  if (!hasLocalRenderScript) {
+    overallStatus.push('- Local render wrapper is missing, so a render check could not be performed.');
+  } else if (localRenderPassed) {
+    overallStatus.push('- Local HTML render passed via the Quarto wrapper.');
+  } else {
+    overallStatus.push(`- Local HTML render failed${typeof localRender?.status === 'number' ? ` with status ${localRender.status}` : ''}.`);
   }
 }
 summary.push(...section('Summary', overallStatus));
@@ -171,27 +177,44 @@ if (!hasHealthcheckScript) {
 summary.push(...section('Combined Healthcheck', healthLines));
 
 const renderLines = [];
-if (!quartoAvailable) {
-  renderLines.push('- Render check not run: `quarto` command not found.');
-  renderLines.push(...codeBlock(quartoCheck.stderr || quartoCheck.stdout || 'quarto: command not found'));
+if (!hasLocalRenderScript) {
+  renderLines.push('- Render check not run: local render wrapper script is missing.');
+  renderLines.push(...codeBlock('scripts/render-with-local-quarto.js: not found'));
 } else {
-  renderLines.push('- Command: `quarto render`');
-  renderLines.push(`- Exit status: ${renderAttempt.status}`);
-  renderLines.push(...codeBlock([renderAttempt.stdout, renderAttempt.stderr].filter(Boolean).join('\n')));
+  renderLines.push(`- Command: \`${localRenderCommand}\``);
+  renderLines.push(`- Exit status: ${typeof localRender?.status === 'number' ? localRender.status : 'unknown'}`);
+  if (localRenderSummary?.quartoPath) {
+    renderLines.push(`- Quarto binary: \`${localRenderSummary.quartoPath}\``);
+  }
+  if (localRenderSummary?.quartoVersion) {
+    renderLines.push(`- Quarto version: ${localRenderSummary.quartoVersion}`);
+  }
+  if (typeof localRenderSummary?.outputDirExists === 'boolean') {
+    renderLines.push(`- Output directory present: ${localRenderSummary.outputDirExists ? 'yes' : 'no'}`);
+  }
+  renderLines.push('- Reports:');
+  renderLines.push('  - `reports/local-render-report.md`');
+  renderLines.push('  - `reports/local-render-report.json`');
+  renderLines.push(...codeBlock(localRenderSummary?.output || [localRender?.stdout, localRender?.stderr].filter(Boolean).join('\n')));
 }
 summary.push(...section('Render Check', renderLines));
 
 const gitLines = [
-  `- Working tree dirty at wrap-up time: ${dirtyTree ? 'yes' : 'no'}`,
-  ...codeBlock(gitStatus.stdout || gitStatus.stderr)
+  `- Working tree dirty before tagging decision: ${dirtyTreeBeforeTag ? 'yes' : 'no'}`,
+  ...codeBlock(gitStatusBeforeTag.stdout || gitStatusBeforeTag.stderr)
 ];
 summary.push(...section('Git Working Tree', gitLines));
+
+fs.writeFileSync(summaryPath, summary.join('\n'));
+
+const gitStatusAfterWrap = run('git', ['status', '--short']);
+const dirtyTreeAfterWrap = cleanText(gitStatusAfterWrap.stdout).length > 0;
 
 let tagMessage = '- No tag requested.';
 if (wantsTag) {
   const tagName = explicitTagName || `eod-${todayStamp()}`;
-  if (dirtyTree) {
-    tagMessage = `- Tag request skipped: working tree is dirty, so local tag \`${tagName}\` was not created.`;
+  if (dirtyTreeAfterWrap) {
+    tagMessage = `- Tag request skipped: working tree is dirty after writing wrap-up artifacts, so local tag \`${tagName}\` was not created.`;
   } else {
     const existingTag = run('git', ['tag', '--list', tagName]);
     if (cleanText(existingTag.stdout)) {
@@ -206,11 +229,11 @@ if (wantsTag) {
     }
   }
 }
-summary.push(...section('Tagging', [tagMessage]));
 
-summary.push('## Notes', '', '- This wrap-up is intentionally honest: placeholder chapters or missing render tooling keep the day from being marked fully green.', '- No network operations are performed by this script.', '');
+const wrapupContent = fs.readFileSync(summaryPath, 'utf8');
+const enhanced = `${wrapupContent}\n## Tagging\n\n${tagMessage}\n\n## Notes\n\n- This wrap-up is intentionally honest: placeholder chapters or failed health checks keep the day from being marked fully green.\n- Local render success is recorded separately from the stricter PATH-based healthcheck so infrastructure reality is visible instead of flattened.\n- No network operations are performed by this script.\n`;
+fs.writeFileSync(summaryPath, enhanced);
 
-fs.writeFileSync(summaryPath, summary.join('\n'));
 console.log(`Wrote ${path.basename(summaryPath)}`);
 console.log(cleanText(tagMessage).replace(/^-\s*/, ''));
 
@@ -221,7 +244,7 @@ if (validation.status === 1) {
   exitCode = Math.max(exitCode, 2);
 }
 
-if (!quartoAvailable || (renderAttempt && renderAttempt.status !== 0)) {
+if (!localRenderPassed) {
   exitCode = Math.max(exitCode, 2);
 }
 
