@@ -92,8 +92,8 @@ if (hasLocalRenderScript) {
 }
 
 const gitHead = run('git', ['rev-parse', '--short', 'HEAD']);
-const gitStatusBeforeTag = run('git', ['status', '--short']);
-const dirtyTreeBeforeTag = cleanText(gitStatusBeforeTag.stdout).length > 0;
+const gitStatusBeforeWrap = run('git', ['status', '--short']);
+const dirtyTreeBeforeWrap = cleanText(gitStatusBeforeWrap.stdout).length > 0;
 
 const summary = [];
 summary.push('# End-of-Day Wrap-Up', '');
@@ -200,21 +200,16 @@ if (!hasLocalRenderScript) {
 summary.push(...section('Render Check', renderLines));
 
 const gitLines = [
-  `- Working tree dirty before tagging decision: ${dirtyTreeBeforeTag ? 'yes' : 'no'}`,
-  ...codeBlock(gitStatusBeforeTag.stdout || gitStatusBeforeTag.stderr)
+  `- Working tree dirty before wrap-up write: ${dirtyTreeBeforeWrap ? 'yes' : 'no'}`,
+  ...codeBlock(gitStatusBeforeWrap.stdout || gitStatusBeforeWrap.stderr)
 ];
 summary.push(...section('Git Working Tree', gitLines));
-
-fs.writeFileSync(summaryPath, summary.join('\n'));
-
-const gitStatusAfterWrap = run('git', ['status', '--short']);
-const dirtyTreeAfterWrap = cleanText(gitStatusAfterWrap.stdout).length > 0;
 
 let tagMessage = '- No tag requested.';
 if (wantsTag) {
   const tagName = explicitTagName || `eod-${todayStamp()}`;
-  if (dirtyTreeAfterWrap) {
-    tagMessage = `- Tag request skipped: working tree is dirty after writing wrap-up artifacts, so local tag \`${tagName}\` was not created.`;
+  if (dirtyTreeBeforeWrap) {
+    tagMessage = `- Tag request skipped: working tree was already dirty before wrap-up generation, so local tag \`${tagName}\` was not created.`;
   } else {
     const existingTag = run('git', ['tag', '--list', tagName]);
     if (cleanText(existingTag.stdout)) {
@@ -230,9 +225,9 @@ if (wantsTag) {
   }
 }
 
-const wrapupContent = fs.readFileSync(summaryPath, 'utf8');
-const enhanced = `${wrapupContent}\n## Tagging\n\n${tagMessage}\n\n## Notes\n\n- This wrap-up is intentionally honest: placeholder chapters or failed health checks keep the day from being marked fully green.\n- Local render success is recorded separately from the stricter PATH-based healthcheck so infrastructure reality is visible instead of flattened.\n- No network operations are performed by this script.\n`;
-fs.writeFileSync(summaryPath, enhanced);
+summary.push(...section('Tagging', [tagMessage]));
+summary.push('## Notes', '', '- This wrap-up is intentionally honest: placeholder chapters or failed health checks keep the day from being marked fully green.', '- Local render success is recorded separately from the stricter PATH-based healthcheck so infrastructure reality is visible instead of flattened.', '- No network operations are performed by this script.', '');
+fs.writeFileSync(summaryPath, summary.join('\n'));
 
 console.log(`Wrote ${path.basename(summaryPath)}`);
 console.log(cleanText(tagMessage).replace(/^-\s*/, ''));
