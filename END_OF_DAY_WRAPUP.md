@@ -1,8 +1,8 @@
 # End-of-Day Wrap-Up
 
-Generated: 2026-04-12T13:34:43.414Z
+Generated: 2026-04-12T13:36:35.322Z
 
-Git HEAD: f2e5053
+Git HEAD: 1ba1319
 
 ## Summary
 
@@ -106,11 +106,11 @@ WARN:   - Day 29: chapters/day-29.qmd
 - Exit status: 1
 - Overall status: FAIL (exit 1)
 - Checks:
-  - Placeholder Audit: WARN (exit 2, 54 ms)
-  - Internal Link Audit: PASS (exit 0, 61 ms)
-  - Image Asset Audit: PASS (exit 0, 64 ms)
-  - Frontmatter Audit: WARN (exit 2, 67 ms)
-  - Render Environment Doctor: FAIL (exit 1, 255 ms)
+  - Placeholder Audit: WARN (exit 2, 64 ms)
+  - Internal Link Audit: PASS (exit 0, 69 ms)
+  - Image Asset Audit: PASS (exit 0, 59 ms)
+  - Frontmatter Audit: WARN (exit 2, 75 ms)
+  - Render Environment Doctor: FAIL (exit 1, 301 ms)
 - Reports:
   - `reports/healthcheck-report.md`
   - `reports/healthcheck-report.json`
@@ -187,7 +187,7 @@ Output created: _book/index.html
 
 ## Git Working Tree
 
-- Working tree dirty before tagging decision: yes
+- Working tree dirty before wrap-up write: yes
 ```text
 M placeholder-chapters.json
  M reports/frontmatter-audit-report.json
@@ -203,7 +203,7 @@ M placeholder-chapters.json
 
 ## Tagging
 
-- Tag request skipped: working tree is dirty after writing wrap-up artifacts, so local tag `eod-2026-04-12` was not created.
+- Tag request skipped: working tree was already dirty before wrap-up generation, so local tag `eod-2026-04-12` was not created.
 
 ## Notes
 
