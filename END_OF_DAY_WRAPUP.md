@@ -1,8 +1,8 @@
 # End-of-Day Wrap-Up
 
-Generated: 2026-04-12T13:36:35.322Z
+Generated: 2026-04-12T13:38:03.828Z
 
-Git HEAD: 1ba1319
+Git HEAD: 5ab86c7
 
 ## Summary
 
@@ -106,11 +106,11 @@ WARN:   - Day 29: chapters/day-29.qmd
 - Exit status: 1
 - Overall status: FAIL (exit 1)
 - Checks:
-  - Placeholder Audit: WARN (exit 2, 64 ms)
-  - Internal Link Audit: PASS (exit 0, 69 ms)
-  - Image Asset Audit: PASS (exit 0, 59 ms)
-  - Frontmatter Audit: WARN (exit 2, 75 ms)
-  - Render Environment Doctor: FAIL (exit 1, 301 ms)
+  - Placeholder Audit: WARN (exit 2, 58 ms)
+  - Internal Link Audit: PASS (exit 0, 60 ms)
+  - Image Asset Audit: PASS (exit 0, 55 ms)
+  - Frontmatter Audit: WARN (exit 2, 72 ms)
+  - Render Environment Doctor: FAIL (exit 1, 248 ms)
 - Reports:
   - `reports/healthcheck-report.md`
   - `reports/healthcheck-report.json`
