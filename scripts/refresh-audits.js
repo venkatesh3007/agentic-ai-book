@@ -8,7 +8,7 @@ const reportDir = path.join(repoRoot, 'reports');
 const reportMdPath = path.join(reportDir, 'refresh-audits-report.md');
 const reportJsonPath = path.join(reportDir, 'refresh-audits-report.json');
 
-const commands = [
+const baseCommands = [
   {
     id: 'placeholders',
     title: 'Placeholder Audit',
@@ -56,16 +56,17 @@ const commands = [
     args: [path.join(repoRoot, 'scripts', 'run-healthcheck.js')],
     warnOn: new Set([2]),
     reports: ['reports/healthcheck-report.md', 'reports/healthcheck-report.json']
-  },
-  {
-    id: 'dashboard',
-    title: 'Status Dashboard',
-    command: process.execPath,
-    args: [path.join(repoRoot, 'scripts', 'build-status-dashboard.js')],
-    warnOn: new Set([]),
-    reports: ['reports/status-dashboard.md', 'reports/status-dashboard.json']
   }
 ];
+
+const dashboardCommand = {
+  id: 'dashboard',
+  title: 'Status Dashboard',
+  command: process.execPath,
+  args: [path.join(repoRoot, 'scripts', 'build-status-dashboard.js')],
+  warnOn: new Set([]),
+  reports: ['reports/status-dashboard.md', 'reports/status-dashboard.json']
+};
 
 function ensureReportDir() {
   fs.mkdirSync(reportDir, { recursive: true });
@@ -118,32 +119,17 @@ function statusEmoji(status) {
   return '❌';
 }
 
-function main() {
-  ensureReportDir();
-  const startedAt = new Date().toISOString();
-  const results = commands.map(runOne);
-  const hasFail = results.some((item) => item.status === 'fail');
-  const hasWarn = results.some((item) => item.status === 'warn');
-  const overallStatus = hasFail ? 'fail' : hasWarn ? 'warn' : 'pass';
-  const exitCode = hasFail ? 1 : hasWarn ? 2 : 0;
-
-  const summary = {
-    generatedAt: startedAt,
-    overallStatus,
-    exitCode,
-    results
-  };
-
+function writeRefreshReports(summary) {
   fs.writeFileSync(reportJsonPath, JSON.stringify(summary, null, 2) + '\n');
 
   const md = [];
   md.push('# Audit Refresh Report', '');
-  md.push(`- Generated: ${startedAt}`);
-  md.push(`- Overall status: ${statusEmoji(overallStatus)} **${overallStatus.toUpperCase()}**`);
-  md.push(`- Commands run: ${results.length}`);
+  md.push(`- Generated: ${summary.generatedAt}`);
+  md.push(`- Overall status: ${statusEmoji(summary.overallStatus)} **${summary.overallStatus.toUpperCase()}**`);
+  md.push(`- Commands run: ${summary.results.length}`);
   md.push('');
   md.push('## Results', '');
-  for (const item of results) {
+  for (const item of summary.results) {
     md.push(`### ${statusEmoji(item.status)} ${item.title}`);
     md.push(`- Command: \`${item.command}\``);
     md.push(`- Exit code: ${item.exitCode}`);
@@ -159,10 +145,42 @@ function main() {
   }
 
   fs.writeFileSync(reportMdPath, md.join('\n') + '\n');
+}
+
+function computeOverall(results) {
+  const hasFail = results.some((item) => item.status === 'fail');
+  const hasWarn = results.some((item) => item.status === 'warn');
+  return {
+    overallStatus: hasFail ? 'fail' : hasWarn ? 'warn' : 'pass',
+    exitCode: hasFail ? 1 : hasWarn ? 2 : 0
+  };
+}
+
+function main() {
+  ensureReportDir();
+  const generatedAt = new Date().toISOString();
+
+  const results = baseCommands.map(runOne);
+  let summary = {
+    generatedAt,
+    ...computeOverall(results),
+    results
+  };
+
+  writeRefreshReports(summary);
+
+  const dashboardResult = runOne(dashboardCommand);
+  summary = {
+    generatedAt,
+    ...computeOverall([...results, dashboardResult]),
+    results: [...results, dashboardResult]
+  };
+
+  writeRefreshReports(summary);
 
   console.log(`Wrote ${toPosix(path.relative(repoRoot, reportMdPath))}`);
   console.log(`Wrote ${toPosix(path.relative(repoRoot, reportJsonPath))}`);
-  process.exit(exitCode);
+  process.exit(summary.exitCode);
 }
 
 try {

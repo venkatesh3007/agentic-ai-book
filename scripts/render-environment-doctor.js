@@ -16,6 +16,15 @@ const REQUIRED_MIN_VERSIONS = {
   quarto: '1.4.0'
 };
 
+const QUARTO_CANDIDATE_PATHS = [
+  path.join(os.homedir(), 'quarto', 'bin', 'quarto'),
+  path.join(os.homedir(), 'bin', 'quarto'),
+  path.join(os.homedir(), 'bin', 'bin', 'quarto'),
+  '/usr/local/bin/quarto',
+  '/usr/bin/quarto',
+  '/opt/quarto/bin/quarto'
+];
+
 function ensureReportsDir() {
   fs.mkdirSync(reportsDir, { recursive: true });
 }
@@ -124,6 +133,65 @@ function checkBinary({ name, command, args = ['--version'], required = false, mi
   };
 }
 
+function checkQuartoCli() {
+  const pathResult = runCommand('quarto', ['--version']);
+  if (pathResult.status !== 'not-found') {
+    const version = extractVersion(pathResult.stdout || pathResult.stderr);
+    let status = 'pass';
+    let detail = version
+      ? `Detected v${version} via PATH`
+      : 'Quarto responded via PATH but no semantic version was detected.';
+
+    if (!version) {
+      status = 'fail';
+      detail += ` (unable to confirm ≥ v${REQUIRED_MIN_VERSIONS.quarto})`;
+    } else if (compareSemver(version, REQUIRED_MIN_VERSIONS.quarto) < 0) {
+      status = 'fail';
+      detail += ` (< v${REQUIRED_MIN_VERSIONS.quarto} required)`;
+    }
+
+    return {
+      name: 'Quarto CLI',
+      required: true,
+      status,
+      detail,
+      recommendation: status === 'pass' ? '' : 'Upgrade Quarto to a supported version and keep it on PATH.',
+      discoveredPaths: []
+    };
+  }
+
+  const discoveredPaths = [];
+  for (const candidate of QUARTO_CANDIDATE_PATHS) {
+    if (!fs.existsSync(candidate)) continue;
+    const candidateResult = runCommand(candidate, ['--version']);
+    const version = extractVersion(candidateResult.stdout || candidateResult.stderr);
+    discoveredPaths.push({ path: candidate, version: version || null, status: candidateResult.status });
+  }
+
+  if (discoveredPaths.length) {
+    const best = discoveredPaths.find((item) => item.version) || discoveredPaths[0];
+    const versionText = best.version ? `v${best.version}` : 'unknown version';
+    const pathList = discoveredPaths.map((item) => item.path).join(', ');
+    return {
+      name: 'Quarto CLI',
+      required: true,
+      status: 'fail',
+      detail: `Quarto is not on PATH, but candidate binary/binaries exist: ${pathList}. Best detected version: ${versionText}.`,
+      recommendation: `Add one of these binaries to PATH or invoke Quarto explicitly from ${best.path}.`,
+      discoveredPaths
+    };
+  }
+
+  return {
+    name: 'Quarto CLI',
+    required: true,
+    status: 'fail',
+    detail: 'Command `quarto` was not found in PATH and no common local Quarto install path was detected.',
+    recommendation: 'Install Quarto from https://quarto.org/docs/get-started/ for local renders.',
+    discoveredPaths: []
+  };
+}
+
 function checkQuartoConfigDir() {
   const expectedDir = path.join(os.homedir(), '.quarto');
   const exists = fs.existsSync(expectedDir);
@@ -132,7 +200,7 @@ function checkQuartoConfigDir() {
     required: false,
     status: exists ? 'pass' : 'warn',
     detail: exists ? `Found ${expectedDir}` : 'Not found. Quarto usually initializes this on first run.',
-    recommendation: exists ? '' : 'Run `quarto check` after installation so the user config directory is created.'
+    recommendation: exists ? '' : 'Run `quarto check` after Quarto is available on PATH so the user config directory is created.'
   };
 }
 
@@ -151,6 +219,7 @@ function gatherHostInfo() {
 function buildReports(checkResults, hostInfo, generatedAt) {
   const requiredFailures = checkResults.filter((c) => c.required && c.status !== 'pass');
   const warnings = checkResults.filter((c) => !c.required && c.status !== 'pass');
+  const quartoCheck = checkResults.find((c) => c.name === 'Quarto CLI');
   const exitCode = requiredFailures.length ? 1 : warnings.length ? 2 : 0;
 
   const markdown = [];
@@ -176,6 +245,10 @@ function buildReports(checkResults, hostInfo, generatedAt) {
   }
   markdown.push(`- Exit code: ${exitCode}`);
 
+  if (quartoCheck?.discoveredPaths?.length) {
+    markdown.push(`- Quarto binaries discovered outside PATH: ${quartoCheck.discoveredPaths.map((item) => `\`${item.path}\``).join(', ')}`);
+  }
+
   markdown.push('', '## Detailed Checks', '');
   markdown.push('| Check | Required | Status | Details | Recommendation |');
   markdown.push('| --- | --- | --- | --- | --- |');
@@ -188,6 +261,15 @@ function buildReports(checkResults, hostInfo, generatedAt) {
       escapePipes(check.recommendation || '')
     ];
     markdown.push(`| ${row.join(' | ')} |`);
+  }
+
+  if (quartoCheck?.discoveredPaths?.length) {
+    markdown.push('', '## Quarto Discovery', '');
+    markdown.push('| Path | Detected Version | Probe Status |');
+    markdown.push('| --- | --- | --- |');
+    for (const item of quartoCheck.discoveredPaths) {
+      markdown.push(`| ${escapePipes(item.path)} | ${escapePipes(item.version || 'unknown')} | ${escapePipes(item.status)} |`);
+    }
   }
 
   if (requiredFailures.length || warnings.length) {
@@ -212,7 +294,8 @@ function buildReports(checkResults, hostInfo, generatedAt) {
     host: hostInfo,
     checks: checkResults,
     requiredFailures: requiredFailures.map((c) => c.name),
-    warnings: warnings.map((c) => c.name)
+    warnings: warnings.map((c) => c.name),
+    quartoDiscoveredPaths: quartoCheck?.discoveredPaths || []
   };
 
   return { markdown: markdown.join('\n') + '\n', json: JSON.stringify(jsonPayload, null, 2) + '\n', exitCode };
@@ -243,15 +326,7 @@ function main() {
       recommendation: 'Install git 2.30+ to match GitHub Actions runners.'
     })
   );
-  results.push(
-    checkBinary({
-      name: 'Quarto CLI',
-      command: 'quarto',
-      required: true,
-      minVersion: REQUIRED_MIN_VERSIONS.quarto,
-      recommendation: 'Install Quarto from https://quarto.org/docs/get-started/ for local renders.'
-    })
-  );
+  results.push(checkQuartoCli());
   results.push(
     checkBinary({
       name: 'Pandoc',
@@ -280,6 +355,9 @@ function main() {
   results.forEach((check) => {
     const prefix = check.status === 'pass' ? 'OK' : check.status === 'warn' ? 'WARN' : 'FAIL';
     console.log(`[${prefix}] ${check.name} — ${check.detail}`);
+    if (check.discoveredPaths?.length) {
+      console.log(`      ↳ Discovered candidate paths: ${check.discoveredPaths.map((item) => item.path).join(', ')}`);
+    }
     if (check.recommendation && check.status !== 'pass') {
       console.log(`      ↳ ${check.recommendation}`);
     }

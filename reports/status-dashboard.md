@@ -1,10 +1,10 @@
 # Repository Status Dashboard
 
-- Generated: 2026-04-12T04:32:56.469Z
+- Generated: 2026-04-12T07:33:13.576Z
 - Overall status: ❌ **FAIL**
 - Audit snapshot freshness: ✅ **FRESH**
-- Oldest source report: 2026-04-12T04:32:55.979Z (0 minute(s) old)
-- Newest source report: 2026-04-12T04:32:56.414Z (0 minute(s) old)
+- Oldest source report: 2026-04-12T07:33:12.977Z (0 minute(s) old)
+- Newest source report: 2026-04-12T07:33:13.533Z (0 minute(s) old)
 - Placeholder day chapters remaining: **21**
 
 ## Current Wins
@@ -18,7 +18,7 @@
 
 ## Current Blockers
 
-- Render tooling missing required dependency: Quarto CLI
+- Quarto exists on disk but is not wired into PATH (/home/openclaw/quarto/bin/quarto, /home/openclaw/bin/quarto, /home/openclaw/bin/bin/quarto)
 - 21 placeholder day chapters still need honest rewrites
 
 ## Next Priority Rewrites
@@ -31,11 +31,11 @@
 
 ## Audit Snapshot
 
-- ⚠️ **Placeholder Audit** — WARN (exit 2, 64 ms)
-- ✅ **Internal Link Audit** — PASS (exit 0, 69 ms)
-- ✅ **Image Asset Audit** — PASS (exit 0, 58 ms)
-- ⚠️ **Frontmatter Audit** — WARN (exit 2, 71 ms)
-- ❌ **Render Environment Doctor** — FAIL (exit 1, 226 ms)
+- ⚠️ **Placeholder Audit** — WARN (exit 2, 56 ms)
+- ✅ **Internal Link Audit** — PASS (exit 0, 61 ms)
+- ✅ **Image Asset Audit** — PASS (exit 0, 56 ms)
+- ⚠️ **Frontmatter Audit** — WARN (exit 2, 73 ms)
+- ❌ **Render Environment Doctor** — FAIL (exit 1, 353 ms)
 
 ## Detailed Counts
 
@@ -45,11 +45,18 @@
 - Image asset issues: **0**
 - Render required failures: **1**
 - Render warnings: **3**
+- Quarto candidate paths discovered: **3**
+
+## Quarto Discovery
+
+- `/home/openclaw/quarto/bin/quarto` — version 1.6.42
+- `/home/openclaw/bin/quarto` — version 1.6.42
+- `/home/openclaw/bin/bin/quarto` — version 1.6.42
 
 ## Refresh Workflow
 
 - Run `npm run audit:refresh` to regenerate the prerequisite audit JSON files in one pass before rebuilding the dashboard.
-- Last bulk refresh report: 2026-04-12T04:32:37.411Z
+- Last bulk refresh report: 2026-04-12T07:33:11.957Z
 
 ## Source Reports
 

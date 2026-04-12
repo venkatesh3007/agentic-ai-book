@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-12T04:32:56.248Z",
+  "generatedAt": "2026-04-12T07:33:13.259Z",
   "exitCode": 1,
   "host": {
     "platform": "linux 6.8.0-107-generic",
@@ -35,8 +35,25 @@
       "name": "Quarto CLI",
       "required": true,
       "status": "fail",
-      "detail": "Command `quarto` was not found in PATH.",
-      "recommendation": "Install Quarto from https://quarto.org/docs/get-started/ for local renders."
+      "detail": "Quarto is not on PATH, but candidate binary/binaries exist: /home/openclaw/quarto/bin/quarto, /home/openclaw/bin/quarto, /home/openclaw/bin/bin/quarto. Best detected version: v1.6.42.",
+      "recommendation": "Add one of these binaries to PATH or invoke Quarto explicitly from /home/openclaw/quarto/bin/quarto.",
+      "discoveredPaths": [
+        {
+          "path": "/home/openclaw/quarto/bin/quarto",
+          "version": "1.6.42",
+          "status": "ok"
+        },
+        {
+          "path": "/home/openclaw/bin/quarto",
+          "version": "1.6.42",
+          "status": "ok"
+        },
+        {
+          "path": "/home/openclaw/bin/bin/quarto",
+          "version": "1.6.42",
+          "status": "ok"
+        }
+      ]
     },
     {
       "name": "Pandoc",
@@ -57,7 +74,7 @@
       "required": false,
       "status": "warn",
       "detail": "Not found. Quarto usually initializes this on first run.",
-      "recommendation": "Run `quarto check` after installation so the user config directory is created."
+      "recommendation": "Run `quarto check` after Quarto is available on PATH so the user config directory is created."
     }
   ],
   "requiredFailures": [
@@ -67,5 +84,22 @@
     "Pandoc",
     "LaTeX engine (tectonic/pdflatex)",
     "Quarto user config directory"
+  ],
+  "quartoDiscoveredPaths": [
+    {
+      "path": "/home/openclaw/quarto/bin/quarto",
+      "version": "1.6.42",
+      "status": "ok"
+    },
+    {
+      "path": "/home/openclaw/bin/quarto",
+      "version": "1.6.42",
+      "status": "ok"
+    },
+    {
+      "path": "/home/openclaw/bin/bin/quarto",
+      "version": "1.6.42",
+      "status": "ok"
+    }
   ]
 }

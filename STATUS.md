@@ -26,6 +26,7 @@
 April 12 work stayed focused on manuscript integrity and repo tooling instead of inventing missing product days:
 - add a single-command audit refresh workflow so future sessions can regenerate every repo-local report before making claims about manuscript health
 - teach the status dashboard to expose audit snapshot freshness instead of quietly trusting stale JSON artifacts
+- improve the render doctor so it can detect Quarto binaries that exist on disk but are missing from PATH instead of misdiagnosing them as completely uninstalled
 - rerun the repo-local audits through the new refresh flow so the generated reports match the actual manuscript state
 - update the repo docs and status notes to reflect the new workflow honestly
 
@@ -36,7 +37,10 @@ April 12 work stayed focused on manuscript integrity and repo tooling instead of
 - ✅ Upgraded `scripts/build-status-dashboard.js` so it now reports audit snapshot freshness based on report timestamps instead of silently trusting whatever JSON files were already lying around
 - ✅ The dashboard now warns when the oldest prerequisite report is stale and points maintainers at `npm run audit:refresh` as the repair path
 - ✅ Reran `npm run audit:refresh`, which regenerated the repo-local audit artifacts and confirmed the dashboard snapshot is **FRESH**
-- ⚠️ Overall healthcheck status remains **FAIL** because the repo still has two real blockers: a missing local Quarto install and 21 remaining placeholder day chapters from Day 09 through Day 29
+- ✅ Improved `scripts/render-environment-doctor.js` so it now detects Quarto binaries that exist outside PATH and reports their candidate locations instead of collapsing every failure into “install Quarto”
+- ✅ On this host, the doctor now proves Quarto binaries exist at `/home/openclaw/quarto/bin/quarto`, `/home/openclaw/bin/quarto`, and `/home/openclaw/bin/bin/quarto`, which narrows the real blocker to PATH wiring rather than package absence
+- ✅ The status dashboard now surfaces Quarto discovery details so future sessions can see that render readiness is blocked by environment wiring, not pure installation state
+- ⚠️ Overall healthcheck status remains **FAIL** because the repo still has two real blockers: Quarto is not available on PATH for normal `quarto render` commands, and 21 placeholder day chapters from Day 09 through Day 29 still need honest rewrites
 
 ## Daily Updates
 

@@ -86,6 +86,7 @@ function main() {
   const imageIssues = images.issues?.length ?? 0;
   const renderRequiredFailures = render.requiredFailures ?? [];
   const renderWarnings = render.warnings ?? [];
+  const quartoDiscoveredPaths = render.quartoDiscoveredPaths ?? [];
   const checks = health.checks ?? [];
   const generatedAtValues = [placeholder, health, frontmatter, links, images, render]
     .map(parseGeneratedAt)
@@ -102,7 +103,11 @@ function main() {
     blockers.push(`Audit snapshot is stale (oldest report is ${formatAge(oldestAgeMs)} old); run \`npm run audit:refresh\``);
   }
   if (renderRequiredFailures.length) {
-    blockers.push(`Render tooling missing required dependency: ${renderRequiredFailures.join(', ')}`);
+    if (quartoDiscoveredPaths.length) {
+      blockers.push(`Quarto exists on disk but is not wired into PATH (${quartoDiscoveredPaths.map((item) => item.path).join(', ')})`);
+    } else {
+      blockers.push(`Render tooling missing required dependency: ${renderRequiredFailures.join(', ')}`);
+    }
   }
   if (placeholderCount) {
     blockers.push(`${placeholderCount} placeholder day chapters still need honest rewrites`);
@@ -225,7 +230,16 @@ function main() {
   lines.push(`- Image asset issues: **${imageIssues}**`);
   lines.push(`- Render required failures: **${renderRequiredFailures.length}**`);
   lines.push(`- Render warnings: **${renderWarnings.length}**`);
+  lines.push(`- Quarto candidate paths discovered: **${quartoDiscoveredPaths.length}**`);
   lines.push('');
+
+  if (quartoDiscoveredPaths.length) {
+    lines.push('## Quarto Discovery', '');
+    for (const item of quartoDiscoveredPaths) {
+      lines.push(`- \`${item.path}\`${item.version ? ` — version ${item.version}` : ''}`);
+    }
+    lines.push('');
+  }
 
   lines.push('## Refresh Workflow', '');
   lines.push('- Run `npm run audit:refresh` to regenerate the prerequisite audit JSON files in one pass before rebuilding the dashboard.');

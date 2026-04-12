@@ -79,7 +79,7 @@ The end-of-day wrap-up script writes `END_OF_DAY_WRAPUP.md`, reruns the placehol
 - writes a detailed report to `reports/render-environment-report.md` plus a machine-readable JSON copy, and
 - exits with status `1` if required tooling is missing, or `2` when only optional warnings remain.
 
-This is not a substitute for `quarto render`, but it gives the repo a real integrity gate even on machines where Quarto is not installed.
+This is not a substitute for `quarto render`, but it gives the repo a real integrity gate even on machines where Quarto is not installed. It also now distinguishes between “Quarto truly missing” and “Quarto present on disk but not exposed on PATH,” which matters on long-lived servers where tooling may have been unpacked into `$HOME/quarto/bin` or similar locations without updating shell startup files.
 
 ### Internal link audit
 
