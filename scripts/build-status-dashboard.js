@@ -12,6 +12,8 @@ const frontmatterJsonPath = path.join(reportDir, 'frontmatter-audit-report.json'
 const linkJsonPath = path.join(reportDir, 'link-check-report.json');
 const imageJsonPath = path.join(reportDir, 'image-audit-report.json');
 const renderJsonPath = path.join(reportDir, 'render-environment-report.json');
+const refreshJsonPath = path.join(reportDir, 'refresh-audits-report.json');
+const STALE_THRESHOLD_MS = 6 * 60 * 60 * 1000;
 
 function readJson(filePath) {
   if (!fs.existsSync(filePath)) return null;
@@ -41,6 +43,25 @@ function rel(p) {
   return path.relative(repoRoot, p).split(path.sep).join('/');
 }
 
+function parseGeneratedAt(payload) {
+  if (!payload || !payload.generatedAt) return null;
+  const time = Date.parse(payload.generatedAt);
+  return Number.isNaN(time) ? null : time;
+}
+
+function formatAge(ms) {
+  if (ms == null) return 'unknown age';
+  const minutes = Math.round(ms / (60 * 1000));
+  if (minutes < 60) return `${minutes} minute(s)`;
+  const hours = (ms / (60 * 60 * 1000)).toFixed(1);
+  return `${hours} hour(s)`;
+}
+
+function freshnessStatus(ageMs) {
+  if (ageMs == null) return 'unknown';
+  return ageMs > STALE_THRESHOLD_MS ? 'stale' : 'fresh';
+}
+
 function main() {
   ensureReportDir();
 
@@ -50,6 +71,7 @@ function main() {
   const links = readJson(linkJsonPath);
   const images = readJson(imageJsonPath);
   const render = readJson(renderJsonPath);
+  const refresh = readJson(refreshJsonPath);
 
   if (!placeholder || !health || !frontmatter || !links || !images || !render) {
     console.error('ERROR: Missing one or more prerequisite JSON reports. Run the audits first.');
@@ -65,8 +87,20 @@ function main() {
   const renderRequiredFailures = render.requiredFailures ?? [];
   const renderWarnings = render.warnings ?? [];
   const checks = health.checks ?? [];
+  const generatedAtValues = [placeholder, health, frontmatter, links, images, render]
+    .map(parseGeneratedAt)
+    .filter((value) => value != null);
+  const oldestGeneratedAt = generatedAtValues.length ? Math.min(...generatedAtValues) : null;
+  const newestGeneratedAt = generatedAtValues.length ? Math.max(...generatedAtValues) : null;
+  const now = Date.now();
+  const oldestAgeMs = oldestGeneratedAt == null ? null : now - oldestGeneratedAt;
+  const newestAgeMs = newestGeneratedAt == null ? null : now - newestGeneratedAt;
+  const snapshotFreshness = freshnessStatus(oldestAgeMs);
 
   const blockers = [];
+  if (snapshotFreshness === 'stale') {
+    blockers.push(`Audit snapshot is stale (oldest report is ${formatAge(oldestAgeMs)} old); run \`npm run audit:refresh\``);
+  }
   if (renderRequiredFailures.length) {
     blockers.push(`Render tooling missing required dependency: ${renderRequiredFailures.join(', ')}`);
   }
@@ -84,6 +118,8 @@ function main() {
   }
 
   const wins = [];
+  if (snapshotFreshness === 'fresh') wins.push(`Audit snapshot is fresh (oldest report age: ${formatAge(oldestAgeMs)})`);
+  wins.push(`Bulk audit refresh command available via \`npm run audit:refresh\``);
   if (linkIssues === 0) wins.push('Internal link audit is clean');
   if (imageIssues === 0) wins.push('Image asset audit is clean');
   if (frontmatterErrors === 0) wins.push('Frontmatter audit has zero errors');
@@ -92,6 +128,14 @@ function main() {
   const summary = {
     generatedAt: new Date().toISOString(),
     overallStatus: health.overallStatus,
+    snapshotFreshness,
+    snapshotGeneratedAt: {
+      oldest: oldestGeneratedAt == null ? null : new Date(oldestGeneratedAt).toISOString(),
+      newest: newestGeneratedAt == null ? null : new Date(newestGeneratedAt).toISOString(),
+      oldestAgeMs,
+      newestAgeMs
+    },
+    refreshReportGeneratedAt: refresh?.generatedAt ?? null,
     placeholderCount,
     nextPriority,
     blockers,
@@ -127,7 +171,8 @@ function main() {
       rel(frontmatterJsonPath),
       rel(linkJsonPath),
       rel(imageJsonPath),
-      rel(renderJsonPath)
+      rel(renderJsonPath),
+      rel(refreshJsonPath)
     ]
   };
 
@@ -135,6 +180,9 @@ function main() {
   lines.push('# Repository Status Dashboard', '');
   lines.push(`- Generated: ${summary.generatedAt}`);
   lines.push(`- Overall status: ${statusEmoji(summary.overallStatus)} **${statusWord(summary.overallStatus)}**`);
+  lines.push(`- Audit snapshot freshness: ${snapshotFreshness === 'fresh' ? '✅' : snapshotFreshness === 'stale' ? '⚠️' : '❓'} **${statusWord(snapshotFreshness)}**`);
+  lines.push(`- Oldest source report: ${summary.snapshotGeneratedAt.oldest || 'unknown'} (${formatAge(oldestAgeMs)} old)`);
+  lines.push(`- Newest source report: ${summary.snapshotGeneratedAt.newest || 'unknown'} (${formatAge(newestAgeMs)} old)`);
   lines.push(`- Placeholder day chapters remaining: **${placeholderCount}**`);
   lines.push('');
 
@@ -177,6 +225,15 @@ function main() {
   lines.push(`- Image asset issues: **${imageIssues}**`);
   lines.push(`- Render required failures: **${renderRequiredFailures.length}**`);
   lines.push(`- Render warnings: **${renderWarnings.length}**`);
+  lines.push('');
+
+  lines.push('## Refresh Workflow', '');
+  lines.push('- Run `npm run audit:refresh` to regenerate the prerequisite audit JSON files in one pass before rebuilding the dashboard.');
+  if (summary.refreshReportGeneratedAt) {
+    lines.push(`- Last bulk refresh report: ${summary.refreshReportGeneratedAt}`);
+  } else {
+    lines.push('- No bulk refresh report has been generated yet.');
+  }
   lines.push('');
 
   lines.push('## Source Reports', '');

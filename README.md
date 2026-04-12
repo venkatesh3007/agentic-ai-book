@@ -62,6 +62,7 @@ npm run audit:images
 npm run audit:frontmatter
 npm run audit:health
 npm run audit:dashboard
+npm run audit:refresh
 npm run wrapup:eod
 node scripts/end-of-day-wrapup.js --tag
 npm run doctor:render
@@ -113,7 +114,11 @@ This is especially useful for catching book-specific debt that link and image ch
 
 ### Status dashboard
 
-`npm run audit:dashboard` runs `scripts/build-status-dashboard.js`, which reads the existing JSON audit outputs and compiles a compact repo dashboard. It summarizes current wins, active blockers, the next priority day-chapter rewrites, and the latest per-audit status lines in `reports/status-dashboard.{md,json}`. This is useful when you want a quick “what changed and what still hurts?” view without opening every raw report.
+`npm run audit:dashboard` runs `scripts/build-status-dashboard.js`, which reads the existing JSON audit outputs and compiles a compact repo dashboard. It summarizes current wins, active blockers, the next priority day-chapter rewrites, and the latest per-audit status lines in `reports/status-dashboard.{md,json}`. It now also reports whether the underlying audit snapshot is fresh or stale, so a dashboard built from yesterday's JSON files cannot quietly masquerade as current state. This is useful when you want a quick “what changed and what still hurts?” view without opening every raw report.
+
+### Bulk audit refresh
+
+`npm run audit:refresh` runs `scripts/refresh-audits.js`, which regenerates the placeholder audit, link audit, image audit, frontmatter audit, render doctor, combined healthcheck, and status dashboard in one pass. It writes its own execution report to `reports/refresh-audits-report.{md,json}` so future sessions can prove exactly which checks were refreshed, how long they took, and which command still failed.
 
 ## Author
 

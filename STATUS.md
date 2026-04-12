@@ -23,23 +23,20 @@
 
 ## Current Session Focus
 
-April 11 work stayed focused on manuscript integrity and repo tooling instead of inventing missing product days:
-- rewrite Day 08 from a raw template into an explicit continuity-gap chapter
-- fix the placeholder validator so it only flags real template leftovers rather than any incidental `[TBD]` mention in prose
-- add a compact status dashboard generator so future sessions can see wins, blockers, and next rewrites without reopening every raw report
-- rerun the repo-local audits so the generated reports match the actual manuscript state
-- update the status file to reflect the new baseline honestly
+April 12 work stayed focused on manuscript integrity and repo tooling instead of inventing missing product days:
+- add a single-command audit refresh workflow so future sessions can regenerate every repo-local report before making claims about manuscript health
+- teach the status dashboard to expose audit snapshot freshness instead of quietly trusting stale JSON artifacts
+- rerun the repo-local audits through the new refresh flow so the generated reports match the actual manuscript state
+- update the repo docs and status notes to reflect the new workflow honestly
 
 ### Verification Note
 
-- ✅ Rewrote `chapters/day-08.qmd` into a real chapter that documents the missing record honestly instead of leaving behind fake future-facing template text
-- ✅ Tightened `scripts/validate-book.js` so it now distinguishes between true template placeholders and quoted discussion of placeholder markers inside prose
-- ✅ Added `scripts/build-status-dashboard.js` plus `npm run audit:dashboard`, which compiles the existing audit JSON files into `reports/status-dashboard.{md,json}`
-- ✅ The new dashboard now summarizes current wins, active blockers, next priority rewrites, and per-audit status lines in one compact artifact
-- ✅ `npm run validate` now reports **21** placeholder day chapters remaining instead of 22, with Day 08 removed from the backlog
-- ✅ `npm run audit:frontmatter` now reports **21** warnings instead of 22, because Day 08 frontmatter no longer contains placeholder metadata
-- ✅ `npm run audit:health` and `npm run audit:dashboard` were rerun so the combined reports reflect the improved manuscript state
-- ⚠️ Overall healthcheck status remains **FAIL** because the repo still has two known blockers: a missing local Quarto install and 21 remaining placeholder day chapters from Day 09 through Day 29
+- ✅ Added `scripts/refresh-audits.js` plus `npm run audit:refresh`, which reruns the placeholder audit, link audit, image audit, frontmatter audit, render doctor, combined healthcheck, and status dashboard in one pass
+- ✅ The refresh workflow writes `reports/refresh-audits-report.{md,json}`, so the repo now records exactly which audit commands were rerun, their exit codes, durations, and report outputs
+- ✅ Upgraded `scripts/build-status-dashboard.js` so it now reports audit snapshot freshness based on report timestamps instead of silently trusting whatever JSON files were already lying around
+- ✅ The dashboard now warns when the oldest prerequisite report is stale and points maintainers at `npm run audit:refresh` as the repair path
+- ✅ Reran `npm run audit:refresh`, which regenerated the repo-local audit artifacts and confirmed the dashboard snapshot is **FRESH**
+- ⚠️ Overall healthcheck status remains **FAIL** because the repo still has two real blockers: a missing local Quarto install and 21 remaining placeholder day chapters from Day 09 through Day 29
 
 ## Daily Updates
 

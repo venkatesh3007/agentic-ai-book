@@ -1,18 +1,15 @@
-# Repository Healthcheck Report
+# Audit Refresh Report
 
-- Generated: 2026-04-12T04:32:56.414Z
-- Overall status: **FAIL** (❌ FAIL)
-- Checks run: 5
-- Exit code: 1
+- Generated: 2026-04-12T04:32:55.057Z
+- Overall status: ❌ **FAIL**
+- Commands run: 7
 
-## Check Results
+## Results
 
-### Placeholder Audit — ⚠️ WARN
-
-- Description: Validates _quarto.yml references and flags day chapters that are still placeholder templates.
+### ⚠️ Placeholder Audit
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/validate-book.js`
 - Exit code: 2
-- Duration: 64 ms
+- Duration: 88 ms
 - Reports:
   - `PLACEHOLDER_CHAPTERS.md`
   - `placeholder-chapters.json`
@@ -96,12 +93,10 @@ WARN:   - Day 29: chapters/day-29.qmd
 ```
 </details>
 
-### Internal Link Audit — ✅ PASS
-
-- Description: Scans Markdown/QMD files for broken repo-local links and missing anchors.
+### ✅ Internal Link Audit
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-internal-links.js`
 - Exit code: 0
-- Duration: 69 ms
+- Duration: 103 ms
 - Reports:
   - `reports/link-check-report.md`
   - `reports/link-check-report.json`
@@ -116,12 +111,10 @@ Internal link check passed.
 ```
 </details>
 
-### Image Asset Audit — ✅ PASS
-
-- Description: Ensures every referenced image exists inside the repository with a valid extension.
+### ✅ Image Asset Audit
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-image-assets.js`
 - Exit code: 0
-- Duration: 58 ms
+- Duration: 110 ms
 - Reports:
   - `reports/image-audit-report.md`
   - `reports/image-audit-report.json`
@@ -136,12 +129,10 @@ Image asset audit passed.
 ```
 </details>
 
-### Frontmatter Audit — ⚠️ WARN
-
-- Description: Checks QMD frontmatter for required metadata and placeholder leftovers.
+### ⚠️ Frontmatter Audit
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-frontmatter.js`
 - Exit code: 2
-- Duration: 71 ms
+- Duration: 153 ms
 - Reports:
   - `reports/frontmatter-audit-report.md`
   - `reports/frontmatter-audit-report.json`
@@ -179,12 +170,10 @@ Frontmatter audit completed with warnings. See reports/frontmatter-audit-report.
 ```
 </details>
 
-### Render Environment Doctor — ❌ FAIL
-
-- Description: Checks the local machine for the tools required to run a trustworthy `quarto render`.
+### ❌ Render Environment Doctor
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/render-environment-doctor.js`
 - Exit code: 1
-- Duration: 226 ms
+- Duration: 367 ms
 - Reports:
   - `reports/render-environment-report.md`
   - `reports/render-environment-report.json`
@@ -208,6 +197,36 @@ Reports written to: reports/render-environment-report.md and reports/render-envi
 ```
 </details>
 
----
+### ❌ Combined Healthcheck
+- Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/run-healthcheck.js`
+- Exit code: 1
+- Duration: 547 ms
+- Reports:
+  - `reports/healthcheck-report.md`
+  - `reports/healthcheck-report.json`
 
-*This combined healthcheck runs entirely repo-local audits without invoking Quarto render.*
+<details>
+<summary>Output</summary>
+
+```text
+Healthcheck FAIL (exit 1). Report written to reports/healthcheck-report.md
+```
+</details>
+
+### ✅ Status Dashboard
+- Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/build-status-dashboard.js`
+- Exit code: 0
+- Duration: 58 ms
+- Reports:
+  - `reports/status-dashboard.md`
+  - `reports/status-dashboard.json`
+
+<details>
+<summary>Output</summary>
+
+```text
+Wrote reports/status-dashboard.md
+Wrote reports/status-dashboard.json
+```
+</details>
+

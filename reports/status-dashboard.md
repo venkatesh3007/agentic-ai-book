@@ -1,11 +1,16 @@
 # Repository Status Dashboard
 
-- Generated: 2026-04-11T10:31:08.710Z
+- Generated: 2026-04-12T04:32:56.469Z
 - Overall status: ❌ **FAIL**
+- Audit snapshot freshness: ✅ **FRESH**
+- Oldest source report: 2026-04-12T04:32:55.979Z (0 minute(s) old)
+- Newest source report: 2026-04-12T04:32:56.414Z (0 minute(s) old)
 - Placeholder day chapters remaining: **21**
 
 ## Current Wins
 
+- Audit snapshot is fresh (oldest report age: 0 minute(s))
+- Bulk audit refresh command available via `npm run audit:refresh`
 - Internal link audit is clean
 - Image asset audit is clean
 - Frontmatter audit has zero errors
@@ -26,11 +31,11 @@
 
 ## Audit Snapshot
 
-- ⚠️ **Placeholder Audit** — WARN (exit 2, 68 ms)
-- ✅ **Internal Link Audit** — PASS (exit 0, 74 ms)
-- ✅ **Image Asset Audit** — PASS (exit 0, 74 ms)
+- ⚠️ **Placeholder Audit** — WARN (exit 2, 64 ms)
+- ✅ **Internal Link Audit** — PASS (exit 0, 69 ms)
+- ✅ **Image Asset Audit** — PASS (exit 0, 58 ms)
 - ⚠️ **Frontmatter Audit** — WARN (exit 2, 71 ms)
-- ❌ **Render Environment Doctor** — FAIL (exit 1, 214 ms)
+- ❌ **Render Environment Doctor** — FAIL (exit 1, 226 ms)
 
 ## Detailed Counts
 
@@ -41,6 +46,11 @@
 - Render required failures: **1**
 - Render warnings: **3**
 
+## Refresh Workflow
+
+- Run `npm run audit:refresh` to regenerate the prerequisite audit JSON files in one pass before rebuilding the dashboard.
+- Last bulk refresh report: 2026-04-12T04:32:37.411Z
+
 ## Source Reports
 
 - `placeholder-chapters.json`
@@ -49,6 +59,7 @@
 - `reports/link-check-report.json`
 - `reports/image-audit-report.json`
 - `reports/render-environment-report.json`
+- `reports/refresh-audits-report.json`
 
 ---
 
