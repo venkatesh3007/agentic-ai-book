@@ -1,6 +1,6 @@
 # AI-Native Book - Current Status
 
-**Last Updated**: April 11, 2026
+**Last Updated**: April 12, 2026
 
 ## Progress
 
@@ -27,6 +27,7 @@ April 12 work stayed focused on manuscript integrity and repo tooling instead of
 - add a single-command audit refresh workflow so future sessions can regenerate every repo-local report before making claims about manuscript health
 - teach the status dashboard to expose audit snapshot freshness instead of quietly trusting stale JSON artifacts
 - improve the render doctor so it can detect Quarto binaries that exist on disk but are missing from PATH instead of misdiagnosing them as completely uninstalled
+- add a local render wrapper that uses discovered Quarto binaries directly, so HTML book renders can succeed even when shell PATH wiring is incomplete
 - rerun the repo-local audits through the new refresh flow so the generated reports match the actual manuscript state
 - update the repo docs and status notes to reflect the new workflow honestly
 
@@ -40,7 +41,9 @@ April 12 work stayed focused on manuscript integrity and repo tooling instead of
 - ✅ Improved `scripts/render-environment-doctor.js` so it now detects Quarto binaries that exist outside PATH and reports their candidate locations instead of collapsing every failure into “install Quarto”
 - ✅ On this host, the doctor now proves Quarto binaries exist at `/home/openclaw/quarto/bin/quarto`, `/home/openclaw/bin/quarto`, and `/home/openclaw/bin/bin/quarto`, which narrows the real blocker to PATH wiring rather than package absence
 - ✅ The status dashboard now surfaces Quarto discovery details so future sessions can see that render readiness is blocked by environment wiring, not pure installation state
-- ⚠️ Overall healthcheck status remains **FAIL** because the repo still has two real blockers: Quarto is not available on PATH for normal `quarto render` commands, and 21 placeholder day chapters from Day 09 through Day 29 still need honest rewrites
+- ✅ Added `scripts/render-with-local-quarto.js` plus `npm run render:local`, which discovers a working Quarto binary and runs `quarto render` explicitly from that path instead of relying on PATH
+- ✅ Verified `npm run render:local` succeeds for HTML output on this host using `/home/openclaw/quarto/bin/quarto`, producing `_book/index.html` and logging the run to `reports/local-render-report.{md,json}`
+- ⚠️ HTML render is now working through the wrapper, but the combined healthcheck still reports **FAIL** because the default `quarto` command is not on PATH and 21 placeholder day chapters from Day 09 through Day 29 still need honest rewrites
 
 ## Daily Updates
 

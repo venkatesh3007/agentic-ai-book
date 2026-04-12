@@ -1,6 +1,6 @@
 # Audit Refresh Report
 
-- Generated: 2026-04-12T07:33:11.957Z
+- Generated: 2026-04-12T10:33:14.290Z
 - Overall status: ❌ **FAIL**
 - Commands run: 7
 
@@ -9,7 +9,7 @@
 ### ⚠️ Placeholder Audit
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/validate-book.js`
 - Exit code: 2
-- Duration: 111 ms
+- Duration: 58 ms
 - Reports:
   - `PLACEHOLDER_CHAPTERS.md`
   - `placeholder-chapters.json`
@@ -96,7 +96,7 @@ WARN:   - Day 29: chapters/day-29.qmd
 ### ✅ Internal Link Audit
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-internal-links.js`
 - Exit code: 0
-- Duration: 71 ms
+- Duration: 60 ms
 - Reports:
   - `reports/link-check-report.md`
   - `reports/link-check-report.json`
@@ -114,7 +114,7 @@ Internal link check passed.
 ### ✅ Image Asset Audit
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-image-assets.js`
 - Exit code: 0
-- Duration: 54 ms
+- Duration: 51 ms
 - Reports:
   - `reports/image-audit-report.md`
   - `reports/image-audit-report.json`
@@ -132,7 +132,7 @@ Image asset audit passed.
 ### ⚠️ Frontmatter Audit
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-frontmatter.js`
 - Exit code: 2
-- Duration: 150 ms
+- Duration: 71 ms
 - Reports:
   - `reports/frontmatter-audit-report.md`
   - `reports/frontmatter-audit-report.json`
@@ -173,7 +173,7 @@ Frontmatter audit completed with warnings. See reports/frontmatter-audit-report.
 ### ❌ Render Environment Doctor
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/render-environment-doctor.js`
 - Exit code: 1
-- Duration: 549 ms
+- Duration: 307 ms
 - Reports:
   - `reports/render-environment-report.md`
   - `reports/render-environment-report.json`
@@ -201,7 +201,7 @@ Reports written to: reports/render-environment-report.md and reports/render-envi
 ### ❌ Combined Healthcheck
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/run-healthcheck.js`
 - Exit code: 1
-- Duration: 650 ms
+- Duration: 618 ms
 - Reports:
   - `reports/healthcheck-report.md`
   - `reports/healthcheck-report.json`
@@ -217,7 +217,7 @@ Healthcheck FAIL (exit 1). Report written to reports/healthcheck-report.md
 ### ✅ Status Dashboard
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/build-status-dashboard.js`
 - Exit code: 0
-- Duration: 45 ms
+- Duration: 48 ms
 - Reports:
   - `reports/status-dashboard.md`
   - `reports/status-dashboard.json`

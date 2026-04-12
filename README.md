@@ -63,6 +63,7 @@ npm run audit:frontmatter
 npm run audit:health
 npm run audit:dashboard
 npm run audit:refresh
+npm run render:local
 npm run wrapup:eod
 node scripts/end-of-day-wrapup.js --tag
 npm run doctor:render
@@ -119,6 +120,10 @@ This is especially useful for catching book-specific debt that link and image ch
 ### Bulk audit refresh
 
 `npm run audit:refresh` runs `scripts/refresh-audits.js`, which regenerates the placeholder audit, link audit, image audit, frontmatter audit, render doctor, combined healthcheck, and status dashboard in one pass. It writes its own execution report to `reports/refresh-audits-report.{md,json}` so future sessions can prove exactly which checks were refreshed, how long they took, and which command still failed.
+
+### Local render wrapper
+
+`npm run render:local` runs `scripts/render-with-local-quarto.js`, which tries known local Quarto install paths directly instead of assuming `quarto` is already on PATH. It writes a render attempt report to `reports/local-render-report.{md,json}` with the exact binary used, command line, exit code, and captured output. On this host it has been verified to render the HTML book successfully via `/home/openclaw/quarto/bin/quarto`, producing `_book/index.html`. This makes local render attempts auditable on servers where Quarto exists but shell PATH wiring is incomplete.
 
 ## Author
 

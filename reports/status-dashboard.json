@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-04-12T07:33:13.576Z",
+  "generatedAt": "2026-04-12T10:33:15.492Z",
   "overallStatus": "fail",
   "snapshotFreshness": "fresh",
   "snapshotGeneratedAt": {
-    "oldest": "2026-04-12T07:33:12.977Z",
-    "newest": "2026-04-12T07:33:13.533Z",
-    "oldestAgeMs": 599,
-    "newestAgeMs": 43
+    "oldest": "2026-04-12T10:33:14.921Z",
+    "newest": "2026-04-12T10:33:15.445Z",
+    "oldestAgeMs": 570,
+    "newestAgeMs": 46
   },
-  "refreshReportGeneratedAt": "2026-04-12T07:33:11.957Z",
+  "refreshReportGeneratedAt": "2026-04-12T10:33:14.290Z",
   "placeholderCount": 21,
   "nextPriority": [
     {
@@ -50,35 +50,35 @@
       "title": "Placeholder Audit",
       "status": "warn",
       "exitCode": 2,
-      "durationMs": 56
+      "durationMs": 54
     },
     {
       "id": "internal-links",
       "title": "Internal Link Audit",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 61
+      "durationMs": 65
     },
     {
       "id": "image-assets",
       "title": "Image Asset Audit",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 56
+      "durationMs": 62
     },
     {
       "id": "frontmatter-audit",
       "title": "Frontmatter Audit",
       "status": "warn",
       "exitCode": 2,
-      "durationMs": 73
+      "durationMs": 70
     },
     {
       "id": "render-doctor",
       "title": "Render Environment Doctor",
       "status": "fail",
       "exitCode": 1,
-      "durationMs": 353
+      "durationMs": 317
     }
   ],
   "audits": {

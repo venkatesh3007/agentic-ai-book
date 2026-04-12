@@ -10,6 +10,7 @@
     "audit:health": "node scripts/run-healthcheck.js",
     "audit:dashboard": "node scripts/build-status-dashboard.js",
     "audit:refresh": "node scripts/refresh-audits.js",
+    "render:local": "node scripts/render-with-local-quarto.js . --to html",
     "wrapup:eod": "node scripts/end-of-day-wrapup.js",
     "doctor:render": "node scripts/render-environment-doctor.js"
   }
