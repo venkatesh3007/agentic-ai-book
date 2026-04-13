@@ -52,6 +52,14 @@ const checks = [
     args: [path.join(repoRoot, 'scripts', 'render-environment-doctor.js')],
     reportPaths: ['reports/render-environment-report.md', 'reports/render-environment-report.json'],
     warnOn: new Set([2])
+  },
+  {
+    id: 'local-render',
+    title: 'Local HTML Render',
+    description: 'Runs an actual local HTML book render through the Quarto wrapper so health checks verify the artifact, not just the environment.',
+    command: process.execPath,
+    args: [path.join(repoRoot, 'scripts', 'render-with-local-quarto.js'), '.', '--to', 'html'],
+    reportPaths: ['reports/local-render-report.md', 'reports/local-render-report.json']
   }
 ];
 
@@ -156,7 +164,7 @@ function writeMarkdown(summary) {
     lines.push('');
   }
 
-  lines.push('---', '', '*This combined healthcheck runs entirely repo-local audits without invoking Quarto render.*');
+  lines.push('---', '', '*This combined healthcheck runs repo-local manuscript audits plus a real local HTML render attempt through the Quarto wrapper.*');
   fs.writeFileSync(markdownPath, lines.join('\n'));
 }
 

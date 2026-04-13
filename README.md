@@ -111,7 +111,7 @@ This is especially useful for catching book-specific debt that link and image ch
 
 ### Combined healthcheck
 
-`npm run audit:health` runs `scripts/run-healthcheck.js`, which chains the placeholder audit, internal link audit, image audit, frontmatter audit, and render-environment doctor into one command. It records every command's exit code, duration, and trimmed output, writes the combined summary to `reports/healthcheck-report.md` plus a JSON twin, and exits with `0`/`1`/`2` depending on whether the repo is clean, failed, or merely warning-laden. This makes end-of-day wrap-ups honest even when Quarto itself is unavailable.
+`npm run audit:health` runs `scripts/run-healthcheck.js`, which chains the placeholder audit, internal link audit, image audit, frontmatter audit, render-environment doctor, and a real local HTML render attempt through the Quarto wrapper into one command. It records every command's exit code, duration, and trimmed output, writes the combined summary to `reports/healthcheck-report.md` plus a JSON twin, and exits with `0`/`1`/`2` depending on whether the repo is clean, failed, or merely warning-laden. This makes end-of-day wrap-ups more honest because the healthcheck now verifies the actual book artifact when local Quarto is available, instead of stopping at environment inspection.
 
 ### Status dashboard
 

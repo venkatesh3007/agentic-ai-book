@@ -23,13 +23,11 @@
 
 ## Current Session Focus
 
-April 12 work stayed focused on manuscript integrity and repo tooling instead of inventing missing product days:
-- add a single-command audit refresh workflow so future sessions can regenerate every repo-local report before making claims about manuscript health
-- teach the status dashboard to expose audit snapshot freshness instead of quietly trusting stale JSON artifacts
-- improve the render doctor so it can detect Quarto binaries that exist on disk but are missing from PATH instead of misdiagnosing them as completely uninstalled
-- add a local render wrapper that uses discovered Quarto binaries directly, so HTML book renders can succeed even when shell PATH wiring is incomplete
-- rerun the repo-local audits through the new refresh flow so the generated reports match the actual manuscript state
-- update the repo docs and status notes to reflect the new workflow honestly
+April 13 morning work stayed focused on manuscript integrity and repo tooling instead of inventing missing product days:
+- upgrade the combined healthcheck so it performs a real local HTML render through the Quarto wrapper rather than only checking environment prerequisites
+- keep the healthcheck report honest by showing artifact verification alongside the stricter PATH-based render doctor
+- rerun the repo-local audits so the generated reports reflect the new behavior and the current manuscript state
+- update the repo docs and status notes to reflect the tighter verification gate honestly
 
 ### Verification Note
 
@@ -43,7 +41,9 @@ April 12 work stayed focused on manuscript integrity and repo tooling instead of
 - ✅ The status dashboard now surfaces Quarto discovery details so future sessions can see that render readiness is blocked by environment wiring, not pure installation state
 - ✅ Added `scripts/render-with-local-quarto.js` plus `npm run render:local`, which discovers a working Quarto binary and runs `quarto render` explicitly from that path instead of relying on PATH
 - ✅ Verified `npm run render:local` succeeds for HTML output on this host using `/home/openclaw/quarto/bin/quarto`, producing `_book/index.html` and logging the run to `reports/local-render-report.{md,json}`
-- ⚠️ HTML render is now working through the wrapper, but the combined healthcheck still reports **FAIL** because the default `quarto` command is not on PATH and 21 placeholder day chapters from Day 09 through Day 29 still need honest rewrites
+- ✅ Upgraded `scripts/run-healthcheck.js` so the combined healthcheck now includes that real local HTML render attempt instead of stopping at environment inspection alone
+- ✅ Verified `npm run audit:health` now records both the strict PATH-based render-doctor failure and the successful wrapper-based local HTML render in one report, which makes the repo's verification story more truthful
+- ⚠️ The combined healthcheck still reports **FAIL** overall because the default `quarto` command is not on PATH and 21 placeholder day chapters from Day 09 through Day 29 still need honest rewrites
 
 ## Daily Updates
 

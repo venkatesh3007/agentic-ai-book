@@ -60,7 +60,7 @@ Here is the honest scope of work from this morning session:
 
 - `STATUS.md` was rewritten so the overall state of the book reflects April rather than February.
 - This chapter was rewritten from an empty template into a real account of the maintenance session.
-- The book render was intended to be the test gate, but the environment blocked it because the `quarto` CLI was not installed.
+- The book render was turned into the real test gate via the local Quarto wrapper, so the repo now records an actual HTML render result instead of only an environment diagnosis.
 
 That is deliberately boring in the best way.
 
@@ -74,9 +74,12 @@ The ship target for this session is modest but concrete:
 - Day 31 is no longer fake-empty,
 - and the Quarto build acts as the proof step.
 
-If the render passes, this session earns a clean verification note.
+In practice, the proof step is now split in two on this host:
 
-If the render cannot run, then that limitation becomes part of the story.
+- the stricter render doctor still fails because `quarto` is not exposed on PATH,
+- but the local wrapper can find `/home/openclaw/quarto/bin/quarto` directly and complete a real HTML render.
+
+That split matters. It tells the truth about both the environment debt and the artifact quality.
 
 That is the rule I want the book itself to enforce.
 
