@@ -1,19 +1,21 @@
 # Repository Status Dashboard
 
-- Generated: 2026-04-13T07:36:37.733Z
+- Generated: 2026-04-13T10:31:39.235Z
 - Overall status: ❌ **FAIL**
 - Audit snapshot freshness: ✅ **FRESH**
-- Oldest source report: 2026-04-13T07:35:15.414Z (1 minute(s) old)
-- Newest source report: 2026-04-13T07:36:37.496Z (0 minute(s) old)
+- Oldest source report: 2026-04-13T07:35:15.414Z (2.9 hour(s) old)
+- Newest source report: 2026-04-13T07:36:37.496Z (2.9 hour(s) old)
 - Placeholder day chapters remaining: **21**
+- Latest local HTML render: ✅ **PASS** (exit 0)
 
 ## Current Wins
 
-- Audit snapshot is fresh (oldest report age: 1 minute(s))
+- Audit snapshot is fresh (oldest report age: 2.9 hour(s))
 - Bulk audit refresh command available via `npm run audit:refresh`
 - Internal link audit is clean
 - Image asset audit is clean
 - Frontmatter audit has zero errors
+- Latest local HTML render passed via /home/openclaw/quarto/bin/quarto
 - Placeholder backlog currently at 21
 
 ## Current Blockers
@@ -47,6 +49,7 @@
 - Render required failures: **1**
 - Render warnings: **3**
 - Quarto candidate paths discovered: **3**
+- Local render output directory present: **yes**
 
 ## Quarto Discovery
 
@@ -67,6 +70,7 @@
 - `reports/link-check-report.json`
 - `reports/image-audit-report.json`
 - `reports/render-environment-report.json`
+- `reports/local-render-report.json`
 - `reports/refresh-audits-report.json`
 
 ---

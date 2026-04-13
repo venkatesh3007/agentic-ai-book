@@ -115,7 +115,7 @@ This is especially useful for catching book-specific debt that link and image ch
 
 ### Status dashboard
 
-`npm run audit:dashboard` runs `scripts/build-status-dashboard.js`, which reads the existing JSON audit outputs and compiles a compact repo dashboard. It summarizes current wins, active blockers, the next priority day-chapter rewrites, and the latest per-audit status lines in `reports/status-dashboard.{md,json}`. It now also reports whether the underlying audit snapshot is fresh or stale, so a dashboard built from yesterday's JSON files cannot quietly masquerade as current state. This is useful when you want a quick “what changed and what still hurts?” view without opening every raw report.
+`npm run audit:dashboard` runs `scripts/build-status-dashboard.js`, which reads the existing JSON audit outputs and compiles a compact repo dashboard. It summarizes current wins, active blockers, the next priority day-chapter rewrites, the latest wrapper-based local HTML render result, and the latest per-audit status lines in `reports/status-dashboard.{md,json}`. It now also reports whether the underlying audit snapshot is fresh or stale, so a dashboard built from yesterday's JSON files cannot quietly masquerade as current state. This is useful when you want a quick “what changed and what still hurts?” view without opening every raw report.
 
 ### Bulk audit refresh
 

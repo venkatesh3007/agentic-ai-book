@@ -44,6 +44,7 @@ April 13 morning work stayed focused on manuscript integrity and repo tooling in
 - ✅ Upgraded `scripts/run-healthcheck.js` so the combined healthcheck now includes that real local HTML render attempt instead of stopping at environment inspection alone
 - ✅ Verified `npm run audit:health` now records both the strict PATH-based render-doctor failure and the successful wrapper-based local HTML render in one report, which makes the repo's verification story more truthful
 - ✅ Added missing bibliography entries for the manuscript's unresolved citations and rewired the affected chapters so the wrapper-based HTML render now completes without citeproc "citation not found" warnings
+- ✅ Upgraded the status dashboard so it now treats `reports/local-render-report.json` as a first-class source, surfaces the latest wrapper-based HTML render status directly, and includes that artifact in snapshot freshness calculations
 - ⚠️ The combined healthcheck still reports **FAIL** overall because the default `quarto` command is not on PATH and 21 placeholder day chapters from Day 09 through Day 29 still need honest rewrites
 
 ## Daily Updates

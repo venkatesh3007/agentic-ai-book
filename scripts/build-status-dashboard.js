@@ -12,6 +12,7 @@ const frontmatterJsonPath = path.join(reportDir, 'frontmatter-audit-report.json'
 const linkJsonPath = path.join(reportDir, 'link-check-report.json');
 const imageJsonPath = path.join(reportDir, 'image-audit-report.json');
 const renderJsonPath = path.join(reportDir, 'render-environment-report.json');
+const localRenderJsonPath = path.join(reportDir, 'local-render-report.json');
 const refreshJsonPath = path.join(reportDir, 'refresh-audits-report.json');
 const STALE_THRESHOLD_MS = 6 * 60 * 60 * 1000;
 
@@ -71,9 +72,10 @@ function main() {
   const links = readJson(linkJsonPath);
   const images = readJson(imageJsonPath);
   const render = readJson(renderJsonPath);
+  const localRender = readJson(localRenderJsonPath);
   const refresh = readJson(refreshJsonPath);
 
-  if (!placeholder || !health || !frontmatter || !links || !images || !render) {
+  if (!placeholder || !health || !frontmatter || !links || !images || !render || !localRender) {
     console.error('ERROR: Missing one or more prerequisite JSON reports. Run the audits first.');
     process.exit(1);
   }
@@ -87,8 +89,12 @@ function main() {
   const renderRequiredFailures = render.requiredFailures ?? [];
   const renderWarnings = render.warnings ?? [];
   const quartoDiscoveredPaths = render.quartoDiscoveredPaths ?? [];
+  const localRenderStatus = localRender.status ?? 'unknown';
+  const localRenderExitCode = localRender.exitCode ?? null;
+  const localRenderQuartoBinary = localRender.quartoBinary ?? localRender.quartoPath ?? null;
+  const localRenderOutputDirPresent = localRender.outputDirPresent ?? localRender.outputDirExists ?? null;
   const checks = health.checks ?? [];
-  const generatedAtValues = [placeholder, health, frontmatter, links, images, render]
+  const generatedAtValues = [placeholder, health, frontmatter, links, images, render, localRender]
     .map(parseGeneratedAt)
     .filter((value) => value != null);
   const oldestGeneratedAt = generatedAtValues.length ? Math.min(...generatedAtValues) : null;
@@ -128,6 +134,9 @@ function main() {
   if (linkIssues === 0) wins.push('Internal link audit is clean');
   if (imageIssues === 0) wins.push('Image asset audit is clean');
   if (frontmatterErrors === 0) wins.push('Frontmatter audit has zero errors');
+  if (String(localRenderStatus).toLowerCase() === 'pass') {
+    wins.push(`Latest local HTML render passed${localRenderQuartoBinary ? ` via ${localRenderQuartoBinary}` : ''}`);
+  }
   wins.push(`Placeholder backlog currently at ${placeholderCount}`);
 
   const summary = {
@@ -168,6 +177,12 @@ function main() {
       render: {
         requiredFailures: renderRequiredFailures,
         warnings: renderWarnings
+      },
+      localRender: {
+        status: localRenderStatus,
+        exitCode: localRenderExitCode,
+        quartoBinary: localRenderQuartoBinary,
+        outputDirPresent: localRenderOutputDirPresent
       }
     },
     sourceReports: [
@@ -177,6 +192,7 @@ function main() {
       rel(linkJsonPath),
       rel(imageJsonPath),
       rel(renderJsonPath),
+      rel(localRenderJsonPath),
       rel(refreshJsonPath)
     ]
   };
@@ -189,6 +205,7 @@ function main() {
   lines.push(`- Oldest source report: ${summary.snapshotGeneratedAt.oldest || 'unknown'} (${formatAge(oldestAgeMs)} old)`);
   lines.push(`- Newest source report: ${summary.snapshotGeneratedAt.newest || 'unknown'} (${formatAge(newestAgeMs)} old)`);
   lines.push(`- Placeholder day chapters remaining: **${placeholderCount}**`);
+  lines.push(`- Latest local HTML render: ${statusEmoji(localRenderStatus)} **${statusWord(localRenderStatus)}**${localRenderExitCode == null ? '' : ` (exit ${localRenderExitCode})`}`);
   lines.push('');
 
   lines.push('## Current Wins', '');
@@ -231,6 +248,7 @@ function main() {
   lines.push(`- Render required failures: **${renderRequiredFailures.length}**`);
   lines.push(`- Render warnings: **${renderWarnings.length}**`);
   lines.push(`- Quarto candidate paths discovered: **${quartoDiscoveredPaths.length}**`);
+  lines.push(`- Local render output directory present: **${localRenderOutputDirPresent === true ? 'yes' : localRenderOutputDirPresent === false ? 'no' : 'unknown'}**`);
   lines.push('');
 
   if (quartoDiscoveredPaths.length) {
