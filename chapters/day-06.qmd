@@ -43,7 +43,7 @@ Hit Post, and the bot calls the Twitter API. It posts the first tweet, gets the 
 
 The most important file in the bot is the prompt. Not the code — the prompt. You set it with `/setprompt` and it controls everything about how threads get written.
 
-I set mine to write like me — @venkatesh3007. Short sentences. First person. Real numbers. No hashtags. No emoji spam. Arguments, not stories.
+I set mine to write like me — @venkatesh3007 [@venkatesh3007-x]. Short sentences. First person. Real numbers. No hashtags. No emoji spam. Arguments, not stories.
 
 The prompt is stored in SQLite. Change it anytime. The bot remembers.
 
@@ -106,4 +106,4 @@ Node.js, grammY (Telegram), twitter-api-v2, Anthropic Claude API, better-sqlite3
 
 **System prompts are products.** The difference between a generic thread bot and a useful one is entirely in the prompt. Same code, different prompt, completely different output. The prompt is the product. The code is plumbing.
 
-**Ship what works, fix the rest tomorrow.** The bot generated, scored, edited, and drafted threads on Day 6. Twitter posting was broken. Rather than debug the console for hours, I shipped what worked and fixed the API setup the next morning. It took five minutes once I knew what was wrong. The bot has been fully operational since — generating and posting threads to @venkatesh3007.
+**Ship what works, fix the rest tomorrow.** The bot generated, scored, edited, and drafted threads on Day 6. Twitter posting was broken. Rather than debug the console for hours, I shipped what worked and fixed the API setup the next morning. It took five minutes once I knew what was wrong. The bot has been fully operational since — generating and posting threads to @venkatesh3007 [@venkatesh3007-x].

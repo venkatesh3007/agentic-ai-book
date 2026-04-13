@@ -18,7 +18,7 @@ Sometimes the most productive day is one where you don't build anything at all. 
 
 I'd been hearing about Peter Steinberger (@steipete) and his "factory approach" to building with AI. He's the creator of OpenClaw, but I needed to understand his methodology — not just his tools.
 
-Jarvis helped me track down the key article: ["Shipping at Inference Speed"](https://steipete.me/posts/2025/shipping-at-inference-speed). Reading it was like finding the blueprint I'd been looking for.
+Jarvis helped me track down the key article: ["Shipping at Inference Speed"](https://steipete.me/posts/2025/shipping-at-inference-speed) [@steipete-inference-speed]. Reading it was like finding the blueprint I'd been looking for.
 
 ## The Evolution
 

@@ -1,6 +1,6 @@
 # Repository Healthcheck Report
 
-- Generated: 2026-04-13T04:32:39.524Z
+- Generated: 2026-04-13T07:36:37.496Z
 - Overall status: **FAIL** (❌ FAIL)
 - Checks run: 6
 - Exit code: 1
@@ -12,7 +12,7 @@
 - Description: Validates _quarto.yml references and flags day chapters that are still placeholder templates.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/validate-book.js`
 - Exit code: 2
-- Duration: 61 ms
+- Duration: 54 ms
 - Reports:
   - `PLACEHOLDER_CHAPTERS.md`
   - `placeholder-chapters.json`
@@ -121,7 +121,7 @@ Internal link check passed.
 - Description: Ensures every referenced image exists inside the repository with a valid extension.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-image-assets.js`
 - Exit code: 0
-- Duration: 59 ms
+- Duration: 52 ms
 - Reports:
   - `reports/image-audit-report.md`
   - `reports/image-audit-report.json`
@@ -141,7 +141,7 @@ Image asset audit passed.
 - Description: Checks QMD frontmatter for required metadata and placeholder leftovers.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-frontmatter.js`
 - Exit code: 2
-- Duration: 66 ms
+- Duration: 87 ms
 - Reports:
   - `reports/frontmatter-audit-report.md`
   - `reports/frontmatter-audit-report.json`
@@ -184,7 +184,7 @@ Frontmatter audit completed with warnings. See reports/frontmatter-audit-report.
 - Description: Checks the local machine for the tools required to run a trustworthy `quarto render`.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/render-environment-doctor.js`
 - Exit code: 1
-- Duration: 252 ms
+- Duration: 285 ms
 - Reports:
   - `reports/render-environment-report.md`
   - `reports/render-environment-report.json`
@@ -214,7 +214,7 @@ Reports written to: reports/render-environment-report.md and reports/render-envi
 - Description: Runs an actual local HTML book render through the Quarto wrapper so health checks verify the artifact, not just the environment.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/render-with-local-quarto.js . --to html`
 - Exit code: 0
-- Duration: 80.42 s
+- Duration: 81.59 s
 - Reports:
   - `reports/local-render-report.md`
   - `reports/local-render-report.json`
@@ -237,9 +237,7 @@ Wrote reports/local-render-report.json
 [1m[34m[10/49] chapters/08-writing-in-the-open.qmd[39m[22m
 [1m[34m[11/49] chapters/09-planning-the-sprint.qmd[39m[22m
 [1m[34m[12/49] chapters/day-02-warmup.qmd[39m[22m
-[WARNING] Citeproc: citation steipete not found
 [1m[34m[13/49] chapters/day-03-warmup.qmd[39m[22m
-[WARNING] Citeproc: citation messageId not found
 [1m[34m[14/49] chapters/day-05-warmup.qmd[39m[22m
 [1m[34m[15/49] chapters/day-01.qmd[39m[22m
 [1m[34m[16/49] chapters/day-02.qmd[39m[22m
@@ -247,7 +245,6 @@ Wrote reports/local-render-report.json
 [1m[34m[18/49] chapters/day-04.qmd[39m[22m
 [1m[34m[19/49] chapters/day-05.qmd[39m[22m
 [1m[34m[20/49] chapters/day-06.qmd[39m[22m
-[WARNING] Citeproc: citation venkatesh3007 not found
 [1m[34m[21/49] chapters/day-07.qmd[39m[22m
 [1m[34m[22/49] chapters/day-08.qmd[39m[22m
 [1m[34m[23/49] chapters/day-09.qmd[39m[22m

@@ -1,6 +1,6 @@
 # Local Quarto Render Report
 
-- Generated: 2026-04-13T04:31:19.145Z
+- Generated: 2026-04-13T07:35:15.945Z
 - Status: **PASS**
 - Exit code: 0
 - Target: `.`
@@ -24,9 +24,7 @@
 [1m[34m[10/49] chapters/08-writing-in-the-open.qmd[39m[22m
 [1m[34m[11/49] chapters/09-planning-the-sprint.qmd[39m[22m
 [1m[34m[12/49] chapters/day-02-warmup.qmd[39m[22m
-[WARNING] Citeproc: citation steipete not found
 [1m[34m[13/49] chapters/day-03-warmup.qmd[39m[22m
-[WARNING] Citeproc: citation messageId not found
 [1m[34m[14/49] chapters/day-05-warmup.qmd[39m[22m
 [1m[34m[15/49] chapters/day-01.qmd[39m[22m
 [1m[34m[16/49] chapters/day-02.qmd[39m[22m
@@ -34,7 +32,6 @@
 [1m[34m[18/49] chapters/day-04.qmd[39m[22m
 [1m[34m[19/49] chapters/day-05.qmd[39m[22m
 [1m[34m[20/49] chapters/day-06.qmd[39m[22m
-[WARNING] Citeproc: citation venkatesh3007 not found
 [1m[34m[21/49] chapters/day-07.qmd[39m[22m
 [1m[34m[22/49] chapters/day-08.qmd[39m[22m
 [1m[34m[23/49] chapters/day-09.qmd[39m[22m

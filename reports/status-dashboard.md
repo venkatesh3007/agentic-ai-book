@@ -1,10 +1,10 @@
 # Repository Status Dashboard
 
-- Generated: 2026-04-13T04:32:42.430Z
+- Generated: 2026-04-13T07:36:37.733Z
 - Overall status: ❌ **FAIL**
 - Audit snapshot freshness: ✅ **FRESH**
-- Oldest source report: 2026-04-13T04:31:18.665Z (1 minute(s) old)
-- Newest source report: 2026-04-13T04:32:39.524Z (0 minute(s) old)
+- Oldest source report: 2026-04-13T07:35:15.414Z (1 minute(s) old)
+- Newest source report: 2026-04-13T07:36:37.496Z (0 minute(s) old)
 - Placeholder day chapters remaining: **21**
 
 ## Current Wins
@@ -31,12 +31,12 @@
 
 ## Audit Snapshot
 
-- ⚠️ **Placeholder Audit** — WARN (exit 2, 61 ms)
+- ⚠️ **Placeholder Audit** — WARN (exit 2, 54 ms)
 - ✅ **Internal Link Audit** — PASS (exit 0, 59 ms)
-- ✅ **Image Asset Audit** — PASS (exit 0, 59 ms)
-- ⚠️ **Frontmatter Audit** — WARN (exit 2, 66 ms)
-- ❌ **Render Environment Doctor** — FAIL (exit 1, 252 ms)
-- ✅ **Local HTML Render** — PASS (exit 0, 80416 ms)
+- ✅ **Image Asset Audit** — PASS (exit 0, 52 ms)
+- ⚠️ **Frontmatter Audit** — WARN (exit 2, 87 ms)
+- ❌ **Render Environment Doctor** — FAIL (exit 1, 285 ms)
+- ✅ **Local HTML Render** — PASS (exit 0, 81587 ms)
 
 ## Detailed Counts
 

@@ -59,7 +59,7 @@ Works in Telegram, WhatsApp, wherever OpenClaw runs. Phone-native monitoring.
 
 Message threading for linear chat platforms.
 
-AI conversations get complex. You reference "that deploy from yesterday" or "the error we saw earlier." Contextual Threading adds @messageId references and context reconstruction.
+AI conversations get complex. You reference "that deploy from yesterday" or "the error we saw earlier." Contextual Threading adds message-level references and context reconstruction [@contextual-threading].
 
 ```
 You: Deploy the latest changes
