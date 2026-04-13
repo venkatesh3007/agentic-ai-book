@@ -11,6 +11,8 @@ const summaryPath = path.join(repoRoot, 'END_OF_DAY_WRAPUP.md');
 const placeholderJsonPath = path.join(repoRoot, 'placeholder-chapters.json');
 const healthcheckJsonPath = path.join(repoRoot, 'reports', 'healthcheck-report.json');
 const localRenderJsonPath = path.join(repoRoot, 'reports', 'local-render-report.json');
+const dashboardScript = path.join(repoRoot, 'scripts', 'build-status-dashboard.js');
+const dashboardJsonPath = path.join(repoRoot, 'reports', 'status-dashboard.json');
 
 const args = process.argv.slice(2);
 const wantsTag = args.includes('--tag');
@@ -67,6 +69,7 @@ if (!fs.existsSync(validateScript)) {
 const validationCommand = formatCommand(process.execPath, [path.relative(repoRoot, validateScript)]);
 const healthcheckCommand = formatCommand(process.execPath, [path.relative(repoRoot, healthcheckScript)]);
 const localRenderCommand = formatCommand(process.execPath, [path.relative(repoRoot, localRenderScript), '.', '--to', 'html']);
+const dashboardCommand = formatCommand(process.execPath, [path.relative(repoRoot, dashboardScript)]);
 
 const validation = run(process.execPath, [validateScript]);
 
@@ -89,6 +92,14 @@ let localRenderSummary = null;
 if (hasLocalRenderScript) {
   localRender = run(process.execPath, [localRenderScript, '.', '--to', 'html']);
   localRenderSummary = readJsonIfExists(localRenderJsonPath);
+}
+
+const hasDashboardScript = fs.existsSync(dashboardScript);
+let dashboard = null;
+let dashboardSummary = null;
+if (hasDashboardScript) {
+  dashboard = run(process.execPath, [dashboardScript]);
+  dashboardSummary = readJsonIfExists(dashboardJsonPath);
 }
 
 const gitHead = run('git', ['rev-parse', '--short', 'HEAD']);
@@ -199,6 +210,31 @@ if (!hasLocalRenderScript) {
 }
 summary.push(...section('Render Check', renderLines));
 
+const dashboardLines = [];
+if (!hasDashboardScript) {
+  dashboardLines.push('- Status dashboard script not found; skipping.');
+} else {
+  dashboardLines.push(`- Command: \`${dashboardCommand}\``);
+  dashboardLines.push(`- Exit status: ${typeof dashboard?.status === 'number' ? dashboard.status : 'unknown'}`);
+  if (dashboardSummary) {
+    dashboardLines.push(`- Overall status: ${(dashboardSummary.overallStatus || 'unknown').toString().toUpperCase()}`);
+    dashboardLines.push(`- Snapshot freshness: ${(dashboardSummary.snapshotFreshness || 'unknown').toString().toUpperCase()}`);
+    if (dashboardSummary.audits?.localRender) {
+      const localStatus = (dashboardSummary.audits.localRender.status || 'unknown').toString().toUpperCase();
+      const localExit = dashboardSummary.audits.localRender.exitCode;
+      dashboardLines.push(`- Dashboard local render status: ${localStatus}${typeof localExit === 'number' ? ` (exit ${localExit})` : ''}`);
+    }
+    dashboardLines.push('- Reports:');
+    dashboardLines.push('  - `reports/status-dashboard.md`');
+    dashboardLines.push('  - `reports/status-dashboard.json`');
+  } else {
+    dashboardLines.push('- Dashboard JSON summary is missing or unreadable.');
+  }
+  const dashboardOutput = [dashboard?.stdout || '', dashboard?.stderr || ''].filter(Boolean).join('\n');
+  dashboardLines.push(...codeBlock(dashboardOutput));
+}
+summary.push(...section('Status Dashboard', dashboardLines));
+
 const gitLines = [
   `- Working tree dirty before wrap-up write: ${dirtyTreeBeforeWrap ? 'yes' : 'no'}`,
   ...codeBlock(gitStatusBeforeWrap.stdout || gitStatusBeforeWrap.stderr)
@@ -208,16 +244,17 @@ summary.push(...section('Git Working Tree', gitLines));
 let tagMessage = '- No tag requested.';
 if (wantsTag) {
   const tagName = explicitTagName || `eod-${todayStamp()}`;
-  if (dirtyTreeBeforeWrap) {
-    tagMessage = `- Tag request skipped: working tree was already dirty before wrap-up generation, so local tag \`${tagName}\` was not created.`;
+  const gitHeadFull = cleanText(run('git', ['rev-parse', 'HEAD']).stdout);
+  if (!gitHeadFull) {
+    tagMessage = `- Tag request failed: could not resolve HEAD for tag \`${tagName}\`.`;
   } else {
     const existingTag = run('git', ['tag', '--list', tagName]);
     if (cleanText(existingTag.stdout)) {
       tagMessage = `- Tag request skipped: local tag \`${tagName}\` already exists.`;
     } else {
-      const tagResult = run('git', ['tag', '-a', tagName, '-m', `End-of-day wrap-up ${todayStamp()}`]);
+      const tagResult = run('git', ['tag', '-a', tagName, gitHeadFull, '-m', `End-of-day wrap-up ${todayStamp()}`]);
       if (tagResult.status === 0) {
-        tagMessage = `- Local tag created: \`${tagName}\`.`;
+        tagMessage = `- Local tag created at HEAD: \`${tagName}\`.${dirtyTreeBeforeWrap ? ' Working tree had uncommitted audit/output changes, but tagging the current commit is still valid for a daily milestone.' : ''}`;
       } else {
         tagMessage = `- Tag request failed for \`${tagName}\` (status ${tagResult.status}).`;
       }

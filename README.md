@@ -69,7 +69,7 @@ node scripts/end-of-day-wrapup.js --tag
 npm run doctor:render
 ```
 
-The end-of-day wrap-up script writes `END_OF_DAY_WRAPUP.md`, reruns the placeholder audit, reports whether Quarto render tooling is actually available, and only creates a local git tag when `--tag` is explicitly requested and the working tree is clean.
+The end-of-day wrap-up script writes `END_OF_DAY_WRAPUP.md`, reruns the placeholder audit, records the combined healthcheck, local render, and status dashboard summaries, and only creates a local git tag when `--tag` is explicitly requested. The tag is anchored to the current `HEAD`, even if the working tree contains freshly generated audit artifacts.
 
 ### Render environment doctor
 

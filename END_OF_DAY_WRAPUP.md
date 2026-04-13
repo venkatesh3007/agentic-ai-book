@@ -1,8 +1,8 @@
 # End-of-Day Wrap-Up
 
-Generated: 2026-04-12T13:38:03.828Z
+Generated: 2026-04-13T13:33:40.249Z
 
-Git HEAD: 5ab86c7
+Git HEAD: 64363ae
 
 ## Summary
 
@@ -106,11 +106,12 @@ WARN:   - Day 29: chapters/day-29.qmd
 - Exit status: 1
 - Overall status: FAIL (exit 1)
 - Checks:
-  - Placeholder Audit: WARN (exit 2, 58 ms)
-  - Internal Link Audit: PASS (exit 0, 60 ms)
-  - Image Asset Audit: PASS (exit 0, 55 ms)
-  - Frontmatter Audit: WARN (exit 2, 72 ms)
-  - Render Environment Doctor: FAIL (exit 1, 248 ms)
+  - Placeholder Audit: WARN (exit 2, 53 ms)
+  - Internal Link Audit: PASS (exit 0, 61 ms)
+  - Image Asset Audit: PASS (exit 0, 51 ms)
+  - Frontmatter Audit: WARN (exit 2, 86 ms)
+  - Render Environment Doctor: FAIL (exit 1, 269 ms)
+  - Local HTML Render: PASS (exit 0, 74930 ms)
 - Reports:
   - `reports/healthcheck-report.md`
   - `reports/healthcheck-report.json`
@@ -141,9 +142,7 @@ Healthcheck FAIL (exit 1). Report written to reports/healthcheck-report.md
 [1m[34m[10/49] chapters/08-writing-in-the-open.qmd[39m[22m
 [1m[34m[11/49] chapters/09-planning-the-sprint.qmd[39m[22m
 [1m[34m[12/49] chapters/day-02-warmup.qmd[39m[22m
-[WARNING] Citeproc: citation steipete not found
 [1m[34m[13/49] chapters/day-03-warmup.qmd[39m[22m
-[WARNING] Citeproc: citation messageId not found
 [1m[34m[14/49] chapters/day-05-warmup.qmd[39m[22m
 [1m[34m[15/49] chapters/day-01.qmd[39m[22m
 [1m[34m[16/49] chapters/day-02.qmd[39m[22m
@@ -151,7 +150,6 @@ Healthcheck FAIL (exit 1). Report written to reports/healthcheck-report.md
 [1m[34m[18/49] chapters/day-04.qmd[39m[22m
 [1m[34m[19/49] chapters/day-05.qmd[39m[22m
 [1m[34m[20/49] chapters/day-06.qmd[39m[22m
-[WARNING] Citeproc: citation venkatesh3007 not found
 [1m[34m[21/49] chapters/day-07.qmd[39m[22m
 [1m[34m[22/49] chapters/day-08.qmd[39m[22m
 [1m[34m[23/49] chapters/day-09.qmd[39m[22m
@@ -185,11 +183,28 @@ Healthcheck FAIL (exit 1). Report written to reports/healthcheck-report.md
 Output created: _book/index.html
 ```
 
+## Status Dashboard
+
+- Command: `/usr/bin/node scripts/build-status-dashboard.js`
+- Exit status: 0
+- Overall status: FAIL
+- Snapshot freshness: FRESH
+- Dashboard local render status: PASS (exit 0)
+- Reports:
+  - `reports/status-dashboard.md`
+  - `reports/status-dashboard.json`
+```text
+Wrote reports/status-dashboard.md
+Wrote reports/status-dashboard.json
+```
+
 ## Git Working Tree
 
 - Working tree dirty before wrap-up write: yes
 ```text
-M placeholder-chapters.json
+M README.md
+ M STATUS.md
+ M placeholder-chapters.json
  M reports/frontmatter-audit-report.json
  M reports/healthcheck-report.json
  M reports/healthcheck-report.md
@@ -199,11 +214,14 @@ M placeholder-chapters.json
  M reports/local-render-report.md
  M reports/render-environment-report.json
  M reports/render-environment-report.md
+ M reports/status-dashboard.json
+ M reports/status-dashboard.md
+ M scripts/end-of-day-wrapup.js
 ```
 
 ## Tagging
 
-- Tag request skipped: working tree was already dirty before wrap-up generation, so local tag `eod-2026-04-12` was not created.
+- Local tag created at HEAD: `eod-2026-04-13`. Working tree had uncommitted audit/output changes, but tagging the current commit is still valid for a daily milestone.
 
 ## Notes
 
