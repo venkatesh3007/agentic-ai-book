@@ -44,6 +44,8 @@ What it checks right now:
 - it writes a human-readable audit report to `PLACEHOLDER_CHAPTERS.md`,
 - and it writes machine-readable output to `placeholder-chapters.json` for future automation.
 
+The placeholder rules used by `npm run validate` are now shared with the frontmatter audit, so placeholder cleanup criteria only need to be updated in one place instead of drifting across two separate scripts.
+
 For cross-file integrity, run the internal link audit:
 
 ```bash
@@ -102,7 +104,7 @@ The command exits non-zero if any internal link or anchor is broken, giving us a
 
 ### Frontmatter audit
 
-`npm run audit:frontmatter` runs `scripts/check-frontmatter.js`, which audits the manuscript's QMD frontmatter for metadata drift. The audit:
+`npm run audit:frontmatter` runs `scripts/check-frontmatter.js`, which audits the manuscript's QMD frontmatter for metadata drift. Its placeholder detection now shares the same rule module as `npm run validate`, so metadata warnings and placeholder-chapter warnings do not silently diverge over time. The audit:
 - scans every `.qmd` source file while skipping generated artifacts like `_book/` and `reports/`,
 - fails if a QMD file is missing frontmatter or a required `title`,
 - warns when day chapters still contain `[TBD]` placeholder metadata,

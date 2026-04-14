@@ -21,27 +21,27 @@
 
 ## Warnings
 
-- **placeholder-metadata** — `chapters/day-09.qmd` — Frontmatter still contains [TBD] placeholder text
-- **placeholder-metadata** — `chapters/day-10.qmd` — Frontmatter still contains [TBD] placeholder text
-- **placeholder-metadata** — `chapters/day-11.qmd` — Frontmatter still contains [TBD] placeholder text
-- **placeholder-metadata** — `chapters/day-12.qmd` — Frontmatter still contains [TBD] placeholder text
-- **placeholder-metadata** — `chapters/day-13.qmd` — Frontmatter still contains [TBD] placeholder text
-- **placeholder-metadata** — `chapters/day-14.qmd` — Frontmatter still contains [TBD] placeholder text
-- **placeholder-metadata** — `chapters/day-15.qmd` — Frontmatter still contains [TBD] placeholder text
-- **placeholder-metadata** — `chapters/day-16.qmd` — Frontmatter still contains [TBD] placeholder text
-- **placeholder-metadata** — `chapters/day-17.qmd` — Frontmatter still contains [TBD] placeholder text
-- **placeholder-metadata** — `chapters/day-18.qmd` — Frontmatter still contains [TBD] placeholder text
-- **placeholder-metadata** — `chapters/day-19.qmd` — Frontmatter still contains [TBD] placeholder text
-- **placeholder-metadata** — `chapters/day-20.qmd` — Frontmatter still contains [TBD] placeholder text
-- **placeholder-metadata** — `chapters/day-21.qmd` — Frontmatter still contains [TBD] placeholder text
-- **placeholder-metadata** — `chapters/day-22.qmd` — Frontmatter still contains [TBD] placeholder text
-- **placeholder-metadata** — `chapters/day-23.qmd` — Frontmatter still contains [TBD] placeholder text
-- **placeholder-metadata** — `chapters/day-24.qmd` — Frontmatter still contains [TBD] placeholder text
-- **placeholder-metadata** — `chapters/day-25.qmd` — Frontmatter still contains [TBD] placeholder text
-- **placeholder-metadata** — `chapters/day-26.qmd` — Frontmatter still contains [TBD] placeholder text
-- **placeholder-metadata** — `chapters/day-27.qmd` — Frontmatter still contains [TBD] placeholder text
-- **placeholder-metadata** — `chapters/day-28.qmd` — Frontmatter still contains [TBD] placeholder text
-- **placeholder-metadata** — `chapters/day-29.qmd` — Frontmatter still contains [TBD] placeholder text
+- **placeholder-metadata** — `chapters/day-09.qmd` — Frontmatter still contains placeholder text
+- **placeholder-metadata** — `chapters/day-10.qmd` — Frontmatter still contains placeholder text
+- **placeholder-metadata** — `chapters/day-11.qmd` — Frontmatter still contains placeholder text
+- **placeholder-metadata** — `chapters/day-12.qmd` — Frontmatter still contains placeholder text
+- **placeholder-metadata** — `chapters/day-13.qmd` — Frontmatter still contains placeholder text
+- **placeholder-metadata** — `chapters/day-14.qmd` — Frontmatter still contains placeholder text
+- **placeholder-metadata** — `chapters/day-15.qmd` — Frontmatter still contains placeholder text
+- **placeholder-metadata** — `chapters/day-16.qmd` — Frontmatter still contains placeholder text
+- **placeholder-metadata** — `chapters/day-17.qmd` — Frontmatter still contains placeholder text
+- **placeholder-metadata** — `chapters/day-18.qmd` — Frontmatter still contains placeholder text
+- **placeholder-metadata** — `chapters/day-19.qmd` — Frontmatter still contains placeholder text
+- **placeholder-metadata** — `chapters/day-20.qmd` — Frontmatter still contains placeholder text
+- **placeholder-metadata** — `chapters/day-21.qmd` — Frontmatter still contains placeholder text
+- **placeholder-metadata** — `chapters/day-22.qmd` — Frontmatter still contains placeholder text
+- **placeholder-metadata** — `chapters/day-23.qmd` — Frontmatter still contains placeholder text
+- **placeholder-metadata** — `chapters/day-24.qmd` — Frontmatter still contains placeholder text
+- **placeholder-metadata** — `chapters/day-25.qmd` — Frontmatter still contains placeholder text
+- **placeholder-metadata** — `chapters/day-26.qmd` — Frontmatter still contains placeholder text
+- **placeholder-metadata** — `chapters/day-27.qmd` — Frontmatter still contains placeholder text
+- **placeholder-metadata** — `chapters/day-28.qmd` — Frontmatter still contains placeholder text
+- **placeholder-metadata** — `chapters/day-29.qmd` — Frontmatter still contains placeholder text
 
 ---
 

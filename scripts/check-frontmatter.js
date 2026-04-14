@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 const fs = require('fs');
 const path = require('path');
+const {
+  hasPlaceholderMetadata,
+  isDayChapterPath
+} = require('./lib/placeholder-rules');
 
 const repoRoot = process.cwd();
 const reportDir = path.join(repoRoot, 'reports');
@@ -109,10 +113,8 @@ function checkDayTitle(file, title) {
 }
 
 function checkPlaceholderMetadata(file, frontmatter) {
-  const title = frontmatter.title || '';
-  const subtitle = frontmatter.subtitle || '';
-  if (/\[TBD\]/.test(title) || /\[TBD\]/.test(subtitle)) {
-    recordWarning(file, 'placeholder-metadata', 'Frontmatter still contains [TBD] placeholder text');
+  if (hasPlaceholderMetadata(frontmatter)) {
+    recordWarning(file, 'placeholder-metadata', 'Frontmatter still contains placeholder text');
   }
 }
 
@@ -131,7 +133,7 @@ function auditFile(fullPath, chapterSet) {
   }
 
   if (chapterSet.has(relPath) && relPath.startsWith('chapters/')) {
-    const isDayChapter = /^chapters\/day-\d+\.qmd$/.test(relPath);
+    const isDayChapter = isDayChapterPath(relPath);
     chapterEntries.push({
       file: relPath,
       title: frontmatter.data.title || '',
