@@ -1,8 +1,8 @@
 # End-of-Day Wrap-Up
 
-Generated: 2026-04-13T13:33:40.249Z
+Generated: 2026-04-14T13:35:52.238Z
 
-Git HEAD: 64363ae
+Git HEAD: 3533d58
 
 ## Summary
 
@@ -106,12 +106,12 @@ WARN:   - Day 29: chapters/day-29.qmd
 - Exit status: 1
 - Overall status: FAIL (exit 1)
 - Checks:
-  - Placeholder Audit: WARN (exit 2, 53 ms)
-  - Internal Link Audit: PASS (exit 0, 61 ms)
-  - Image Asset Audit: PASS (exit 0, 51 ms)
-  - Frontmatter Audit: WARN (exit 2, 86 ms)
-  - Render Environment Doctor: FAIL (exit 1, 269 ms)
-  - Local HTML Render: PASS (exit 0, 74930 ms)
+  - Placeholder Audit: WARN (exit 2, 76 ms)
+  - Internal Link Audit: PASS (exit 0, 64 ms)
+  - Image Asset Audit: PASS (exit 0, 57 ms)
+  - Frontmatter Audit: WARN (exit 2, 90 ms)
+  - Render Environment Doctor: FAIL (exit 1, 259 ms)
+  - Local HTML Render: PASS (exit 0, 80130 ms)
 - Reports:
   - `reports/healthcheck-report.md`
   - `reports/healthcheck-report.json`
@@ -202,9 +202,7 @@ Wrote reports/status-dashboard.json
 
 - Working tree dirty before wrap-up write: yes
 ```text
-M README.md
- M STATUS.md
- M placeholder-chapters.json
+M placeholder-chapters.json
  M reports/frontmatter-audit-report.json
  M reports/healthcheck-report.json
  M reports/healthcheck-report.md
@@ -212,16 +210,17 @@ M README.md
  M reports/link-check-report.json
  M reports/local-render-report.json
  M reports/local-render-report.md
+ M reports/refresh-audits-report.json
+ M reports/refresh-audits-report.md
  M reports/render-environment-report.json
  M reports/render-environment-report.md
  M reports/status-dashboard.json
  M reports/status-dashboard.md
- M scripts/end-of-day-wrapup.js
 ```
 
 ## Tagging
 
-- Local tag created at HEAD: `eod-2026-04-13`. Working tree had uncommitted audit/output changes, but tagging the current commit is still valid for a daily milestone.
+- Local tag created at HEAD: `eod-2026-04-14`. Working tree had uncommitted audit/output changes, but tagging the current commit is still valid for a daily milestone.
 
 ## Notes
 
