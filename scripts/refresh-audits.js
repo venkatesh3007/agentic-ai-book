@@ -50,6 +50,14 @@ const baseCommands = [
     reports: ['reports/render-environment-report.md', 'reports/render-environment-report.json']
   },
   {
+    id: 'local-render',
+    title: 'Local HTML Render',
+    command: process.execPath,
+    args: [path.join(repoRoot, 'scripts', 'render-with-local-quarto.js'), '.', '--to', 'html'],
+    warnOn: new Set([]),
+    reports: ['reports/local-render-report.md', 'reports/local-render-report.json']
+  },
+  {
     id: 'health',
     title: 'Combined Healthcheck',
     command: process.execPath,

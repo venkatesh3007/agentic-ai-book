@@ -1,6 +1,6 @@
 # Repository Healthcheck Report
 
-- Generated: 2026-04-13T13:32:23.534Z
+- Generated: 2026-04-14T04:33:20.745Z
 - Overall status: **FAIL** (❌ FAIL)
 - Checks run: 6
 - Exit code: 1
@@ -12,7 +12,7 @@
 - Description: Validates _quarto.yml references and flags day chapters that are still placeholder templates.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/validate-book.js`
 - Exit code: 2
-- Duration: 53 ms
+- Duration: 54 ms
 - Reports:
   - `PLACEHOLDER_CHAPTERS.md`
   - `placeholder-chapters.json`
@@ -101,7 +101,7 @@ WARN:   - Day 29: chapters/day-29.qmd
 - Description: Scans Markdown/QMD files for broken repo-local links and missing anchors.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-internal-links.js`
 - Exit code: 0
-- Duration: 61 ms
+- Duration: 56 ms
 - Reports:
   - `reports/link-check-report.md`
   - `reports/link-check-report.json`
@@ -121,7 +121,7 @@ Internal link check passed.
 - Description: Ensures every referenced image exists inside the repository with a valid extension.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-image-assets.js`
 - Exit code: 0
-- Duration: 51 ms
+- Duration: 50 ms
 - Reports:
   - `reports/image-audit-report.md`
   - `reports/image-audit-report.json`
@@ -141,7 +141,7 @@ Image asset audit passed.
 - Description: Checks QMD frontmatter for required metadata and placeholder leftovers.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-frontmatter.js`
 - Exit code: 2
-- Duration: 86 ms
+- Duration: 72 ms
 - Reports:
   - `reports/frontmatter-audit-report.md`
   - `reports/frontmatter-audit-report.json`
@@ -214,7 +214,7 @@ Reports written to: reports/render-environment-report.md and reports/render-envi
 - Description: Runs an actual local HTML book render through the Quarto wrapper so health checks verify the artifact, not just the environment.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/render-with-local-quarto.js . --to html`
 - Exit code: 0
-- Duration: 74.93 s
+- Duration: 74.06 s
 - Reports:
   - `reports/local-render-report.md`
   - `reports/local-render-report.json`

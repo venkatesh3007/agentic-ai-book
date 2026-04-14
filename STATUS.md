@@ -31,11 +31,11 @@ April 13 morning work stayed focused on manuscript integrity and repo tooling in
 
 ### Verification Note
 
-- ✅ Added `scripts/refresh-audits.js` plus `npm run audit:refresh`, which reruns the placeholder audit, link audit, image audit, frontmatter audit, render doctor, combined healthcheck, and status dashboard in one pass
+- ✅ Added `scripts/refresh-audits.js` plus `npm run audit:refresh`, which reruns the placeholder audit, link audit, image audit, frontmatter audit, render doctor, standalone local HTML render, combined healthcheck, and status dashboard in one pass
 - ✅ The refresh workflow writes `reports/refresh-audits-report.{md,json}`, so the repo now records exactly which audit commands were rerun, their exit codes, durations, and report outputs
 - ✅ Upgraded `scripts/build-status-dashboard.js` so it now reports audit snapshot freshness based on report timestamps instead of silently trusting whatever JSON files were already lying around
 - ✅ The dashboard now warns when the oldest prerequisite report is stale and points maintainers at `npm run audit:refresh` as the repair path
-- ✅ Reran `npm run audit:refresh`, which regenerated the repo-local audit artifacts and confirmed the dashboard snapshot is **FRESH**
+- ✅ Reran `npm run audit:refresh`, which regenerated the repo-local audit artifacts, refreshed `reports/local-render-report.{md,json}` in the same pass, and confirmed the dashboard snapshot is **FRESH**
 - ✅ Improved `scripts/render-environment-doctor.js` so it now detects Quarto binaries that exist outside PATH and reports their candidate locations instead of collapsing every failure into “install Quarto”
 - ✅ On this host, the doctor now proves Quarto binaries exist at `/home/openclaw/quarto/bin/quarto`, `/home/openclaw/bin/quarto`, and `/home/openclaw/bin/bin/quarto`, which narrows the real blocker to PATH wiring rather than package absence
 - ✅ The status dashboard now surfaces Quarto discovery details so future sessions can see that render readiness is blocked by environment wiring, not pure installation state
@@ -46,6 +46,7 @@ April 13 morning work stayed focused on manuscript integrity and repo tooling in
 - ✅ Added missing bibliography entries for the manuscript's unresolved citations and rewired the affected chapters so the wrapper-based HTML render now completes without citeproc "citation not found" warnings
 - ✅ Upgraded the status dashboard so it now treats `reports/local-render-report.json` as a first-class source, surfaces the latest wrapper-based HTML render status directly, and includes that artifact in snapshot freshness calculations
 - ✅ Fixed the end-of-day wrap-up flow so it now records dashboard output alongside validation, healthcheck, and render results, and can tag the current `HEAD` even when freshly generated audit artifacts leave the working tree dirty
+- ✅ Tightened the refresh pipeline so the dashboard no longer depends on a potentially stale standalone local-render artifact; `npm run audit:refresh` now regenerates that wrapper-based render report explicitly before rebuilding the dashboard
 - ⚠️ The combined healthcheck still reports **FAIL** overall because the default `quarto` command is not on PATH and 21 placeholder day chapters from Day 09 through Day 29 still need honest rewrites
 
 ## Daily Updates

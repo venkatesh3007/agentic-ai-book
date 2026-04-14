@@ -71,6 +71,8 @@ npm run doctor:render
 
 The end-of-day wrap-up script writes `END_OF_DAY_WRAPUP.md`, reruns the placeholder audit, records the combined healthcheck, local render, and status dashboard summaries, and only creates a local git tag when `--tag` is explicitly requested. The tag is anchored to the current `HEAD`, even if the working tree contains freshly generated audit artifacts.
 
+As of the latest tooling pass, `npm run audit:refresh` also regenerates the standalone local render report directly, so the dashboard and refresh artifacts now describe the same validation window instead of mixing fresh audits with an older render snapshot.
+
 ### Render environment doctor
 
 `npm run doctor:render` runs `scripts/render-environment-doctor.js`, which audits the local machine for the prerequisites required to run a trustworthy `quarto render`. The doctor script:
@@ -119,7 +121,7 @@ This is especially useful for catching book-specific debt that link and image ch
 
 ### Bulk audit refresh
 
-`npm run audit:refresh` runs `scripts/refresh-audits.js`, which regenerates the placeholder audit, link audit, image audit, frontmatter audit, render doctor, combined healthcheck, and status dashboard in one pass. It writes its own execution report to `reports/refresh-audits-report.{md,json}` so future sessions can prove exactly which checks were refreshed, how long they took, and which command still failed.
+`npm run audit:refresh` runs `scripts/refresh-audits.js`, which regenerates the placeholder audit, link audit, image audit, frontmatter audit, render doctor, standalone local HTML render report, combined healthcheck, and status dashboard in one pass. Including the wrapper-based local render directly in the refresh flow keeps the dashboard's “latest local render” state tied to the same refresh window as the other prerequisite reports, instead of silently depending on an older artifact. The command writes its own execution report to `reports/refresh-audits-report.{md,json}` so future sessions can prove exactly which checks were refreshed, how long they took, and which command still failed.
 
 ### Local render wrapper
 
