@@ -48,7 +48,8 @@ April 13 morning work stayed focused on manuscript integrity and repo tooling in
 - ✅ Fixed the end-of-day wrap-up flow so it now records dashboard output alongside validation, healthcheck, and render results, and can tag the current `HEAD` even when freshly generated audit artifacts leave the working tree dirty
 - ✅ Tightened the refresh pipeline so the dashboard no longer depends on a potentially stale standalone local-render artifact; `npm run audit:refresh` now regenerates that wrapper-based render report explicitly before rebuilding the dashboard
 - ✅ Extracted shared placeholder-detection rules into `scripts/lib/placeholder-rules.js`, so `npm run validate` and `npm run audit:frontmatter` now classify placeholder day chapters from one source of truth instead of drifting independently
-- ✅ Reran `npm run audit:refresh` after the refactor and confirmed the repo still renders locally while reporting the same honest blocker set: PATH wiring for `quarto` plus 21 placeholder day chapters
+- ✅ Extracted shared local Quarto discovery into `scripts/lib/quarto-local.js`, so the render doctor and wrapper-based HTML render now probe the same candidate binaries instead of duplicating PATH fallback logic
+- ✅ Reran `npm run audit:refresh` after the Quarto refactor and confirmed the repo still renders locally while reporting the same honest blocker set: PATH wiring for `quarto` plus 21 placeholder day chapters
 - ⚠️ The combined healthcheck still reports **FAIL** overall because the default `quarto` command is not on PATH and 21 placeholder day chapters from Day 09 through Day 29 still need honest rewrites
 
 ## Daily Updates

@@ -2,7 +2,11 @@
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
-const { spawnSync } = require('child_process');
+const {
+  discoverLocalQuartoBinaries,
+  extractVersion,
+  runCommand
+} = require('./lib/quarto-local');
 
 const repoRoot = process.cwd();
 const reportsDir = path.join(repoRoot, 'reports');
@@ -15,15 +19,6 @@ const REQUIRED_MIN_VERSIONS = {
   git: '2.30.0',
   quarto: '1.4.0'
 };
-
-const QUARTO_CANDIDATE_PATHS = [
-  path.join(os.homedir(), 'quarto', 'bin', 'quarto'),
-  path.join(os.homedir(), 'bin', 'quarto'),
-  path.join(os.homedir(), 'bin', 'bin', 'quarto'),
-  '/usr/local/bin/quarto',
-  '/usr/bin/quarto',
-  '/opt/quarto/bin/quarto'
-];
 
 function ensureReportsDir() {
   fs.mkdirSync(reportsDir, { recursive: true });
@@ -46,34 +41,6 @@ function compareSemver(a, b) {
     if (diff !== 0) return diff > 0 ? 1 : -1;
   }
   return 0;
-}
-
-function extractVersion(text) {
-  if (!text) return null;
-  const match = text.match(/(\d+\.\d+\.\d+)/);
-  if (match) return match[1];
-  const shorter = text.match(/(\d+\.\d+)/);
-  return shorter ? `${shorter[1]}.0` : null;
-}
-
-function runCommand(command, args = []) {
-  try {
-    const result = spawnSync(command, args, { encoding: 'utf8' });
-    if (result.error && result.error.code === 'ENOENT') {
-      return { status: 'not-found' };
-    }
-    return {
-      status: result.status === 0 ? 'ok' : 'error',
-      exitCode: result.status,
-      stdout: result.stdout?.trim() || '',
-      stderr: result.stderr?.trim() || ''
-    };
-  } catch (error) {
-    if (error.code === 'ENOENT') {
-      return { status: 'not-found' };
-    }
-    return { status: 'error', stderr: String(error) };
-  }
 }
 
 function formatStatus(status) {
@@ -160,13 +127,7 @@ function checkQuartoCli() {
     };
   }
 
-  const discoveredPaths = [];
-  for (const candidate of QUARTO_CANDIDATE_PATHS) {
-    if (!fs.existsSync(candidate)) continue;
-    const candidateResult = runCommand(candidate, ['--version']);
-    const version = extractVersion(candidateResult.stdout || candidateResult.stderr);
-    discoveredPaths.push({ path: candidate, version: version || null, status: candidateResult.status });
-  }
+  const discoveredPaths = discoverLocalQuartoBinaries();
 
   if (discoveredPaths.length) {
     const best = discoveredPaths.find((item) => item.version) || discoveredPaths[0];

@@ -1,39 +1,16 @@
 #!/usr/bin/env node
 const fs = require('fs');
 const path = require('path');
-const os = require('os');
 const { spawnSync } = require('child_process');
+const { findWorkingLocalQuarto } = require('./lib/quarto-local');
 
 const repoRoot = process.cwd();
 const reportsDir = path.join(repoRoot, 'reports');
 const markdownReportPath = path.join(reportsDir, 'local-render-report.md');
 const jsonReportPath = path.join(reportsDir, 'local-render-report.json');
 
-const quartoCandidates = [
-  path.join(os.homedir(), 'quarto', 'bin', 'quarto'),
-  path.join(os.homedir(), 'bin', 'quarto'),
-  path.join(os.homedir(), 'bin', 'bin', 'quarto'),
-  '/usr/local/bin/quarto',
-  '/usr/bin/quarto',
-  '/opt/quarto/bin/quarto'
-];
-
 function ensureReportsDir() {
   fs.mkdirSync(reportsDir, { recursive: true });
-}
-
-function findQuartoBinary() {
-  for (const candidate of quartoCandidates) {
-    if (!fs.existsSync(candidate)) continue;
-    const probe = spawnSync(candidate, ['--version'], { encoding: 'utf8' });
-    if (probe.status === 0) {
-      return {
-        path: candidate,
-        version: (probe.stdout || probe.stderr || '').trim().split(/\s+/)[0] || null
-      };
-    }
-  }
-  return null;
 }
 
 function toPosix(value) {
@@ -50,7 +27,7 @@ function main() {
   const generatedAt = new Date().toISOString();
   const target = process.argv[2] || '.';
   const extraArgs = process.argv.slice(3);
-  const quarto = findQuartoBinary();
+  const quarto = findWorkingLocalQuarto();
 
   if (!quarto) {
     const summary = {

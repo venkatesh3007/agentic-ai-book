@@ -77,7 +77,7 @@ As of the latest tooling pass, `npm run audit:refresh` also regenerates the stan
 
 ### Render environment doctor
 
-`npm run doctor:render` runs `scripts/render-environment-doctor.js`, which audits the local machine for the prerequisites required to run a trustworthy `quarto render`. The doctor script:
+`npm run doctor:render` runs `scripts/render-environment-doctor.js`, which audits the local machine for the prerequisites required to run a trustworthy `quarto render`. The doctor now shares its local Quarto discovery logic with the render wrapper through `scripts/lib/quarto-local.js`, so PATH diagnostics and wrapper-based render execution inspect the same candidate binaries instead of maintaining parallel lists. The doctor script:
 - checks version requirements for Node.js, npm, git, and the Quarto CLI,
 - verifies whether auxiliary tools such as Pandoc and Tectonic are installed,
 - records host metadata (platform, architecture, memory, timezone),
@@ -127,7 +127,7 @@ This is especially useful for catching book-specific debt that link and image ch
 
 ### Local render wrapper
 
-`npm run render:local` runs `scripts/render-with-local-quarto.js`, which tries known local Quarto install paths directly instead of assuming `quarto` is already on PATH. It writes a render attempt report to `reports/local-render-report.{md,json}` with the exact binary used, command line, exit code, and captured output. On this host it has been verified to render the HTML book successfully via `/home/openclaw/quarto/bin/quarto`, producing `_book/index.html`. This makes local render attempts auditable on servers where Quarto exists but shell PATH wiring is incomplete.
+`npm run render:local` runs `scripts/render-with-local-quarto.js`, which tries known local Quarto install paths directly instead of assuming `quarto` is already on PATH. It writes a render attempt report to `reports/local-render-report.{md,json}` with the exact binary used, command line, exit code, and captured output. The wrapper now reuses the same shared local-Quarto helper as the render doctor, which keeps diagnosis and execution aligned when candidate install paths change. On this host it has been verified to render the HTML book successfully via `/home/openclaw/quarto/bin/quarto`, producing `_book/index.html`. This makes local render attempts auditable on servers where Quarto exists but shell PATH wiring is incomplete.
 
 ## Author
 
