@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-04-14T13:33:05.378Z",
-  "exitCode": 1,
+  "generatedAt": "2026-04-15T04:32:45.118Z",
+  "exitCode": 2,
   "host": {
     "platform": "linux 6.8.0-107-generic",
     "arch": "x64",
@@ -34,26 +34,10 @@
     {
       "name": "Quarto CLI",
       "required": true,
-      "status": "fail",
-      "detail": "Quarto is not on PATH, but candidate binary/binaries exist: /home/openclaw/quarto/bin/quarto, /home/openclaw/bin/quarto, /home/openclaw/bin/bin/quarto. Best detected version: v1.6.42.",
-      "recommendation": "Add one of these binaries to PATH or invoke Quarto explicitly from /home/openclaw/quarto/bin/quarto.",
-      "discoveredPaths": [
-        {
-          "path": "/home/openclaw/quarto/bin/quarto",
-          "version": "1.6.42",
-          "status": "ok"
-        },
-        {
-          "path": "/home/openclaw/bin/quarto",
-          "version": "1.6.42",
-          "status": "ok"
-        },
-        {
-          "path": "/home/openclaw/bin/bin/quarto",
-          "version": "1.6.42",
-          "status": "ok"
-        }
-      ]
+      "status": "pass",
+      "detail": "Detected v1.6.42 via PATH",
+      "recommendation": "",
+      "discoveredPaths": []
     },
     {
       "name": "Pandoc",
@@ -77,29 +61,13 @@
       "recommendation": "Run `quarto check` after Quarto is available on PATH so the user config directory is created."
     }
   ],
-  "requiredFailures": [
-    "Quarto CLI"
-  ],
+  "requiredFailures": [],
   "warnings": [
     "Pandoc",
     "LaTeX engine (tectonic/pdflatex)",
     "Quarto user config directory"
   ],
-  "quartoDiscoveredPaths": [
-    {
-      "path": "/home/openclaw/quarto/bin/quarto",
-      "version": "1.6.42",
-      "status": "ok"
-    },
-    {
-      "path": "/home/openclaw/bin/quarto",
-      "version": "1.6.42",
-      "status": "ok"
-    },
-    {
-      "path": "/home/openclaw/bin/bin/quarto",
-      "version": "1.6.42",
-      "status": "ok"
-    }
-  ]
+  "quartoDiscoveredPaths": [],
+  "bootstrapPath": "/home/openclaw/quarto/bin",
+  "bootstrapAddedPathEntry": true
 }

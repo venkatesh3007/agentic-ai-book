@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "validate": "node scripts/validate-book.js",
+    "env:quarto": "node scripts/bootstrap-env.js",
     "audit:placeholders": "node scripts/validate-book.js",
     "audit:links": "node scripts/check-internal-links.js",
     "audit:images": "node scripts/check-image-assets.js",
@@ -12,6 +13,7 @@
     "audit:refresh": "node scripts/refresh-audits.js",
     "render:local": "node scripts/render-with-local-quarto.js . --to html",
     "wrapup:eod": "node scripts/end-of-day-wrapup.js",
-    "doctor:render": "node scripts/render-environment-doctor.js"
+    "doctor:render": "node scripts/render-environment-doctor.js",
+    "quarto:check": "node scripts/bootstrap-env.js quarto check"
   }
 }

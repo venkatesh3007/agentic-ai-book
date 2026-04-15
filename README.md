@@ -69,6 +69,7 @@ npm run render:local
 npm run wrapup:eod
 node scripts/end-of-day-wrapup.js --tag
 npm run doctor:render
+npm run quarto:check
 ```
 
 The end-of-day wrap-up script writes `END_OF_DAY_WRAPUP.md`, reruns the placeholder audit, records the combined healthcheck, local render, and status dashboard summaries, and only creates a local git tag when `--tag` is explicitly requested. The tag is anchored to the current `HEAD`, even if the working tree contains freshly generated audit artifacts.
@@ -77,14 +78,14 @@ As of the latest tooling pass, `npm run audit:refresh` also regenerates the stan
 
 ### Render environment doctor
 
-`npm run doctor:render` runs `scripts/render-environment-doctor.js`, which audits the local machine for the prerequisites required to run a trustworthy `quarto render`. The doctor now shares its local Quarto discovery logic with the render wrapper through `scripts/lib/quarto-local.js`, so PATH diagnostics and wrapper-based render execution inspect the same candidate binaries instead of maintaining parallel lists. The doctor script:
+`npm run doctor:render` runs `scripts/render-environment-doctor.js`, which audits the local machine for the prerequisites required to run a trustworthy `quarto render`. The doctor now shares its local Quarto discovery logic with the render wrapper through `scripts/lib/quarto-local.js`, and it also applies the repo's bootstrap PATH through `scripts/lib/runtime-env.js`, so repo-run diagnostics and wrapper-based render execution inspect the same candidate binaries instead of maintaining parallel logic. The doctor script:
 - checks version requirements for Node.js, npm, git, and the Quarto CLI,
 - verifies whether auxiliary tools such as Pandoc and Tectonic are installed,
 - records host metadata (platform, architecture, memory, timezone),
 - writes a detailed report to `reports/render-environment-report.md` plus a machine-readable JSON copy, and
 - exits with status `1` if required tooling is missing, or `2` when only optional warnings remain.
 
-This is not a substitute for `quarto render`, but it gives the repo a real integrity gate even on machines where Quarto is not installed. It also now distinguishes between “Quarto truly missing” and “Quarto present on disk but not exposed on PATH,” which matters on long-lived servers where tooling may have been unpacked into `$HOME/quarto/bin` or similar locations without updating shell startup files.
+This is not a substitute for `quarto render`, but it gives the repo a real integrity gate even on machines where Quarto is not installed. It now distinguishes between the raw shell environment and the repo's own bootstrap PATH, which matters on long-lived servers where tooling may have been unpacked into `$HOME/quarto/bin` without updating login shell startup files. If you want Quarto commands to run the same way the repo tooling does, use `npm run quarto:check` or `node scripts/bootstrap-env.js quarto ...`.
 
 ### Internal link audit
 

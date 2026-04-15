@@ -1,16 +1,16 @@
 # Repository Status Dashboard
 
-- Generated: 2026-04-14T13:35:52.207Z
-- Overall status: ❌ **FAIL**
+- Generated: 2026-04-15T04:33:56.657Z
+- Overall status: ⚠️ **WARN**
 - Audit snapshot freshness: ✅ **FRESH**
-- Oldest source report: 2026-04-14T13:33:05.097Z (3 minute(s) old)
-- Newest source report: 2026-04-14T13:34:25.753Z (1 minute(s) old)
+- Oldest source report: 2026-04-15T04:32:44.879Z (1 minute(s) old)
+- Newest source report: 2026-04-15T04:33:56.612Z (0 minute(s) old)
 - Placeholder day chapters remaining: **21**
 - Latest local HTML render: ✅ **PASS** (exit 0)
 
 ## Current Wins
 
-- Audit snapshot is fresh (oldest report age: 3 minute(s))
+- Audit snapshot is fresh (oldest report age: 1 minute(s))
 - Bulk audit refresh command available via `npm run audit:refresh`
 - Internal link audit is clean
 - Image asset audit is clean
@@ -20,7 +20,6 @@
 
 ## Current Blockers
 
-- Quarto exists on disk but is not wired into PATH (/home/openclaw/quarto/bin/quarto, /home/openclaw/bin/quarto, /home/openclaw/bin/bin/quarto)
 - 21 placeholder day chapters still need honest rewrites
 
 ## Next Priority Rewrites
@@ -33,12 +32,12 @@
 
 ## Audit Snapshot
 
-- ⚠️ **Placeholder Audit** — WARN (exit 2, 76 ms)
-- ✅ **Internal Link Audit** — PASS (exit 0, 64 ms)
-- ✅ **Image Asset Audit** — PASS (exit 0, 57 ms)
-- ⚠️ **Frontmatter Audit** — WARN (exit 2, 90 ms)
-- ❌ **Render Environment Doctor** — FAIL (exit 1, 259 ms)
-- ✅ **Local HTML Render** — PASS (exit 0, 80130 ms)
+- ⚠️ **Placeholder Audit** — WARN (exit 2, 53 ms)
+- ✅ **Internal Link Audit** — PASS (exit 0, 56 ms)
+- ✅ **Image Asset Audit** — PASS (exit 0, 51 ms)
+- ⚠️ **Frontmatter Audit** — WARN (exit 2, 64 ms)
+- ⚠️ **Render Environment Doctor** — WARN (exit 2, 272 ms)
+- ✅ **Local HTML Render** — PASS (exit 0, 71279 ms)
 
 ## Detailed Counts
 
@@ -46,21 +45,15 @@
 - Frontmatter errors: **0**
 - Internal link issues: **0**
 - Image asset issues: **0**
-- Render required failures: **1**
+- Render required failures: **0**
 - Render warnings: **3**
-- Quarto candidate paths discovered: **3**
+- Quarto candidate paths discovered: **0**
 - Local render output directory present: **yes**
-
-## Quarto Discovery
-
-- `/home/openclaw/quarto/bin/quarto` — version 1.6.42
-- `/home/openclaw/bin/quarto` — version 1.6.42
-- `/home/openclaw/bin/bin/quarto` — version 1.6.42
 
 ## Refresh Workflow
 
 - Run `npm run audit:refresh` to regenerate the prerequisite audit JSON files in one pass before rebuilding the dashboard.
-- Last bulk refresh report: 2026-04-14T13:30:17.099Z
+- Last bulk refresh report: 2026-04-15T04:31:29.786Z
 
 ## Source Reports
 

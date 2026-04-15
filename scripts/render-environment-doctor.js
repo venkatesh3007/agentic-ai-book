@@ -7,6 +7,7 @@ const {
   extractVersion,
   runCommand
 } = require('./lib/quarto-local');
+const { withRepoToolPath } = require('./lib/runtime-env');
 
 const repoRoot = process.cwd();
 const reportsDir = path.join(repoRoot, 'reports');
@@ -66,8 +67,8 @@ function checkNode() {
   };
 }
 
-function checkBinary({ name, command, args = ['--version'], required = false, minVersion = null, recommendation = '' }) {
-  const result = runCommand(command, args);
+function checkBinary({ name, command, args = ['--version'], required = false, minVersion = null, recommendation = '', env = process.env }) {
+  const result = runCommand(command, args, { env });
   if (result.status === 'not-found') {
     return {
       name,
@@ -100,8 +101,8 @@ function checkBinary({ name, command, args = ['--version'], required = false, mi
   };
 }
 
-function checkQuartoCli() {
-  const pathResult = runCommand('quarto', ['--version']);
+function checkQuartoCli(envDetails) {
+  const pathResult = runCommand('quarto', ['--version'], { env: envDetails.env });
   if (pathResult.status !== 'not-found') {
     const version = extractVersion(pathResult.stdout || pathResult.stderr);
     let status = 'pass';
@@ -177,7 +178,7 @@ function gatherHostInfo() {
   };
 }
 
-function buildReports(checkResults, hostInfo, generatedAt) {
+function buildReports(checkResults, hostInfo, generatedAt, envDetails) {
   const requiredFailures = checkResults.filter((c) => c.required && c.status !== 'pass');
   const warnings = checkResults.filter((c) => !c.required && c.status !== 'pass');
   const quartoCheck = checkResults.find((c) => c.name === 'Quarto CLI');
@@ -206,8 +207,12 @@ function buildReports(checkResults, hostInfo, generatedAt) {
   }
   markdown.push(`- Exit code: ${exitCode}`);
 
+  if (envDetails?.quartoBinDir) {
+    markdown.push(`- Repo bootstrap PATH includes: \`${envDetails.quartoBinDir}\``);
+    markdown.push(`- Repo bootstrap added PATH entry this run: ${envDetails.addedToPath ? 'yes' : 'no'}`);
+  }
   if (quartoCheck?.discoveredPaths?.length) {
-    markdown.push(`- Quarto binaries discovered outside PATH: ${quartoCheck.discoveredPaths.map((item) => `\`${item.path}\``).join(', ')}`);
+    markdown.push(`- Quarto binaries discovered outside raw shell PATH: ${quartoCheck.discoveredPaths.map((item) => `\`${item.path}\``).join(', ')}`);
   }
 
   markdown.push('', '## Detailed Checks', '');
@@ -256,7 +261,9 @@ function buildReports(checkResults, hostInfo, generatedAt) {
     checks: checkResults,
     requiredFailures: requiredFailures.map((c) => c.name),
     warnings: warnings.map((c) => c.name),
-    quartoDiscoveredPaths: quartoCheck?.discoveredPaths || []
+    quartoDiscoveredPaths: quartoCheck?.discoveredPaths || [],
+    bootstrapPath: envDetails?.quartoBinDir || null,
+    bootstrapAddedPathEntry: Boolean(envDetails?.addedToPath)
   };
 
   return { markdown: markdown.join('\n') + '\n', json: JSON.stringify(jsonPayload, null, 2) + '\n', exitCode };
@@ -267,6 +274,8 @@ function main() {
   const hostInfo = gatherHostInfo();
   const generatedAt = new Date().toISOString();
 
+  const envDetails = withRepoToolPath(process.env);
+
   const results = [];
   results.push(checkNode());
   results.push(
@@ -275,7 +284,8 @@ function main() {
       command: 'npm',
       required: true,
       minVersion: REQUIRED_MIN_VERSIONS.npm,
-      recommendation: 'Install Node.js 18+ which includes npm ≥ 9.'
+      recommendation: 'Install Node.js 18+ which includes npm ≥ 9.',
+      env: envDetails.env
     })
   );
   results.push(
@@ -284,17 +294,19 @@ function main() {
       command: 'git',
       required: true,
       minVersion: REQUIRED_MIN_VERSIONS.git,
-      recommendation: 'Install git 2.30+ to match GitHub Actions runners.'
+      recommendation: 'Install git 2.30+ to match GitHub Actions runners.',
+      env: envDetails.env
     })
   );
-  results.push(checkQuartoCli());
+  results.push(checkQuartoCli(envDetails));
   results.push(
     checkBinary({
       name: 'Pandoc',
       command: 'pandoc',
       required: false,
       minVersion: '3.1.0',
-      recommendation: 'Install Pandoc 3.1+ or rely on the copy bundled with Quarto.'
+      recommendation: 'Install Pandoc 3.1+ or rely on the copy bundled with Quarto.',
+      env: envDetails.env
     })
   );
   results.push(
@@ -304,12 +316,13 @@ function main() {
       args: ['--version'],
       required: false,
       minVersion: '0.9.0',
-      recommendation: 'Install Tectonic (preferred) or TeX Live to enable PDF output.'
+      recommendation: 'Install Tectonic (preferred) or TeX Live to enable PDF output.',
+      env: envDetails.env
     })
   );
   results.push(checkQuartoConfigDir());
 
-  const { markdown, json, exitCode } = buildReports(results, hostInfo, generatedAt);
+  const { markdown, json, exitCode } = buildReports(results, hostInfo, generatedAt, envDetails);
   fs.writeFileSync(markdownReportPath, markdown);
   fs.writeFileSync(jsonReportPath, json);
 

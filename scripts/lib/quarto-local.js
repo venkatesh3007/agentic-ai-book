@@ -12,9 +12,9 @@ const QUARTO_CANDIDATE_PATHS = [
   '/opt/quarto/bin/quarto'
 ];
 
-function runCommand(command, args = []) {
+function runCommand(command, args = [], options = {}) {
   try {
-    const result = spawnSync(command, args, { encoding: 'utf8' });
+    const result = spawnSync(command, args, { encoding: 'utf8', ...options });
     if (result.error && result.error.code === 'ENOENT') {
       return { status: 'not-found' };
     }
