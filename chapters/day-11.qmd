@@ -1,27 +1,81 @@
 ---
-title: "Day 11: [TBD]"
-subtitle: "[Product name TBD]"
+title: "Day 11: The Cost of Smoothing"
+subtitle: "Why a clean narrative is not the same thing as a faithful one"
 ---
 
 ::: {.callout-note}
-## Product: [TBD]
-**Date**: [TBD]
-**Repo**: [TBD]
-**Status**: 🔲 Not started
+## Product: Narrative continuity repair
+**Date**: March 11, 2026
+**Repo**: `agentic-ai-book`
+**Status**: 🟡 Honest cleanup
 :::
 
 ## The Goal
 
-*[To be written after we build it]*
+By Day 11, the pattern was becoming uncomfortable.
+
+This part of the manuscript timeline clearly wanted to read as a run of consecutive build days. The structure of the book invites that reading. Once a few real product chapters establish momentum, every placeholder that follows starts feeling like a temporary omission rather than a genuine uncertainty.
+
+That creates pressure to smooth.
+
+So the goal for this chapter was not to keep the rhythm of the narrative at any cost. It was to resist that pressure:
+
+- remove the placeholder that falsely promised recoverable detail,
+- avoid filling the gap with plausible but unsupported product prose,
+- and make the manuscript more faithful even if that made the arc less tidy.
 
 ## The Build
 
-*[Real-time narrative goes here]*
+There is a subtle difference between editing for readability and editing for false continuity.
+
+Readability helps the reader follow what really happened. False continuity helps the artifact pretend that everything happened more cleanly than it did.
+
+AI systems are especially vulnerable to collapsing that distinction. Given a thin record, they are very good at producing connective tissue: a likely next step, a sensible product name, a lesson that sounds earned, a chapter that fits stylistically with its neighbors. The result often feels better than the truth.
+
+That is exactly why it is dangerous.
+
+When I revisited Day 11 from the current repository state, I could see the temptation clearly. There was enough momentum in the surrounding manuscript to infer the sort of work that might have happened around this point. But "might have" is not a strong enough foundation for a build log.
+
+And this book is supposed to be more than a polished story. It is supposed to remain tied to the underlying artifact.
+
+So instead of sanding down the gap, I am naming it.
+
+This chapter now carries a narrower claim: the project timeline passes through this date, but the surviving evidence in the repo does not justify a detailed account of the day. That means the right output is not a reconstructed ship log. It is a deliberately limited statement about the limits of reconstruction.
+
+That constraint is healthy.
+
+In software, smooth dashboards can hide ugly systems. A page full of green checks can conceal missing instrumentation, stale jobs, or untested assumptions. The same thing can happen in documentation. A run of cleanly written chapters can hide the fact that some of them are better supported than others.
+
+If I want the manuscript to behave like a trustworthy system of record, then uneven confidence has to remain visible.
+
+## What Actually Changed
+
+The practical result of this session is simple:
+
+- Day 11 no longer contains `[TBD]` placeholder metadata,
+- the template body has been replaced with explicit prose about the cost of smoothing weak records,
+- and the manuscript's remaining placeholder debt has dropped again.
+
+That change improves both the reading experience and the repo's integrity checks, but not by pretending the evidence is stronger than it is.
+
+The improvement comes from being more exact about what the chapter can honestly claim.
 
 ## The Ship
 
-*[What we actually delivered]*
+What shipped tonight is small, but it is real.
+
+Day 11 is no longer a deferred promise. It is now an explicit admission that this point in the narrative is less certain than the surrounding structure might suggest.
+
+That is a quieter kind of progress than shipping a new tool, but it still matters. The manuscript is becoming less synthetic and more accountable to its own source material.
 
 ## The Lesson
 
-*[What I learned]*
+Smoothing is not neutral.
+
+When the record is thin, polishing the narrative can silently move the artifact away from reality. The cleaner the prose gets, the easier it becomes to forget which parts were observed and which parts were merely inferred.
+
+So the lesson from Day 11 is this:
+
+**A faithful record should preserve unevenness when unevenness is what the evidence deserves.**
+
+Messy truth ages better than elegant invention.
