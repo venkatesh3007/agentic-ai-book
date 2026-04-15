@@ -15,7 +15,7 @@
 - ✅ Day 31 has been converted from a placeholder into an honest maintenance-session note
 - ✅ Day 30 has been converted from an empty template into an explicit continuity-gap chapter rather than fabricated progress
 - ✅ Day 08 has now been rewritten as an explicit continuity-gap chapter instead of a fake future promise
-- ⚠️ Days 09-29 still contain placeholder material and need honest rewrites rather than synthetic summaries
+- ⚠️ Days 10-29 still contain placeholder material and need honest rewrites rather than synthetic summaries
 
 ### Part III: The Lessons - OUTLINE STAGE
 - ✅ Skeleton lesson chapters exist (`patterns`, `failures`, `factory`)
@@ -50,7 +50,8 @@ April 13 morning work stayed focused on manuscript integrity and repo tooling in
 - ✅ Extracted shared placeholder-detection rules into `scripts/lib/placeholder-rules.js`, so `npm run validate` and `npm run audit:frontmatter` now classify placeholder day chapters from one source of truth instead of drifting independently
 - ✅ Extracted shared local Quarto discovery into `scripts/lib/quarto-local.js`, so the render doctor and wrapper-based HTML render now probe the same candidate binaries instead of duplicating PATH fallback logic
 - ✅ Reran `npm run audit:refresh` after the Quarto refactor and confirmed the repo still renders locally while reporting the same honest blocker set: PATH wiring for `quarto` plus 21 placeholder day chapters
-- ⚠️ The combined healthcheck still reports **FAIL** overall because 21 placeholder day chapters from Day 09 through Day 29 still need honest rewrites; Quarto-on-PATH is now handled through the repo bootstrap environment instead of remaining a silent machine-local footgun
+- ✅ Afternoon cleanup converted Day 09 from a raw placeholder into an explicit thin-record continuity chapter, dropping the placeholder backlog from 21 to 20 while keeping the wrapper-based HTML render green
+- ⚠️ The combined healthcheck now reports **WARN** rather than **FAIL** because the remaining debt is manuscript quality debt: 20 placeholder day chapters from Day 10 through Day 29 still need honest rewrites, while Quarto-on-PATH is handled through the repo bootstrap environment
 
 ## Daily Updates
 

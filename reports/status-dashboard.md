@@ -1,11 +1,11 @@
 # Repository Status Dashboard
 
-- Generated: 2026-04-15T04:33:56.657Z
+- Generated: 2026-04-15T07:33:36.577Z
 - Overall status: ⚠️ **WARN**
 - Audit snapshot freshness: ✅ **FRESH**
-- Oldest source report: 2026-04-15T04:32:44.879Z (1 minute(s) old)
-- Newest source report: 2026-04-15T04:33:56.612Z (0 minute(s) old)
-- Placeholder day chapters remaining: **21**
+- Oldest source report: 2026-04-15T07:32:19.659Z (1 minute(s) old)
+- Newest source report: 2026-04-15T07:33:36.523Z (0 minute(s) old)
+- Placeholder day chapters remaining: **20**
 - Latest local HTML render: ✅ **PASS** (exit 0)
 
 ## Current Wins
@@ -16,32 +16,32 @@
 - Image asset audit is clean
 - Frontmatter audit has zero errors
 - Latest local HTML render passed via /home/openclaw/quarto/bin/quarto
-- Placeholder backlog currently at 21
+- Placeholder backlog currently at 20
 
 ## Current Blockers
 
-- 21 placeholder day chapters still need honest rewrites
+- 20 placeholder day chapters still need honest rewrites
 
 ## Next Priority Rewrites
 
-- Day 09 — `chapters/day-09.qmd`
 - Day 10 — `chapters/day-10.qmd`
 - Day 11 — `chapters/day-11.qmd`
 - Day 12 — `chapters/day-12.qmd`
 - Day 13 — `chapters/day-13.qmd`
+- Day 14 — `chapters/day-14.qmd`
 
 ## Audit Snapshot
 
-- ⚠️ **Placeholder Audit** — WARN (exit 2, 53 ms)
-- ✅ **Internal Link Audit** — PASS (exit 0, 56 ms)
-- ✅ **Image Asset Audit** — PASS (exit 0, 51 ms)
-- ⚠️ **Frontmatter Audit** — WARN (exit 2, 64 ms)
-- ⚠️ **Render Environment Doctor** — WARN (exit 2, 272 ms)
-- ✅ **Local HTML Render** — PASS (exit 0, 71279 ms)
+- ⚠️ **Placeholder Audit** — WARN (exit 2, 58 ms)
+- ✅ **Internal Link Audit** — PASS (exit 0, 65 ms)
+- ✅ **Image Asset Audit** — PASS (exit 0, 58 ms)
+- ⚠️ **Frontmatter Audit** — WARN (exit 2, 71 ms)
+- ⚠️ **Render Environment Doctor** — WARN (exit 2, 276 ms)
+- ✅ **Local HTML Render** — PASS (exit 0, 76386 ms)
 
 ## Detailed Counts
 
-- Frontmatter warnings: **21**
+- Frontmatter warnings: **20**
 - Frontmatter errors: **0**
 - Internal link issues: **0**
 - Image asset issues: **0**
@@ -53,7 +53,7 @@
 ## Refresh Workflow
 
 - Run `npm run audit:refresh` to regenerate the prerequisite audit JSON files in one pass before rebuilding the dashboard.
-- Last bulk refresh report: 2026-04-15T04:31:29.786Z
+- Last bulk refresh report: 2026-04-15T07:31:02.139Z
 
 ## Source Reports
 

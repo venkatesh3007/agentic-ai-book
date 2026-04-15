@@ -4,7 +4,7 @@
 - QMD files scanned: **49**
 - Chapter entries inspected: **46**
 - Errors: **0**
-- Warnings: **21**
+- Warnings: **20**
 
 ## Checks
 
@@ -21,7 +21,6 @@
 
 ## Warnings
 
-- **placeholder-metadata** — `chapters/day-09.qmd` — Frontmatter still contains placeholder text
 - **placeholder-metadata** — `chapters/day-10.qmd` — Frontmatter still contains placeholder text
 - **placeholder-metadata** — `chapters/day-11.qmd` — Frontmatter still contains placeholder text
 - **placeholder-metadata** — `chapters/day-12.qmd` — Frontmatter still contains placeholder text

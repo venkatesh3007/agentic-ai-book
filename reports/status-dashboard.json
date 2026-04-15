@@ -1,20 +1,16 @@
 {
-  "generatedAt": "2026-04-15T04:33:56.657Z",
+  "generatedAt": "2026-04-15T07:33:36.577Z",
   "overallStatus": "warn",
   "snapshotFreshness": "fresh",
   "snapshotGeneratedAt": {
-    "oldest": "2026-04-15T04:32:44.879Z",
-    "newest": "2026-04-15T04:33:56.612Z",
-    "oldestAgeMs": 71778,
-    "newestAgeMs": 45
+    "oldest": "2026-04-15T07:32:19.659Z",
+    "newest": "2026-04-15T07:33:36.523Z",
+    "oldestAgeMs": 76918,
+    "newestAgeMs": 54
   },
-  "refreshReportGeneratedAt": "2026-04-15T04:31:29.786Z",
-  "placeholderCount": 21,
+  "refreshReportGeneratedAt": "2026-04-15T07:31:02.139Z",
+  "placeholderCount": 20,
   "nextPriority": [
-    {
-      "path": "chapters/day-09.qmd",
-      "day": 9
-    },
     {
       "path": "chapters/day-10.qmd",
       "day": 10
@@ -30,10 +26,14 @@
     {
       "path": "chapters/day-13.qmd",
       "day": 13
+    },
+    {
+      "path": "chapters/day-14.qmd",
+      "day": 14
     }
   ],
   "blockers": [
-    "21 placeholder day chapters still need honest rewrites"
+    "20 placeholder day chapters still need honest rewrites"
   ],
   "wins": [
     "Audit snapshot is fresh (oldest report age: 1 minute(s))",
@@ -42,7 +42,7 @@
     "Image asset audit is clean",
     "Frontmatter audit has zero errors",
     "Latest local HTML render passed via /home/openclaw/quarto/bin/quarto",
-    "Placeholder backlog currently at 21"
+    "Placeholder backlog currently at 20"
   ],
   "checks": [
     {
@@ -50,47 +50,47 @@
       "title": "Placeholder Audit",
       "status": "warn",
       "exitCode": 2,
-      "durationMs": 53
+      "durationMs": 58
     },
     {
       "id": "internal-links",
       "title": "Internal Link Audit",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 56
+      "durationMs": 65
     },
     {
       "id": "image-assets",
       "title": "Image Asset Audit",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 51
+      "durationMs": 58
     },
     {
       "id": "frontmatter-audit",
       "title": "Frontmatter Audit",
       "status": "warn",
       "exitCode": 2,
-      "durationMs": 64
+      "durationMs": 71
     },
     {
       "id": "render-doctor",
       "title": "Render Environment Doctor",
       "status": "warn",
       "exitCode": 2,
-      "durationMs": 272
+      "durationMs": 276
     },
     {
       "id": "local-render",
       "title": "Local HTML Render",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 71279
+      "durationMs": 76386
     }
   ],
   "audits": {
     "frontmatter": {
-      "warnings": 21,
+      "warnings": 20,
       "errors": 0
     },
     "links": {
