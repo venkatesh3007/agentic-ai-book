@@ -1,25 +1,25 @@
 # End-of-Day Wrap-Up
 
-Generated: 2026-04-14T13:35:52.238Z
+Generated: 2026-04-15T13:36:46.161Z
 
-Git HEAD: 3533d58
+Git HEAD: 8580f02
 
 ## Summary
 
 - Overall result: not fully green.
-- Validation found placeholder day chapters still needing honest rewrites (21 remaining).
+- Validation found placeholder day chapters still needing honest rewrites (18 remaining).
 - Local HTML render passed via the Quarto wrapper.
 
 ## Manuscript Integrity
 
 - Referenced chapter files missing: 0
-- Placeholder day chapters remaining: 21
+- Placeholder day chapters remaining: 18
 - Next priority rewrites:
-  - Day 09 — `chapters/day-09.qmd`
-  - Day 10 — `chapters/day-10.qmd`
-  - Day 11 — `chapters/day-11.qmd`
   - Day 12 — `chapters/day-12.qmd`
   - Day 13 — `chapters/day-13.qmd`
+  - Day 14 — `chapters/day-14.qmd`
+  - Day 15 — `chapters/day-15.qmd`
+  - Day 16 — `chapters/day-16.qmd`
 
 ## Validation Command
 
@@ -76,10 +76,7 @@ OK: Chapter exists: chapters/factory.qmd
 OK: Wrote report: PLACEHOLDER_CHAPTERS.md
 OK: Wrote report: placeholder-chapters.json
 
-WARN: Placeholder day chapters still present (21):
-WARN:   - Day 09: chapters/day-09.qmd
-WARN:   - Day 10: chapters/day-10.qmd
-WARN:   - Day 11: chapters/day-11.qmd
+WARN: Placeholder day chapters still present (18):
 WARN:   - Day 12: chapters/day-12.qmd
 WARN:   - Day 13: chapters/day-13.qmd
 WARN:   - Day 14: chapters/day-14.qmd
@@ -103,20 +100,20 @@ WARN:   - Day 29: chapters/day-29.qmd
 ## Combined Healthcheck
 
 - Command: `/usr/bin/node scripts/run-healthcheck.js`
-- Exit status: 1
-- Overall status: FAIL (exit 1)
+- Exit status: 2
+- Overall status: WARN (exit 2)
 - Checks:
-  - Placeholder Audit: WARN (exit 2, 76 ms)
-  - Internal Link Audit: PASS (exit 0, 64 ms)
-  - Image Asset Audit: PASS (exit 0, 57 ms)
-  - Frontmatter Audit: WARN (exit 2, 90 ms)
-  - Render Environment Doctor: FAIL (exit 1, 259 ms)
-  - Local HTML Render: PASS (exit 0, 80130 ms)
+  - Placeholder Audit: WARN (exit 2, 69 ms)
+  - Internal Link Audit: PASS (exit 0, 55 ms)
+  - Image Asset Audit: PASS (exit 0, 50 ms)
+  - Frontmatter Audit: WARN (exit 2, 70 ms)
+  - Render Environment Doctor: WARN (exit 2, 298 ms)
+  - Local HTML Render: PASS (exit 0, 77331 ms)
 - Reports:
   - `reports/healthcheck-report.md`
   - `reports/healthcheck-report.json`
 ```text
-Healthcheck FAIL (exit 1). Report written to reports/healthcheck-report.md
+Healthcheck WARN (exit 2). Report written to reports/healthcheck-report.md
 ```
 
 ## Render Check
@@ -187,7 +184,7 @@ Output created: _book/index.html
 
 - Command: `/usr/bin/node scripts/build-status-dashboard.js`
 - Exit status: 0
-- Overall status: FAIL
+- Overall status: WARN
 - Snapshot freshness: FRESH
 - Dashboard local render status: PASS (exit 0)
 - Reports:
@@ -210,8 +207,6 @@ M placeholder-chapters.json
  M reports/link-check-report.json
  M reports/local-render-report.json
  M reports/local-render-report.md
- M reports/refresh-audits-report.json
- M reports/refresh-audits-report.md
  M reports/render-environment-report.json
  M reports/render-environment-report.md
  M reports/status-dashboard.json
@@ -220,7 +215,7 @@ M placeholder-chapters.json
 
 ## Tagging
 
-- Local tag created at HEAD: `eod-2026-04-14`. Working tree had uncommitted audit/output changes, but tagging the current commit is still valid for a daily milestone.
+- Local tag created at HEAD: `eod-2026-04-15`. Working tree had uncommitted audit/output changes, but tagging the current commit is still valid for a daily milestone.
 
 ## Notes
 
