@@ -1,27 +1,83 @@
 ---
-title: "Day 10: [TBD]"
-subtitle: "[Product name TBD]"
+title: "Day 10: The Unverified Transition"
+subtitle: "Marking a narrative handoff the repo cannot fully reconstruct"
 ---
 
 ::: {.callout-note}
-## Product: [TBD]
-**Date**: [TBD]
-**Repo**: [TBD]
-**Status**: 🔲 Not started
+## Product: Narrative continuity repair
+**Date**: March 10, 2026
+**Repo**: `agentic-ai-book`
+**Status**: 🟡 Honest cleanup
 :::
 
 ## The Goal
 
-*[To be written after we build it]*
+Day 10 sits in an awkward part of the manuscript timeline.
+
+It is close enough to the stronger early-March chapters that it feels like it should contain a clear next build step. The surrounding sections create momentum. A reader expects a continuation: another tool, another deployment, another concrete product session carrying the arc forward.
+
+But when I came back to this chapter from the current repository state, that continuity was not something I could prove.
+
+So the goal here was not to manufacture a smoother bridge. It was to make the uncertainty visible:
+
+- remove the template that implied a recoverable story,
+- avoid narrating a product session the surviving evidence cannot support,
+- and preserve the handoff between stronger chapters without pretending the missing middle is fully known.
 
 ## The Build
 
-*[Real-time narrative goes here]*
+There is a special kind of risk in transition chapters.
+
+Beginning chapters can be explicit about uncertainty because the project is still forming. Big shipping chapters can lean on commits, tests, screenshots, and real artifacts. But transition chapters are easy to fake because they mostly need to *sound* connective. A few sentences of momentum, a plausible next step, a clean lesson — and suddenly the book feels seamless.
+
+That is exactly why they need restraint.
+
+By the time I reviewed Day 10, I had enough surrounding context to imagine what probably happened next. What I did not have was enough directly supported detail to write that imagination down as if it were established fact.
+
+That distinction matters more than it seems.
+
+A manuscript built from real sessions should not quietly upgrade inference into history. If a chapter is structurally useful but evidentially weak, the honest move is to lower the confidence of the chapter instead of raising the confidence of the claims.
+
+So this rewrite keeps the chapter in place while changing what it is allowed to say.
+
+It no longer pretends to be a delayed product narrative. It now functions as an explicit marker that the project moved through this date, but the current repo does not preserve enough detail to reconstruct the motion cleanly.
+
+That is not a glamorous editorial choice, but it is the correct one.
+
+Software systems run into the same problem all the time. A service changes state between two well-instrumented events, but the intermediate telemetry is missing. You can guess the transition. Sometimes you can guess correctly. But the system of record is healthier when it labels the step as unverified than when it writes a confident post-hoc explanation.
+
+This chapter is doing the same thing for the book.
+
+## What Actually Changed
+
+The concrete work from this session is straightforward:
+
+- the Day 10 placeholder frontmatter and template text were removed,
+- the chapter was rewritten as an explicit note about an unverified transition in the narrative,
+- and the manuscript's integrity debt dropped by one more placeholder chapter.
+
+That operational improvement is small but real.
+
+The repo's audits do not care whether the replacement chapter is dramatic. They care whether the manuscript still contains unresolved placeholders. Converting this file from `[TBD]` scaffolding into honest prose makes the book more truthful and the audit output slightly less noisy at the same time.
 
 ## The Ship
 
-*[What we actually delivered]*
+What shipped here is not a recovered product day.
+
+What shipped is a narrower, more accurate claim about the state of the record.
+
+Day 10 now acknowledges that it represents a transition the current artifact cannot fully verify. That is a better outcome than leaving behind a template that falsely promises eventual certainty.
+
+The chapter is less exciting than a fabricated build story, but much more defensible.
 
 ## The Lesson
 
-*[What I learned]*
+Not every bridge in a narrative should be load-bearing.
+
+Some parts of a project timeline are well supported. Others are mostly inferred from the shape of what came before and after. When that happens, the right move is not to strengthen the bridge with invented detail. The right move is to post the weight limit.
+
+So the lesson from Day 10 is this:
+
+**Transitions should be described at the level the evidence can actually carry.**
+
+If the record supports only a light claim, make a light claim. That keeps the larger structure honest.
