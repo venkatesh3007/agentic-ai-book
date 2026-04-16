@@ -76,14 +76,28 @@ function main() {
   const overallStatus = statusLabel(health?.overallStatus);
   const localRenderStatus = statusLabel(dashboard?.audits?.localRender?.status);
   const nextPriority = placeholder?.nextPriority?.[0];
+  const nextPriorityLabel = nextPriority ? `Day ${String(nextPriority.day).padStart(2, '0')}` : 'the next remaining day chapter';
   const nextUpdateText = nextPriority
     ? `After Day ${String(nextPriority.day).padStart(2, '0')} is rewritten or the repo status/infrastructure picture changes materially`
     : 'After the next materially verified repo change';
+
+  const focusSection = [
+    '## Current Session Focus',
+    '',
+    `${formattedDate} status now reflects the current verified repo state instead of a stale April 13 tooling note:`,
+    `- keep the audit/render pipeline honest and reproducible through \`npm run audit:refresh\``,
+    `- preserve the current verified baseline: local HTML render is **${localRenderStatus}**, combined healthcheck is **${overallStatus}**, and audit snapshot freshness is tied to current reports`,
+    `- use the stable tooling baseline to reduce manuscript debt next, starting with ${nextPriorityLabel}`,
+    `- avoid fabricated progress: placeholder chapters should only be replaced with evidence-backed rewrites or explicit continuity-gap chapters`,
+    '',
+    '### Verification Note'
+  ].join('\n');
 
   let text = fs.readFileSync(statusPath, 'utf8');
 
   text = text.replace(/\*\*Last Updated\*\*: .*\n/, `**Last Updated**: ${formattedDate}\n`);
   text = text.replace(/- ⚠️ Days .* still contain placeholder material and need honest rewrites rather than synthetic summaries\n/, `- ⚠️ ${dayRange} still contain placeholder material and need honest rewrites rather than synthetic summaries\n`);
+  text = text.replace(/## Current Session Focus[\s\S]*?### Verification Note\n/, `${focusSection}\n`);
   text = text.replace(/- ⚠️ The combined healthcheck now reports .*\n/, `- ⚠️ The combined healthcheck now reports **${overallStatus}** because the remaining debt is manuscript quality debt: ${placeholderCount} placeholder day chapters from Day ${String(firstDay ?? 0).padStart(2, '0')} through Day ${String(lastDay ?? 0).padStart(2, '0')} still need honest rewrites, while Quarto-on-PATH is handled through the repo bootstrap environment and the latest local HTML render remains **${localRenderStatus}**\n`);
   text = text.replace(/\*\*Next Update\*\*: .*\n/, `**Next Update**: ${nextUpdateText}\n`);
 

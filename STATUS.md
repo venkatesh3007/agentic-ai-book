@@ -23,11 +23,11 @@
 
 ## Current Session Focus
 
-April 13 morning work stayed focused on manuscript integrity and repo tooling instead of inventing missing product days:
-- upgrade the combined healthcheck so it performs a real local HTML render through the Quarto wrapper rather than only checking environment prerequisites
-- keep the healthcheck report honest by showing artifact verification alongside the stricter PATH-based render doctor
-- rerun the repo-local audits so the generated reports reflect the new behavior and the current manuscript state
-- update the repo docs and status notes to reflect the tighter verification gate honestly
+April 16, 2026 status now reflects the current verified repo state instead of a stale April 13 tooling note:
+- keep the audit/render pipeline honest and reproducible through `npm run audit:refresh`
+- preserve the current verified baseline: local HTML render is **PASS**, combined healthcheck is **WARN**, and audit snapshot freshness is tied to current reports
+- use the stable tooling baseline to reduce manuscript debt next, starting with Day 12
+- avoid fabricated progress: placeholder chapters should only be replaced with evidence-backed rewrites or explicit continuity-gap chapters
 
 ### Verification Note
 
@@ -58,7 +58,7 @@ April 13 morning work stayed focused on manuscript integrity and repo tooling in
 ### Snapshot Sync Note
 
 - ✅ Added `scripts/sync-status-md.js` plus `npm run status:sync`, so volatile status prose like **Last Updated**, placeholder-range summaries, and the next-update note can now be refreshed from current repo reports instead of drifting by hand
-- ✅ Verified the sync against current repo state at git HEAD `a99c0bd`, which keeps `STATUS.md` aligned with the dashboard/healthcheck reports after the Day 11 cleanup reduced placeholder debt to 18
+- ✅ Verified the sync against current repo state at git HEAD `892a796`, which keeps `STATUS.md` aligned with the dashboard/healthcheck reports after the Day 11 cleanup reduced placeholder debt to 18
 ## Daily Updates
 
 This book is updated from real build sessions. Every meaningful change should ship with:
