@@ -1,6 +1,6 @@
 # AI-Native Book - Current Status
 
-**Last Updated**: April 15, 2026
+**Last Updated**: April 16, 2026
 
 ## Progress
 
@@ -58,7 +58,7 @@ April 13 morning work stayed focused on manuscript integrity and repo tooling in
 ### Snapshot Sync Note
 
 - ✅ Added `scripts/sync-status-md.js` plus `npm run status:sync`, so volatile status prose like **Last Updated**, placeholder-range summaries, and the next-update note can now be refreshed from current repo reports instead of drifting by hand
-- ✅ Verified the sync against current repo state at git HEAD `7d3d015`, which keeps `STATUS.md` aligned with the dashboard/healthcheck reports after the Day 11 cleanup reduced placeholder debt to 18
+- ✅ Verified the sync against current repo state at git HEAD `a99c0bd`, which keeps `STATUS.md` aligned with the dashboard/healthcheck reports after the Day 11 cleanup reduced placeholder debt to 18
 ## Daily Updates
 
 This book is updated from real build sessions. Every meaningful change should ship with:

@@ -1,15 +1,15 @@
 # Audit Refresh Report
 
-- Generated: 2026-04-15T13:30:57.014Z
+- Generated: 2026-04-16T07:30:33.170Z
 - Overall status: ⚠️ **WARN**
-- Commands run: 8
+- Commands run: 9
 
 ## Results
 
 ### ⚠️ Placeholder Audit
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/validate-book.js`
 - Exit code: 2
-- Duration: 79 ms
+- Duration: 58 ms
 - Reports:
   - `PLACEHOLDER_CHAPTERS.md`
   - `placeholder-chapters.json`
@@ -93,7 +93,7 @@ WARN:   - Day 29: chapters/day-29.qmd
 ### ✅ Internal Link Audit
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-internal-links.js`
 - Exit code: 0
-- Duration: 99 ms
+- Duration: 57 ms
 - Reports:
   - `reports/link-check-report.md`
   - `reports/link-check-report.json`
@@ -111,7 +111,7 @@ Internal link check passed.
 ### ✅ Image Asset Audit
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-image-assets.js`
 - Exit code: 0
-- Duration: 104 ms
+- Duration: 52 ms
 - Reports:
   - `reports/image-audit-report.md`
   - `reports/image-audit-report.json`
@@ -129,7 +129,7 @@ Image asset audit passed.
 ### ⚠️ Frontmatter Audit
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-frontmatter.js`
 - Exit code: 2
-- Duration: 68 ms
+- Duration: 92 ms
 - Reports:
   - `reports/frontmatter-audit-report.md`
   - `reports/frontmatter-audit-report.json`
@@ -167,7 +167,7 @@ Frontmatter audit completed with warnings. See reports/frontmatter-audit-report.
 ### ⚠️ Render Environment Doctor
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/render-environment-doctor.js`
 - Exit code: 2
-- Duration: 299 ms
+- Duration: 300 ms
 - Reports:
   - `reports/render-environment-report.md`
   - `reports/render-environment-report.json`
@@ -193,7 +193,7 @@ Reports written to: reports/render-environment-report.md and reports/render-envi
 ### ✅ Local HTML Render
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/render-with-local-quarto.js . --to html`
 - Exit code: 0
-- Duration: 76639 ms
+- Duration: 83921 ms
 - Reports:
   - `reports/local-render-report.md`
   - `reports/local-render-report.json`
@@ -261,7 +261,7 @@ Output created: _book/index.html
 ### ⚠️ Combined Healthcheck
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/run-healthcheck.js`
 - Exit code: 2
-- Duration: 75260 ms
+- Duration: 85160 ms
 - Reports:
   - `reports/healthcheck-report.md`
   - `reports/healthcheck-report.json`
@@ -277,7 +277,7 @@ Healthcheck WARN (exit 2). Report written to reports/healthcheck-report.md
 ### ✅ Status Dashboard
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/build-status-dashboard.js`
 - Exit code: 0
-- Duration: 60 ms
+- Duration: 61 ms
 - Reports:
   - `reports/status-dashboard.md`
   - `reports/status-dashboard.json`
@@ -288,6 +288,21 @@ Healthcheck WARN (exit 2). Report written to reports/healthcheck-report.md
 ```text
 Wrote reports/status-dashboard.md
 Wrote reports/status-dashboard.json
+```
+</details>
+
+### ✅ STATUS.md Sync
+- Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/sync-status-md.js`
+- Exit code: 0
+- Duration: 104 ms
+- Reports:
+  - `STATUS.md`
+
+<details>
+<summary>Output</summary>
+
+```text
+Synced STATUS.md
 ```
 </details>
 

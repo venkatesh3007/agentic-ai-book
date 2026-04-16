@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-04-15T13:36:46.138Z",
+  "generatedAt": "2026-04-16T07:33:22.858Z",
   "overallStatus": "warn",
   "snapshotFreshness": "fresh",
   "snapshotGeneratedAt": {
-    "oldest": "2026-04-15T13:34:09.842Z",
-    "newest": "2026-04-15T13:35:27.709Z",
-    "oldestAgeMs": 156296,
-    "newestAgeMs": 78429
+    "oldest": "2026-04-16T07:31:57.737Z",
+    "newest": "2026-04-16T07:33:22.802Z",
+    "oldestAgeMs": 85121,
+    "newestAgeMs": 56
   },
-  "refreshReportGeneratedAt": "2026-04-15T13:30:57.014Z",
+  "refreshReportGeneratedAt": "2026-04-16T07:30:33.170Z",
   "placeholderCount": 18,
   "nextPriority": [
     {
@@ -36,7 +36,7 @@
     "18 placeholder day chapters still need honest rewrites"
   ],
   "wins": [
-    "Audit snapshot is fresh (oldest report age: 3 minute(s))",
+    "Audit snapshot is fresh (oldest report age: 1 minute(s))",
     "Bulk audit refresh command available via `npm run audit:refresh`",
     "Internal link audit is clean",
     "Image asset audit is clean",
@@ -50,7 +50,7 @@
       "title": "Placeholder Audit",
       "status": "warn",
       "exitCode": 2,
-      "durationMs": 69
+      "durationMs": 56
     },
     {
       "id": "internal-links",
@@ -64,28 +64,28 @@
       "title": "Image Asset Audit",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 50
+      "durationMs": 51
     },
     {
       "id": "frontmatter-audit",
       "title": "Frontmatter Audit",
       "status": "warn",
       "exitCode": 2,
-      "durationMs": 70
+      "durationMs": 83
     },
     {
       "id": "render-doctor",
       "title": "Render Environment Doctor",
       "status": "warn",
       "exitCode": 2,
-      "durationMs": 298
+      "durationMs": 400
     },
     {
       "id": "local-render",
       "title": "Local HTML Render",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 77331
+      "durationMs": 84460
     }
   ],
   "audits": {

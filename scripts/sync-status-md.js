@@ -98,6 +98,8 @@ function main() {
 
   if (!text.includes('### Snapshot Sync Note')) {
     text = text.replace(marker, `${insertion}${marker}`);
+  } else {
+    text = text.replace(/- ✅ Verified the sync against current repo state at git HEAD .*\n/, `- ✅ Verified the sync against current repo state at git HEAD \`${headSha}\`, which keeps \`STATUS.md\` aligned with the dashboard/healthcheck reports after the Day 11 cleanup reduced placeholder debt to ${placeholderCount}\n`);
   }
 
   fs.writeFileSync(statusPath, text);

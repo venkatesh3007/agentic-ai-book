@@ -76,6 +76,15 @@ const dashboardCommand = {
   reports: ['reports/status-dashboard.md', 'reports/status-dashboard.json']
 };
 
+const statusSyncCommand = {
+  id: 'status-sync',
+  title: 'STATUS.md Sync',
+  command: process.execPath,
+  args: [path.join(repoRoot, 'scripts', 'sync-status-md.js')],
+  warnOn: new Set([]),
+  reports: ['STATUS.md']
+};
+
 function ensureReportDir() {
   fs.mkdirSync(reportDir, { recursive: true });
 }
@@ -178,10 +187,11 @@ function main() {
   writeRefreshReports(summary);
 
   const dashboardResult = runOne(dashboardCommand);
+  const statusSyncResult = runOne(statusSyncCommand);
   summary = {
     generatedAt,
-    ...computeOverall([...results, dashboardResult]),
-    results: [...results, dashboardResult]
+    ...computeOverall([...results, dashboardResult, statusSyncResult]),
+    results: [...results, dashboardResult, statusSyncResult]
   };
 
   writeRefreshReports(summary);
