@@ -130,6 +130,10 @@ This is especially useful for catching book-specific debt that link and image ch
 
 `npm run render:local` runs `scripts/render-with-local-quarto.js`, which tries known local Quarto install paths directly instead of assuming `quarto` is already on PATH. It writes a render attempt report to `reports/local-render-report.{md,json}` with the exact binary used, command line, exit code, and captured output. The wrapper now reuses the same shared local-Quarto helper as the render doctor, which keeps diagnosis and execution aligned when candidate install paths change. On this host it has been verified to render the HTML book successfully via `/home/openclaw/quarto/bin/quarto`, producing `_book/index.html`. This makes local render attempts auditable on servers where Quarto exists but shell PATH wiring is incomplete.
 
+### STATUS.md sync
+
+`npm run status:sync` runs `scripts/sync-status-md.js`, which refreshes the volatile summary lines in `STATUS.md` from the current repo reports and git HEAD. It keeps fields like **Last Updated**, the current placeholder-day range, the current healthcheck summary sentence, and the **Next Update** note aligned with the dashboard and healthcheck outputs instead of drifting as manual prose.
+
 ## Author
 
 **Venkatesh Rao** — Founder of [Aikaara](https://aikaara.com), an AI-native holding company building "the machine that builds software factories."

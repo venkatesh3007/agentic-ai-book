@@ -1,6 +1,6 @@
 # AI-Native Book - Current Status
 
-**Last Updated**: April 12, 2026
+**Last Updated**: April 15, 2026
 
 ## Progress
 
@@ -53,8 +53,12 @@ April 13 morning work stayed focused on manuscript integrity and repo tooling in
 - ✅ Afternoon cleanup converted Day 09 from a raw placeholder into an explicit thin-record continuity chapter, dropping the placeholder backlog from 21 to 20 while keeping the wrapper-based HTML render green
 - ✅ Evening cleanup converted Day 10 from a raw placeholder into an explicit unverified-transition chapter, dropping the placeholder backlog from 20 to 19 while keeping the wrapper-based HTML render green
 - ✅ Night cleanup converted Day 11 from a raw placeholder into an explicit note about the cost of smoothing weak records, dropping the placeholder backlog from 19 to 18 while keeping the wrapper-based HTML render green
-- ⚠️ The combined healthcheck now reports **WARN** rather than **FAIL** because the remaining debt is manuscript quality debt: 18 placeholder day chapters from Day 12 through Day 29 still need honest rewrites, while Quarto-on-PATH is handled through the repo bootstrap environment
+- ⚠️ The combined healthcheck now reports **WARN** because the remaining debt is manuscript quality debt: 18 placeholder day chapters from Day 12 through Day 29 still need honest rewrites, while Quarto-on-PATH is handled through the repo bootstrap environment and the latest local HTML render remains **PASS**
 
+### Snapshot Sync Note
+
+- ✅ Added `scripts/sync-status-md.js` plus `npm run status:sync`, so volatile status prose like **Last Updated**, placeholder-range summaries, and the next-update note can now be refreshed from current repo reports instead of drifting by hand
+- ✅ Verified the sync against current repo state at git HEAD `7d3d015`, which keeps `STATUS.md` aligned with the dashboard/healthcheck reports after the Day 11 cleanup reduced placeholder debt to 18
 ## Daily Updates
 
 This book is updated from real build sessions. Every meaningful change should ship with:
@@ -68,4 +72,4 @@ This book is updated from real build sessions. Every meaningful change should sh
 - **Future readers**: Use git history to track exactly when chapters changed
 - **Rule**: No retrospective hero fiction — if something was unfinished, the text should say so
 
-**Next Update**: After either Quarto is installed locally or one of the placeholder day chapters is rewritten enough to clear both content and metadata warnings
+**Next Update**: After Day 12 is rewritten or the repo status/infrastructure picture changes materially
