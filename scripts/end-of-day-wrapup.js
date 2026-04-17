@@ -13,6 +13,7 @@ const healthcheckJsonPath = path.join(repoRoot, 'reports', 'healthcheck-report.j
 const localRenderJsonPath = path.join(repoRoot, 'reports', 'local-render-report.json');
 const dashboardScript = path.join(repoRoot, 'scripts', 'build-status-dashboard.js');
 const dashboardJsonPath = path.join(repoRoot, 'reports', 'status-dashboard.json');
+const statusSyncScript = path.join(repoRoot, 'scripts', 'sync-status-md.js');
 
 const args = process.argv.slice(2);
 const wantsTag = args.includes('--tag');
@@ -70,6 +71,7 @@ const validationCommand = formatCommand(process.execPath, [path.relative(repoRoo
 const healthcheckCommand = formatCommand(process.execPath, [path.relative(repoRoot, healthcheckScript)]);
 const localRenderCommand = formatCommand(process.execPath, [path.relative(repoRoot, localRenderScript), '.', '--to', 'html']);
 const dashboardCommand = formatCommand(process.execPath, [path.relative(repoRoot, dashboardScript)]);
+const statusSyncCommand = formatCommand(process.execPath, [path.relative(repoRoot, statusSyncScript)]);
 
 const validation = run(process.execPath, [validateScript]);
 
@@ -100,6 +102,12 @@ let dashboardSummary = null;
 if (hasDashboardScript) {
   dashboard = run(process.execPath, [dashboardScript]);
   dashboardSummary = readJsonIfExists(dashboardJsonPath);
+}
+
+const hasStatusSyncScript = fs.existsSync(statusSyncScript);
+let statusSync = null;
+if (hasStatusSyncScript) {
+  statusSync = run(process.execPath, [statusSyncScript]);
 }
 
 const gitHead = run('git', ['rev-parse', '--short', 'HEAD']);
@@ -234,6 +242,19 @@ if (!hasDashboardScript) {
   dashboardLines.push(...codeBlock(dashboardOutput));
 }
 summary.push(...section('Status Dashboard', dashboardLines));
+
+const statusSyncLines = [];
+if (!hasStatusSyncScript) {
+  statusSyncLines.push('- STATUS.md sync script not found; skipping.');
+} else {
+  statusSyncLines.push(`- Command: \`${statusSyncCommand}\``);
+  statusSyncLines.push(`- Exit status: ${typeof statusSync?.status === 'number' ? statusSync.status : 'unknown'}`);
+  statusSyncLines.push('- Reports:');
+  statusSyncLines.push('  - `STATUS.md`');
+  const statusSyncOutput = [statusSync?.stdout || '', statusSync?.stderr || ''].filter(Boolean).join('\n');
+  statusSyncLines.push(...codeBlock(statusSyncOutput));
+}
+summary.push(...section('STATUS.md Sync', statusSyncLines));
 
 const gitLines = [
   `- Working tree dirty before wrap-up write: ${dirtyTreeBeforeWrap ? 'yes' : 'no'}`,

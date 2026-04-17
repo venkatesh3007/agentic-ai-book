@@ -1,8 +1,8 @@
 # End-of-Day Wrap-Up
 
-Generated: 2026-04-16T13:36:41.052Z
+Generated: 2026-04-17T04:36:14.358Z
 
-Git HEAD: f41fdd0
+Git HEAD: 69bca50
 
 ## Summary
 
@@ -102,12 +102,12 @@ WARN:   - Day 29: chapters/day-29.qmd
 - Exit status: 2
 - Overall status: WARN (exit 2)
 - Checks:
-  - Placeholder Audit: WARN (exit 2, 54 ms)
+  - Placeholder Audit: WARN (exit 2, 55 ms)
   - Internal Link Audit: PASS (exit 0, 61 ms)
-  - Image Asset Audit: PASS (exit 0, 50 ms)
-  - Frontmatter Audit: WARN (exit 2, 63 ms)
-  - Render Environment Doctor: WARN (exit 2, 261 ms)
-  - Local HTML Render: PASS (exit 0, 77258 ms)
+  - Image Asset Audit: PASS (exit 0, 52 ms)
+  - Frontmatter Audit: WARN (exit 2, 73 ms)
+  - Render Environment Doctor: WARN (exit 2, 278 ms)
+  - Local HTML Render: PASS (exit 0, 77475 ms)
 - Reports:
   - `reports/healthcheck-report.md`
   - `reports/healthcheck-report.json`
@@ -194,11 +194,22 @@ Wrote reports/status-dashboard.md
 Wrote reports/status-dashboard.json
 ```
 
+## STATUS.md Sync
+
+- Command: `/usr/bin/node scripts/sync-status-md.js`
+- Exit status: 0
+- Reports:
+  - `STATUS.md`
+```text
+Synced STATUS.md
+```
+
 ## Git Working Tree
 
 - Working tree dirty before wrap-up write: yes
 ```text
-M placeholder-chapters.json
+M STATUS.md
+ M placeholder-chapters.json
  M reports/frontmatter-audit-report.json
  M reports/healthcheck-report.json
  M reports/healthcheck-report.md
@@ -206,15 +217,18 @@ M placeholder-chapters.json
  M reports/link-check-report.json
  M reports/local-render-report.json
  M reports/local-render-report.md
+ M reports/refresh-audits-report.json
+ M reports/refresh-audits-report.md
  M reports/render-environment-report.json
  M reports/render-environment-report.md
  M reports/status-dashboard.json
  M reports/status-dashboard.md
+ M scripts/end-of-day-wrapup.js
 ```
 
 ## Tagging
 
-- Local tag created at HEAD: `eod-2026-04-16`. Working tree had uncommitted audit/output changes, but tagging the current commit is still valid for a daily milestone.
+- No tag requested.
 
 ## Notes
 
