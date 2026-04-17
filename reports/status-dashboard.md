@@ -1,11 +1,11 @@
 # Repository Status Dashboard
 
-- Generated: 2026-04-17T10:33:35.990Z
+- Generated: 2026-04-17T13:33:31.532Z
 - Overall status: ⚠️ **WARN**
 - Audit snapshot freshness: ✅ **FRESH**
-- Oldest source report: 2026-04-17T10:32:17.720Z (1 minute(s) old)
-- Newest source report: 2026-04-17T10:33:35.945Z (0 minute(s) old)
-- Placeholder day chapters remaining: **15**
+- Oldest source report: 2026-04-17T13:32:14.520Z (1 minute(s) old)
+- Newest source report: 2026-04-17T13:33:31.491Z (0 minute(s) old)
+- Placeholder day chapters remaining: **14**
 - Latest local HTML render: ✅ **PASS** (exit 0)
 
 ## Current Wins
@@ -16,32 +16,32 @@
 - Image asset audit is clean
 - Frontmatter audit has zero errors
 - Latest local HTML render passed via /home/openclaw/quarto/bin/quarto
-- Placeholder backlog currently at 15
+- Placeholder backlog currently at 14
 
 ## Current Blockers
 
-- 15 placeholder day chapters still need honest rewrites
+- 14 placeholder day chapters still need honest rewrites
 
 ## Next Priority Rewrites
 
-- Day 15 — `chapters/day-15.qmd`
 - Day 16 — `chapters/day-16.qmd`
 - Day 17 — `chapters/day-17.qmd`
 - Day 18 — `chapters/day-18.qmd`
 - Day 19 — `chapters/day-19.qmd`
+- Day 20 — `chapters/day-20.qmd`
 
 ## Audit Snapshot
 
 - ⚠️ **Placeholder Audit** — WARN (exit 2, 54 ms)
-- ✅ **Internal Link Audit** — PASS (exit 0, 63 ms)
+- ✅ **Internal Link Audit** — PASS (exit 0, 62 ms)
 - ✅ **Image Asset Audit** — PASS (exit 0, 55 ms)
 - ⚠️ **Frontmatter Audit** — WARN (exit 2, 66 ms)
-- ⚠️ **Render Environment Doctor** — WARN (exit 2, 243 ms)
-- ✅ **Local HTML Render** — PASS (exit 0, 77787 ms)
+- ⚠️ **Render Environment Doctor** — WARN (exit 2, 278 ms)
+- ✅ **Local HTML Render** — PASS (exit 0, 76501 ms)
 
 ## Detailed Counts
 
-- Frontmatter warnings: **15**
+- Frontmatter warnings: **14**
 - Frontmatter errors: **0**
 - Internal link issues: **0**
 - Image asset issues: **0**
@@ -53,7 +53,7 @@
 ## Refresh Workflow
 
 - Run `npm run audit:refresh` to regenerate the prerequisite audit JSON files in one pass before rebuilding the dashboard.
-- Last bulk refresh report: 2026-04-17T10:30:55.472Z
+- Last bulk refresh report: 2026-04-17T13:30:53.337Z
 
 ## Source Reports
 

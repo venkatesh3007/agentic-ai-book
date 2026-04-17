@@ -1,6 +1,6 @@
 # Audit Refresh Report
 
-- Generated: 2026-04-17T10:30:55.472Z
+- Generated: 2026-04-17T13:30:53.337Z
 - Overall status: ⚠️ **WARN**
 - Commands run: 9
 
@@ -9,7 +9,7 @@
 ### ⚠️ Placeholder Audit
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/validate-book.js`
 - Exit code: 2
-- Duration: 52 ms
+- Duration: 48 ms
 - Reports:
   - `PLACEHOLDER_CHAPTERS.md`
   - `placeholder-chapters.json`
@@ -68,8 +68,7 @@ OK: Chapter exists: chapters/factory.qmd
 OK: Wrote report: PLACEHOLDER_CHAPTERS.md
 OK: Wrote report: placeholder-chapters.json
 
-WARN: Placeholder day chapters still present (15):
-WARN:   - Day 15: chapters/day-15.qmd
+WARN: Placeholder day chapters still present (14):
 WARN:   - Day 16: chapters/day-16.qmd
 WARN:   - Day 17: chapters/day-17.qmd
 WARN:   - Day 18: chapters/day-18.qmd
@@ -90,7 +89,7 @@ WARN:   - Day 29: chapters/day-29.qmd
 ### ✅ Internal Link Audit
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-internal-links.js`
 - Exit code: 0
-- Duration: 59 ms
+- Duration: 51 ms
 - Reports:
   - `reports/link-check-report.md`
   - `reports/link-check-report.json`
@@ -108,7 +107,7 @@ Internal link check passed.
 ### ✅ Image Asset Audit
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-image-assets.js`
 - Exit code: 0
-- Duration: 51 ms
+- Duration: 45 ms
 - Reports:
   - `reports/image-audit-report.md`
   - `reports/image-audit-report.json`
@@ -126,7 +125,7 @@ Image asset audit passed.
 ### ⚠️ Frontmatter Audit
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-frontmatter.js`
 - Exit code: 2
-- Duration: 63 ms
+- Duration: 62 ms
 - Reports:
   - `reports/frontmatter-audit-report.md`
   - `reports/frontmatter-audit-report.json`
@@ -137,9 +136,8 @@ Image asset audit passed.
 ```text
 Scanned 49 QMD file(s)
 Inspected 46 chapter frontmatter block(s)
-Found 0 error(s) and 15 warning(s)
+Found 0 error(s) and 14 warning(s)
 
-WARN [placeholder-metadata] chapters/day-15.qmd — Frontmatter still contains placeholder text
 WARN [placeholder-metadata] chapters/day-16.qmd — Frontmatter still contains placeholder text
 WARN [placeholder-metadata] chapters/day-17.qmd — Frontmatter still contains placeholder text
 WARN [placeholder-metadata] chapters/day-18.qmd — Frontmatter still contains placeholder text
@@ -161,7 +159,7 @@ Frontmatter audit completed with warnings. See reports/frontmatter-audit-report.
 ### ⚠️ Render Environment Doctor
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/render-environment-doctor.js`
 - Exit code: 2
-- Duration: 252 ms
+- Duration: 246 ms
 - Reports:
   - `reports/render-environment-report.md`
   - `reports/render-environment-report.json`
@@ -187,7 +185,7 @@ Reports written to: reports/render-environment-report.md and reports/render-envi
 ### ✅ Local HTML Render
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/render-with-local-quarto.js . --to html`
 - Exit code: 0
-- Duration: 81692 ms
+- Duration: 80649 ms
 - Reports:
   - `reports/local-render-report.md`
   - `reports/local-render-report.json`
@@ -255,7 +253,7 @@ Output created: _book/index.html
 ### ⚠️ Combined Healthcheck
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/run-healthcheck.js`
 - Exit code: 2
-- Duration: 78312 ms
+- Duration: 77062 ms
 - Reports:
   - `reports/healthcheck-report.md`
   - `reports/healthcheck-report.json`
@@ -271,7 +269,7 @@ Healthcheck WARN (exit 2). Report written to reports/healthcheck-report.md
 ### ✅ Status Dashboard
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/build-status-dashboard.js`
 - Exit code: 0
-- Duration: 50 ms
+- Duration: 43 ms
 - Reports:
   - `reports/status-dashboard.md`
   - `reports/status-dashboard.json`
@@ -288,7 +286,7 @@ Wrote reports/status-dashboard.json
 ### ✅ STATUS.md Sync
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/sync-status-md.js`
 - Exit code: 0
-- Duration: 81 ms
+- Duration: 72 ms
 - Reports:
   - `STATUS.md`
 

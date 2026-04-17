@@ -1,27 +1,81 @@
 ---
-title: "Day 15: [TBD]"
-subtitle: "[Product name TBD]"
+title: "Day 15: The Planned Week vs. the Proven Day"
+subtitle: "Why a sprint plan is not the same thing as a recoverable build log"
 ---
 
 ::: {.callout-note}
-## Product: [TBD]
-**Date**: [TBD]
-**Repo**: [TBD]
-**Status**: 🔲 Not started
+## Product: Narrative continuity repair
+**Date**: March 15, 2026
+**Repo**: `agentic-ai-book`
+**Status**: 🟡 Honest cleanup
 :::
 
 ## The Goal
 
-*[To be written after we build it]*
+Day 15 sits right where the manuscript's planning logic becomes especially tempting.
+
+The earlier sprint chapter lays out a clean weekly structure. By that plan, mid-March should already be moving into a new phase of work: business products, integrations, and more visible delivery. Once that framing exists, an empty daily chapter does not feel empty for long. It starts to feel implied. A reader can almost hear the missing build narrative before it is written.
+
+But when I checked the current repository state for this day, I could not find enough direct evidence to justify writing that story as fact.
+
+So the goal of this session was not to promote the plan into history. It was to keep the distinction sharp:
+
+- remove the placeholder that suggested the day could be reconstructed from expectation alone,
+- avoid turning a scheduled phase of the sprint into a fabricated product narrative,
+- and rewrite the chapter around the actual tension between what the plan promised and what the surviving record can prove.
 
 ## The Build
 
-*[Real-time narrative goes here]*
+Plans are powerful because they pre-distribute confidence.
+
+Once a schedule exists, every date inside it starts to feel partly interpreted already. If the sprint says Week 3 should contain business products and integrations, then March 15 seems like it ought to have a clear first entry in that run. The architecture of the manuscript does some of the persuasive work on its own. It gives shape to absence.
+
+That is useful for organizing effort. It is risky for reconstructing history.
+
+Day 15 is where that risk becomes hard to ignore.
+
+I do have evidence that there *was* a plan. The repo still contains a chapter outlining the intended weekly structure of the sprint. That chapter matters. It tells me what this section of the book expected to become. What it does not do is prove what actually shipped on this specific day.
+
+That missing step matters more than it might seem.
+
+If I quietly convert planned work into narrated work, the manuscript stops functioning as a record of real sessions and starts behaving like a cleaned-up execution of the roadmap. The result would be elegant. It would also be false in exactly the way AI-assisted writing makes easiest: the prose would not feel invented because it would be anchored to a genuine plan. But a plan is only prior intention. It is not evidence of completion.
+
+So this rewrite lowers the claim deliberately.
+
+Instead of pretending Day 15 contains a recoverable business-product chapter, I am using it to mark the boundary between sprint design and verifiable delivery. The surviving artifact supports the first clearly. It does not support the second clearly enough for me to narrate it with confidence.
+
+That is a meaningful distinction in engineering too. A roadmap can be precise, ambitious, and internally coherent while still telling you nothing about whether a specific task actually landed on the date it was assigned. Delivery systems become dangerous when scheduled state starts getting mistaken for observed state. The manuscript has to resist the same confusion.
+
+## What Actually Changed
+
+The concrete work in this session is straightforward:
+
+- the Day 15 placeholder frontmatter and template body were removed,
+- the chapter was rewritten as an explicit note about the difference between a planned week and a proven day,
+- and the manuscript's remaining placeholder debt dropped by one more day.
+
+That is not dramatic work, but it is honest work.
+
+Each time a placeholder is replaced with defensible prose, the book becomes less likely to overstate what the repo can support. At the same time, the audit pipeline becomes slightly quieter because one more placeholder/frontmatter warning disappears.
 
 ## The Ship
 
-*[What we actually delivered]*
+What shipped here is not a recovered business-product build.
+
+What shipped is a more exact boundary around what the book knows.
+
+Day 15 now makes it explicit that the sprint plan survives more clearly than the corresponding daily record. The chapter no longer borrows certainty from the roadmap and passes it off as session evidence. Instead, it says that planning and proof have diverged at this point in the timeline.
+
+That keeps the manuscript rougher, but more trustworthy.
 
 ## The Lesson
 
-*[What I learned]*
+A schedule is not a witness.
+
+A roadmap can tell you what should have happened next. A chapter outline can tell you what the book expected to cover. A model can turn both into a convincing daily narrative. None of that closes the gap between intention and evidence.
+
+So the lesson from Day 15 is this:
+
+**When the plan is clearer than the record, document the gap instead of retrofitting execution into the calendar.**
+
+The artifact stays useful only if planned work and proven work remain visibly distinct.
