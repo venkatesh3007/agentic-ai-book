@@ -1,27 +1,83 @@
 ---
-title: "Day 14: [TBD]"
-subtitle: "[Product name TBD]"
+title: "Day 14: The Inherited Confidence"
+subtitle: "Why an empty chapter can look more knowable than it really is"
 ---
 
 ::: {.callout-note}
-## Product: [TBD]
-**Date**: [TBD]
-**Repo**: [TBD]
-**Status**: 🔲 Not started
+## Product: Narrative continuity repair
+**Date**: March 14, 2026
+**Repo**: `agentic-ai-book`
+**Status**: 🟡 Honest cleanup
 :::
 
 ## The Goal
 
-*[To be written after we build it]*
+Day 14 arrives with a subtle problem.
+
+By this stage of the manuscript, the sequence of daily chapters has accumulated enough shape that each unresolved slot begins to inherit credibility from the run around it. The project already feels underway. The book has enough real motion that an empty chapter starts reading less like uncertainty and more like delayed transcription.
+
+That impression is persuasive. It is also not something I can defend from the current repository state.
+
+So the goal for this session was not to preserve the illusion of a fully knowable timeline. It was to interrupt it:
+
+- remove the placeholder that falsely suggested the missing day could be reconstructed on demand,
+- avoid inventing a product session merely because the surrounding structure makes one feel likely,
+- and rewrite the chapter around the actual problem, which is inherited confidence unsupported by direct evidence.
 
 ## The Build
 
-*[Real-time narrative goes here]*
+Confidence can travel farther than proof.
+
+A chapter does not have to contain facts in order to start sounding factual. Sometimes the surrounding narrative does the work for it. If the previous days feel concrete enough, the next empty day begins to borrow their authority. The reader assumes there was a continuation. The author feels pressure to provide one. A model can generate the missing bridge almost instantly.
+
+That is how a thin record starts masquerading as a stable one.
+
+Day 14 is exactly that sort of case.
+
+The timeline around it suggests motion. The book structure encourages expectation. Even the existence of the placeholder itself quietly implies that the real story exists somewhere just out of frame, waiting to be filled back in. But a placeholder is not evidence of the missing event. It is only evidence that someone intended to come back later.
+
+That distinction matters.
+
+If I treat inherited confidence as good enough, the manuscript becomes smoother while also becoming less faithful. It starts rewarding narrative momentum over documentary limits. And because AI systems are very good at producing fluent continuations, the failure mode is not obvious nonsense. It is something much more dangerous: a chapter that sounds reasonable enough to stop being questioned.
+
+So this rewrite narrows the claim on purpose.
+
+Instead of pretending Day 14 contains a recoverable product story, I am using the chapter to say what the current artifact actually supports: by this point in the sequence, the manuscript can make the reader feel more certain than the repo allows. That mismatch between felt continuity and supported continuity is the real subject of the day.
+
+This is not just an editorial concern. Reliable systems have to resist the same failure mode. A runbook, dashboard, or incident timeline becomes less useful the moment it lets adjacent certainty spill over into undocumented steps. Unknowns do not stop being unknown just because the surrounding events are well understood.
+
+The manuscript should be held to the same standard.
+
+## What Actually Changed
+
+The practical change in this session is straightforward:
+
+- the Day 14 placeholder frontmatter and template text were removed,
+- the chapter was rewritten as an explicit note about inherited confidence in the timeline,
+- and the manuscript's remaining placeholder debt dropped by one more day.
+
+That is a modest change, but it is real and measurable.
+
+Replacing a `[TBD]` chapter with honest prose improves two things at once: the reader is no longer misled by a fake promise of later certainty, and the repo audits get slightly cleaner because one more placeholder/frontmatter warning disappears.
 
 ## The Ship
 
-*[What we actually delivered]*
+What shipped here is not a recovered build log.
+
+What shipped is a more accurate boundary around what the book can claim.
+
+Day 14 now refuses to borrow certainty from the chapters around it. It no longer implies that a concrete product day is merely missing from the page. Instead, it states that the page itself was inheriting more confidence than the evidence could support.
+
+That is quieter than shipping a feature, but it still strengthens the artifact.
 
 ## The Lesson
 
-*[What I learned]*
+Borrowed confidence is still a form of drift.
+
+A sequence of real chapters can make the next unknown step feel known. A model can turn that feeling into polished prose. A reader can accept the result because the surrounding arc already feels stable. None of those effects improve the underlying evidence.
+
+So the lesson from Day 14 is this:
+
+**When a gap starts inheriting confidence from nearby certainty, break the spell and mark the gap honestly.**
+
+Trust survives visible limits better than invisible invention.
