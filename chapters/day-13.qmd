@@ -1,27 +1,85 @@
 ---
-title: "Day 13: [TBD]"
-subtitle: "[Product name TBD]"
+title: "Day 13: The Unsupported Momentum"
+subtitle: "What to do when the timeline implies progress more confidently than the evidence does"
 ---
 
 ::: {.callout-note}
-## Product: [TBD]
-**Date**: [TBD]
-**Repo**: [TBD]
-**Status**: 🔲 Not started
+## Product: Narrative continuity repair
+**Date**: March 13, 2026
+**Repo**: `agentic-ai-book`
+**Status**: 🟡 Honest cleanup
 :::
 
 ## The Goal
 
-*[To be written after we build it]*
+Day 13 sits in a dangerous stretch of the manuscript.
+
+By now, the sequence of daily chapters creates its own momentum. A reader expects the project to keep unfolding in visible steps: another tool, another implementation day, another small but concrete piece of product work moving the line forward. That expectation is understandable. The surrounding structure trains the eye to read an empty slot as delayed detail rather than missing certainty.
+
+But when I checked the current repository state for this chapter, I could not justify that confidence.
+
+So the goal here was the same discipline that has guided the recent cleanup passes:
+
+- remove the placeholder that implied a recoverable build log,
+- avoid inventing a product narrative just because the timeline makes one feel likely,
+- and turn the chapter into an honest account of unsupported momentum rather than a polished guess.
 
 ## The Build
 
-*[Real-time narrative goes here]*
+Momentum is one of the easiest things to fake.
+
+Once a project has a believable arc, the unwritten parts start to feel partially written already. The reader can sense what *should* come next. The author can sense it too. In an AI-assisted workflow, that feeling becomes even more dangerous because the model is perfectly happy to supply the connective tissue: a likely feature, a plausible naming choice, a sensible lesson, a chapter that sounds exactly like the ones on either side.
+
+That does not make the bridge true.
+
+Day 13 is the kind of chapter where that risk becomes obvious.
+
+The timeline suggests continued movement. The neighboring material makes a missing build day seem temporary. But suggestion is not support. A well-shaped sequence can create the illusion that the absent chapter is more recoverable than it really is.
+
+That illusion is expensive.
+
+If I let the momentum of the manuscript stand in for evidence, then the book quietly changes from a record of real sessions into a story merely optimized to feel complete. The result may read better in the short term, but it weakens the contract with the reader. What looks like documentary continuity becomes narrative pressure wearing documentary clothes.
+
+So this rewrite does something intentionally narrower.
+
+Instead of pretending I can reconstruct the product work for March 13 from the surviving repo artifact, I am naming the stronger fact I can actually defend: by this point in the timeline, the manuscript strongly implies continued progress, but the current record does not preserve enough evidence to narrate that progress responsibly.
+
+That is still useful information.
+
+In engineering terms, this is the difference between a dashboard that extrapolates a healthy trend across missing telemetry and one that shows a gap in the middle of the graph. The extrapolated line is smoother. The broken line is more honest. If the system is meant to guide real decisions, honesty wins.
+
+The manuscript should behave the same way.
+
+## What Actually Changed
+
+The concrete work in this session is simple:
+
+- the Day 13 placeholder frontmatter and template body were removed,
+- the chapter was rewritten as an explicit note about unsupported momentum in the timeline,
+- and the remaining placeholder debt in the manuscript dropped by one more day.
+
+That change matters both editorially and operationally.
+
+Editorially, the chapter no longer promises hidden certainty. Operationally, the repo's placeholder and frontmatter audits treat `[TBD]` chapters as unresolved integrity debt, so replacing one with honest prose makes the book less misleading and the verification output slightly cleaner.
 
 ## The Ship
 
-*[What we actually delivered]*
+What shipped here is not a recovered product session.
+
+What shipped is a more accurate statement about the limits of the record.
+
+Day 13 now admits that the timeline itself was beginning to overclaim. It no longer leans on the surrounding narrative to imply that a detailed build chapter is merely waiting to be typed up. The chapter now says, plainly, that the motion is easier to feel than to prove.
+
+That is a quieter kind of progress than shipping a tool, but it is still real progress for the artifact.
 
 ## The Lesson
 
-*[What I learned]*
+Momentum is not evidence.
+
+A sequence can make the next step feel inevitable. A missing chapter can inherit confidence from the chapters around it. A model can turn that feeling into fluent prose almost instantly. None of that changes what the source material actually supports.
+
+So the lesson from Day 13 is this:
+
+**When the timeline sounds more confident than the evidence, lower the claim instead of decorating the momentum.**
+
+A trustworthy record should resist the seduction of narrative flow when the underlying proof is thin.
