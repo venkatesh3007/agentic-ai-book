@@ -1,14 +1,9 @@
 {
-  "generatedAt": "2026-04-18T07:32:22.499Z",
+  "generatedAt": "2026-04-18T10:32:15.096Z",
   "scannedFiles": 49,
   "chapterEntries": 46,
   "errors": [],
   "warnings": [
-    {
-      "file": "chapters/day-17.qmd",
-      "type": "placeholder-metadata",
-      "message": "Frontmatter still contains placeholder text"
-    },
     {
       "file": "chapters/day-18.qmd",
       "type": "placeholder-metadata",

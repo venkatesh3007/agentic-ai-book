@@ -1,27 +1,91 @@
 ---
-title: "Day 17: [TBD]"
-subtitle: "[Product name TBD]"
+title: "Day 17: The Nearby Artifact Problem"
+subtitle: "Why evidence from the same week still may not justify the same day"
 ---
 
 ::: {.callout-note}
-## Product: [TBD]
-**Date**: [TBD]
-**Repo**: [TBD]
-**Status**: 🔲 Not started
+## Product: Narrative continuity repair
+**Date**: March 17, 2026
+**Repo**: `agentic-ai-book`
+**Status**: 🟡 Honest cleanup
 :::
 
 ## The Goal
 
-*[To be written after we build it]*
+Day 17 presents a slightly trickier version of the same honesty problem as the surrounding chapters.
+
+By this point in the sprint, the record is no longer empty in every direction. There are real nearby artifacts. There is still planning language that frames this stretch of March as the period for business products and integrations. There are hints of activity close enough to make the missing day feel inferable.
+
+That makes the temptation stronger.
+
+An empty day inside a week with visible traces does not feel empty for long. It starts to feel reconstructable.
+
+But when I checked what the current repository could actually support for March 17 itself, the evidence still did not rise to the level required for a factual daily build narrative.
+
+So the goal for this session was to keep the standard intact:
+
+- remove the placeholder that suggested Day 17 could be filled in by neighboring confidence,
+- avoid treating a nearby real artifact as proof of this specific day,
+- and rewrite the chapter around the real editorial and engineering problem, which is temporal spillover from adjacent evidence.
 
 ## The Build
 
-*[Real-time narrative goes here]*
+Nearby evidence is dangerous because it feels responsibly grounded.
+
+Pure invention is easy to reject. Everyone recognizes the failure mode when a chapter is built from nothing. What is harder to resist is the subtler version: a chapter built from fragments that are real, recent, and close enough to seem safely transferable.
+
+That is what makes Day 17 interesting.
+
+The repo does contain signs that this period was active. The sprint structure still frames the week as one that should have been shifting toward business products and integrations. There is even a real strategy artifact from this same mid-March window, which makes the gap feel less like absence and more like incomplete filing.
+
+But that is exactly where discipline matters.
+
+A nearby artifact can prove that something was happening around a date without proving what happened on the date itself. It narrows uncertainty. It does not eliminate it.
+
+This distinction is easy to lose because narrative systems are built to connect close things. If an artifact is dated March 16, and the surrounding chapters imply an active phase, then March 17 begins to feel like a safe continuation. The story almost writes itself. The chronology seems cooperative. A model can produce the bridge with barely any friction.
+
+That is not the same as evidence.
+
+What I can honestly say is that the week appears active and strategically legible. What I cannot honestly say is which specific product session, if any, belongs to March 17 with enough certainty to narrate it as historical fact. The gap is narrower than a completely blank placeholder, but it is still a gap.
+
+So this rewrite makes that boundary visible instead of smoothing past it.
+
+Instead of promoting adjacent material into a day-level claim, I am using Day 17 to document the failure mode itself: when evidence exists nearby, the missing day starts to inherit more precision than it has earned. That is not just a writing problem. It is a systems problem. Teams do this with changelogs, incident timelines, and sprint reports whenever an adjacent artifact gets mistaken for direct proof.
+
+Reliable records depend on a stricter rule:
+
+close enough is not the same as attributable.
+
+## What Actually Changed
+
+The practical work in this session is clear and measurable:
+
+- the Day 17 placeholder frontmatter and template body were removed,
+- the chapter was rewritten as an explicit note about the limits of nearby evidence,
+- and the manuscript's remaining placeholder debt dropped by one more day.
+
+That is another small continuity repair, but the cumulative effect matters.
+
+Each rewrite removes one more place where the manuscript could accidentally overclaim, and each successful audit refresh confirms that the prose cleanup improved the book without breaking the render pipeline.
 
 ## The Ship
 
-*[What we actually delivered]*
+What shipped here is not a recovered March 17 build narrative.
+
+What shipped is a more careful statement about attribution.
+
+Day 17 now says plainly that evidence from the same week, or even the same immediate stretch of work, cannot automatically be assigned to the missing day between them. The chapter no longer leans on the credibility of nearby artifacts to pretend that the chronology is fully known.
+
+That keeps the book less cinematic, but more dependable.
 
 ## The Lesson
 
-*[What I learned]*
+Adjacency is not attribution.
+
+A real artifact from the same week can make a missing day feel explainable. A strategic plan can make the sequence feel inevitable. A model can turn both into polished continuity. None of that proves which claim belongs to which date unless the record is explicit enough to carry the assignment.
+
+So the lesson from Day 17 is this:
+
+**When evidence is nearby but not truly day-specific, narrow the uncertainty honestly instead of assigning certainty by proximity.**
+
+A trustworthy timeline has to distinguish between what is close and what is proven.
