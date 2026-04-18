@@ -1,27 +1,89 @@
 ---
-title: "Day 16: [TBD]"
-subtitle: "[Product name TBD]"
+title: "Day 16: The Momentum Trap"
+subtitle: "Why an active week can still leave a single day unproven"
 ---
 
 ::: {.callout-note}
-## Product: [TBD]
-**Date**: [TBD]
-**Repo**: [TBD]
-**Status**: 🔲 Not started
+## Product: Narrative continuity repair
+**Date**: March 16, 2026
+**Repo**: `agentic-ai-book`
+**Status**: 🟡 Honest cleanup
 :::
 
 ## The Goal
 
-*[To be written after we build it]*
+By Day 16, the manuscript has enough motion that the missing chapter starts to feel like an administrative error rather than a real evidentiary gap.
+
+That is the trap.
+
+Once a sequence of surrounding days has shape, and once the sprint plan has already established that this part of March should be moving into business products and integrations, an empty chapter begins to look temporary instead of unknown. It feels as if the narrative must already exist somewhere in the repo, waiting to be recovered.
+
+But when I checked the current repository state for direct proof, I still could not justify turning that expectation into a factual build log.
+
+So the goal for this session was simple:
+
+- remove the placeholder that implied Day 16 could be reconstructed from momentum alone,
+- resist the pressure to promote a probable-sounding week into a specific documented day,
+- and rewrite the chapter around the real issue, which is how ongoing motion can make an unsupported claim feel safe.
 
 ## The Build
 
-*[Real-time narrative goes here]*
+Momentum is persuasive because it smooths over missing steps.
+
+If a project is visibly active, then any one empty slot inside that active stretch begins to look less like uncertainty and more like omitted detail. A reader assumes continuity. An author feels invited to supply it. A language model can produce the missing bridge in seconds.
+
+That combination is dangerous precisely because it does not look like fabrication from the inside. It looks like cleanup.
+
+Day 16 sits inside that kind of pressure.
+
+There are signs of direction. The manuscript already frames mid-March as the period when the sprint should be moving toward business products and integrations. Nearby continuity-gap chapters have already explained why that broader structure cannot be treated as proof for the individual days they replaced. And there are scattered clues elsewhere in the repo that make the period feel busy enough to narrate.
+
+But "busy enough to imagine" is not the same as "well evidenced enough to claim."
+
+That distinction matters more as the manuscript advances.
+
+Early in a timeline, a placeholder is obviously unresolved. Later in a timeline, especially inside an apparently active run, a placeholder starts borrowing confidence from sheer narrative momentum. The story already seems to know where it is going, so the empty day starts to feel almost pre-authorized. The risk is that the author stops noticing the gap because the arc around it is doing so much interpretive work.
+
+This chapter is here to stop that slide.
+
+Instead of converting a plausible phase of activity into a specific March 16 product narrative, I am using the day to mark the limit honestly. The repo supports the existence of direction. It supports planning language. It supports surrounding activity. What it does not support clearly enough is a precise, defensible claim about what shipped on this exact date.
+
+That is not a failure of prose. It is a boundary condition of evidence.
+
+Engineering work has the same problem. A system can show healthy throughput, recent deploys, and strong surrounding signals while still leaving an individual event poorly documented. When teams trust the general momentum too much, they start writing incident notes, changelogs, or status updates that collapse "probably happened" into "did happen." That saves time in the short term and destroys trust in the long term.
+
+The manuscript should not make that trade.
+
+## What Actually Changed
+
+The concrete work in this session is small but real:
+
+- the Day 16 placeholder frontmatter and template prose were removed,
+- the chapter was rewritten as an explicit note about the interpretive pressure created by momentum,
+- and the manuscript's remaining placeholder debt dropped by one more day.
+
+As with the earlier continuity-gap rewrites, the value here is not dramatic narrative recovery. It is sharper bookkeeping.
+
+One less placeholder means one less fake promise hanging in the table of contents, one less frontmatter warning in the audits, and one less place where fluency could pretend to be evidence.
 
 ## The Ship
 
-*[What we actually delivered]*
+What shipped here is not a reconstructed business-product day.
+
+What shipped is a clearer refusal to let project momentum impersonate documentation.
+
+Day 16 now says plainly that activity around a missing day is not enough to certify the missing day itself. The chapter no longer hides behind the energy of the broader week. Instead, it records the mismatch between a believable trajectory and a provable session.
+
+That makes the manuscript less seamless, but more reliable.
 
 ## The Lesson
 
-*[What I learned]*
+Momentum is not evidence.
+
+A project can be moving fast. A week can have a clear strategic arc. A model can infer the most likely continuation. None of that proves what happened on a particular date unless the artifact trail is strong enough to carry the claim.
+
+So the lesson from Day 16 is this:
+
+**When a moving timeline makes a missing day feel obvious, slow down and prove the day anyway — or mark the gap.**
+
+Continuity should be earned by evidence, not borrowed from momentum.
