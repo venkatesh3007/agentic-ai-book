@@ -58,7 +58,7 @@ April 17, 2026 status now reflects the current verified repo state instead of a 
 ### Snapshot Sync Note
 
 - ✅ Added `scripts/sync-status-md.js` plus `npm run status:sync`, so volatile status prose like **Last Updated**, placeholder-range summaries, and the next-update note can now be refreshed from current repo reports instead of drifting by hand
-- ✅ Verified the sync against current repo state at git HEAD `141a547`, which keeps `STATUS.md` aligned with the dashboard/healthcheck reports after the Day 11 cleanup reduced placeholder debt to 14
+- ✅ Verified the sync against current repo state at git HEAD `1bd881b`, which keeps `STATUS.md` aligned with the dashboard/healthcheck reports after the Day 11 cleanup reduced placeholder debt to 14
 ## Daily Updates
 
 This book is updated from real build sessions. Every meaningful change should ship with:

@@ -65,6 +65,8 @@ npm run audit:frontmatter
 npm run audit:health
 npm run audit:dashboard
 npm run audit:refresh
+npm run status:sync
+npm run status:finalize
 npm run render:local
 npm run wrapup:eod
 node scripts/end-of-day-wrapup.js --tag
@@ -133,6 +135,8 @@ This is especially useful for catching book-specific debt that link and image ch
 ### STATUS.md sync
 
 `npm run status:sync` runs `scripts/sync-status-md.js`, which refreshes the volatile summary lines in `STATUS.md` from the current repo reports and git HEAD. It keeps fields like **Last Updated**, the current placeholder-day range, the current healthcheck summary sentence, and the **Next Update** note aligned with the dashboard and healthcheck outputs instead of drifting as manual prose.
+
+`npm run status:finalize` runs `scripts/finalize-status-after-commit.js`, which performs one narrow post-commit repair: it updates the Snapshot Sync Note's recorded git HEAD to the current branch tip after a final housekeeping commit. This matters because `status:sync` necessarily runs before that last commit in the current flow, so without a post-commit touch-up the human-facing status file can end the day one commit behind even when the reports themselves are current.
 
 ## Author
 
