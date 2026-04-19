@@ -1,27 +1,93 @@
 ---
-title: "Day 20: [TBD]"
-subtitle: "[Product name TBD]"
+title: "Day 20: The Phase-Lock Mistake"
+subtitle: "Why a clear sprint phase can make an undocumented day feel more specific than it is"
 ---
 
 ::: {.callout-note}
-## Product: [TBD]
-**Date**: [TBD]
-**Repo**: [TBD]
-**Status**: 🔲 Not started
+## Product: Narrative continuity repair
+**Date**: March 20, 2026
+**Repo**: `agentic-ai-book`
+**Status**: 🟡 Honest cleanup
 :::
 
 ## The Goal
 
-*[To be written after we build it]*
+By Day 20, the missing record is surrounded by something that looks almost stable enough to trust automatically.
+
+The sprint plan gives this stretch of March a defined phase. The surrounding continuity-gap chapters have already explained how that phase creates pressure to over-attribute nearby days. And other documents elsewhere in the repo talk about launches, products, and outward-facing work strongly enough that an undocumented date inside this zone can start to feel nearly specified before I have proved anything about it directly.
+
+That is the risk here.
+
+A day inside a strongly named phase starts to feel phase-locked. It seems to inherit not only the general direction of the week, but a sharper implied role: surely this was one of the integration days, or one of the visible delivery days, or one of the business-facing product days.
+
+But when I checked what the current repository could actually support for March 20 itself, that stronger specificity still was not there.
+
+So the goal for this session was to keep that distinction explicit:
+
+- remove the placeholder that falsely implied Day 20 was waiting on recovered details rather than missing evidence,
+- avoid letting a clearly named sprint phase determine the contents of a day by default,
+- and rewrite the chapter around the actual failure mode, which is how phase structure can quietly over-specify undocumented dates.
 
 ## The Build
 
-*[Real-time narrative goes here]*
+Planning systems are good at producing categories.
+
+That is part of why they are useful. A sprint plan helps a reader understand the intended movement of the work. It tells us when the project expected to shift from infrastructure into products, or from experiments into integrations, or from internal scaffolding into more outward-facing delivery. Without those labels, the month would feel shapeless.
+
+But categories have a side effect: they collapse ambiguity.
+
+Once a date sits inside a phase with a strong enough name, it no longer feels like an open question. It feels like an instance.
+
+That is what makes Day 20 dangerous.
+
+By this point, the surrounding context does not merely suggest that the week was active. It suggests what kind of activity it should have contained. The sprint plan frames the period as business-product and integration work. Nearby rewritten chapters have already shown why that framing is not enough to recover the missing days as factual history. Other repo material about launches and positioning adds even more thematic force. The narrative pressure compounds.
+
+The result is subtle but powerful. Instead of asking, "What does the evidence prove about March 20?" the author starts asking, "Which version of this phase does March 20 most likely belong to?" That sounds disciplined. It is actually a downgrade in standards.
+
+The first question is documentary. The second is classificatory.
+
+Classification can narrow possibility. It cannot replace proof.
+
+This distinction matters in real teams too. Once a sprint phase is named, people begin to write tickets, summaries, demos, and retrospectives as if the label itself established what each day contained. If the phase is called "integration week," then every unresolved day starts to get summarized like integration work. If the phase is called "launch prep," then missing activity begins to acquire launch-colored language whether or not the logs justify it.
+
+That is how a clean program plan becomes a blurry historical record.
+
+AI systems amplify this because they are excellent at maintaining phase coherence. Give a model a run of days that all appear to belong to one stage of the sprint, and it will produce a very plausible missing day that fits the stage beautifully. The result reads better than the evidence deserves.
+
+So this rewrite refuses the phase-lock.
+
+What I can honestly say is that March 20 sits inside a well-described part of the sprint. What I cannot honestly say is which specific day-level product action, decision, or ship belongs there strongly enough to narrate it as fact. The chapter therefore records the limit of the evidence instead of pretending the phase label resolved it.
+
+## What Actually Changed
+
+The practical repo change is again small but real:
+
+- the Day 20 placeholder frontmatter and template body were removed,
+- the chapter was rewritten as an explicit note about phase-driven over-specificity,
+- and the manuscript's remaining placeholder debt dropped by one more day.
+
+That removes another false promise from the book.
+
+It also keeps the audits honest: one fewer placeholder, one fewer frontmatter warning, and one more chapter whose uncertainty is stated directly rather than hidden behind a to-do shell.
 
 ## The Ship
 
-*[What we actually delivered]*
+What shipped here is not a recovered March 20 product build.
+
+What shipped is a clearer warning about how planning phases distort historical narration.
+
+Day 20 now says plainly that a date can belong inside a clearly defined phase without becoming a clearly documented day. The chapter no longer lets the sprint structure decide more than the evidence allows. It keeps the phase visible and the proof threshold intact.
+
+That is less dramatic than a fabricated success story and far more useful.
 
 ## The Lesson
 
-*[What I learned]*
+A phase label is not a day-level fact.
+
+A sprint can have a coherent structure. A week can have a recognizable role. A model can turn that role into a smooth missing chapter with almost no resistance. None of those things establishes what happened on a specific date unless the surviving record is explicit enough to carry that claim.
+
+So the lesson from Day 20 is this:
+
+**When a day's apparent specificity comes from the sprint phase around it, demote the phase back to context and require direct proof again.**
+
+A trustworthy record keeps planning categories and historical claims from fusing into one another.
