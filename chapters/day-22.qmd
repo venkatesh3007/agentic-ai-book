@@ -1,27 +1,87 @@
 ---
-title: "Day 22: [TBD]"
-subtitle: "[Product name TBD]"
+title: "Day 22: The Boundary Reset Illusion"
+subtitle: "Why the first day of a new phase can feel more documented than it really is"
 ---
 
 ::: {.callout-note}
-## Product: [TBD]
-**Date**: [TBD]
-**Repo**: [TBD]
-**Status**: 🔲 Not started
+## Product: Narrative continuity repair
+**Date**: March 22, 2026
+**Repo**: `agentic-ai-book`
+**Status**: 🟡 Honest cleanup
 :::
 
 ## The Goal
 
-*[To be written after we build it]*
+Day 22 sits on a line the sprint plan makes unusually visible.
+
+March 21 closes one named phase. March 22 opens another. The plan says Week 4 should move into factory infrastructure and connecting the pieces. That kind of boundary is narratively powerful. It makes the day feel like a reset point, a handoff, or the beginning of a clearly legible next act.
+
+That feeling is seductive because starts seem cleaner than middles. If a new phase begins here, then surely the day should contain a visible turn in direction.
+
+But when I checked what the current repository could actually support for March 22 itself, I still did not have enough direct evidence to narrate a factual product build, a trustworthy kickoff chapter, or a real phase-transition milestone tied confidently to that date.
+
+So the goal for this session was to resist the false clarity of the boundary:
+
+- remove the placeholder that implied Day 22 merely needed recovered details,
+- avoid treating the start of a named sprint phase as proof that the day must contain a documented reset,
+- and rewrite the chapter around the real problem, which is how boundaries make missing days look cleaner and more recoverable than they are.
 
 ## The Build
 
-*[Real-time narrative goes here]*
+Beginnings create their own kind of overconfidence.
+
+An undocumented day in the middle of a run can at least remain visibly ambiguous. A day at the beginning of a new phase often does not get that courtesy. Readers expect a turn. Authors expect a turn. Planning documents encourage a turn. The calendar itself starts to sound explanatory.
+
+That is the illusion Day 22 produces.
+
+The sprint structure now offers a new label: factory infrastructure and connecting the pieces. That label is useful context. It tells me how this stretch of the month was supposed to differ from the week before. It narrows the conceptual space around the missing day. It suggests what kind of work might plausibly belong here.
+
+What it does not do is prove what March 22 specifically contains.
+
+That distinction matters because phase boundaries are good at laundering uncertainty into momentum. Once a new week begins, the undocumented first day starts to feel as if it must contain the pivot that justifies the new heading. A reader can almost hear the opening paragraph already: today the sprint shifted, today the architecture changed, today the separate tools began to connect. All of that sounds structurally right.
+
+Structural rightness is not documentary proof.
+
+This is a recurring failure mode in engineering narratives. Teams write roadmaps that divide work into clear phases, then later reconstruct the first day of each phase as if it naturally carried the decisive turn. The week label becomes a memory aid, then a summary frame, then eventually a claim about what happened on a particular date. The boundary itself becomes evidence.
+
+It is not.
+
+AI-generated prose makes this even easier because boundary chapters are so easy to make legible. Give the model a clean weekly transition and it will supply a convincing reset almost automatically. The day will sound directional, focused, and purposeful. It may even help the book read better. But it will still be a better story than the repo can currently support.
+
+So this rewrite keeps the transition honest.
+
+What I can honestly say is that March 22 is where the sprint plan says a new phase should begin. What I cannot honestly say is which concrete kickoff action, integration step, infrastructure move, or connecting-the-pieces build belongs to the day with enough confidence to narrate it as fact. The chapter therefore records the boundary illusion instead of pretending the boundary resolved the evidence problem.
+
+## What Actually Changed
+
+The practical repo work is straightforward and verifiable:
+
+- the Day 22 placeholder frontmatter and template body were removed,
+- the chapter was rewritten as an explicit note about start-of-phase overconfidence,
+- and the manuscript's remaining placeholder debt dropped by one more day.
+
+That continues the same discipline applied throughout the backlog cleanup.
+
+One more fake promise is gone, one more frontmatter warning disappears, and one more chapter now admits that a clean timeline boundary did not magically create a clean documentary trail.
 
 ## The Ship
 
-*[What we actually delivered]*
+What shipped here is not a recovered March 22 kickoff chapter or a proven Week 4 infrastructure reset.
+
+What shipped is a more accurate account of how phase boundaries distort interpretation.
+
+Day 22 now says plainly that the first day of a new planned phase is not automatically more knowable than the days around it. The chapter no longer lets the freshness of the boundary pose as proof. It keeps the transition visible while refusing to invent the pivot.
+
+That makes the manuscript less slick and more dependable.
 
 ## The Lesson
 
-*[What I learned]*
+A phase boundary is context, not evidence.
+
+A new week can suggest a new direction. A first day can feel like it ought to announce that direction cleanly. A model can generate the transition with almost no friction. None of that establishes what happened on the date unless the artifact trail is explicit enough to support the claim directly.
+
+So the lesson from Day 22 is this:
+
+**When a day looks meaningful mainly because it begins a new planned phase, treat the transition as narrative pressure and re-check the proof from zero.**
+
+A trustworthy timeline does not let boundaries sound more evidentiary than they are.
