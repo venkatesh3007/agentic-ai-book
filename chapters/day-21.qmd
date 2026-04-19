@@ -1,27 +1,87 @@
 ---
-title: "Day 21: [TBD]"
-subtitle: "[Product name TBD]"
+title: "Day 21: The Endpoint Mirage"
+subtitle: "Why the last day of a planned phase can look documented even when it is not"
 ---
 
 ::: {.callout-note}
-## Product: [TBD]
-**Date**: [TBD]
-**Repo**: [TBD]
-**Status**: 🔲 Not started
+## Product: Narrative continuity repair
+**Date**: March 21, 2026
+**Repo**: `agentic-ai-book`
+**Status**: 🟡 Honest cleanup
 :::
 
 ## The Goal
 
-*[To be written after we build it]*
+Day 21 inherits a different kind of pressure from the days around it.
+
+It is not just another undocumented date sitting somewhere inside a themed week. It is the apparent endpoint of that week. The sprint plan marks March 15–21 as a distinct phase. Once I arrive at the final day of that range, the absence begins to feel narratively unstable. Endpoints invite closure. They make readers expect synthesis, shipment, or some visible handoff into the next stretch of work.
+
+That expectation is understandable.
+
+It is also exactly how undocumented days get turned into fiction.
+
+When I checked what the current repository could actually support for March 21 itself, I still did not have evidence strong enough to narrate a factual product chapter, a real launch milestone, or a trustworthy end-of-phase summary tied directly to that date.
+
+So the goal for this session was to refuse the false authority of the endpoint:
+
+- remove the placeholder that implied Day 21 simply awaited recovered details,
+- avoid treating the end of a planned sprint phase as proof that the day must contain culmination,
+- and rewrite the chapter around the real problem, which is how timeline endpoints manufacture confidence they have not earned.
 
 ## The Build
 
-*[Real-time narrative goes here]*
+Endings are unusually persuasive.
+
+A date at the end of a named sequence feels different from one in the middle. Middle days can remain ambiguous without breaking the reader's model too badly. Endpoint days feel as if they should cash out the structure that came before them. If a week has been framed as business products and integrations, then the final day of that week starts to feel like a natural place for a ship note, a checkpoint, a launch decision, or at least a clean summary of what the phase accomplished.
+
+That is the mirage Day 21 creates.
+
+The evidence around this period is enough to make the week legible in broad strokes. The sprint plan still gives the range a name. The surrounding continuity-gap chapters explain why that name cannot be converted into day-level claims automatically. Nearby repo material about launches, audience building, and outward-facing work creates even more gravitational pull toward a satisfying endpoint narrative.
+
+Once all of that is in place, March 21 begins to feel overdetermined. Even without direct documentation, the day seems like it ought to close the arc.
+
+But that feeling comes from story structure, not proof.
+
+A phase ending is still just a coordinate unless the artifact trail shows what actually happened there. Without that trail, the temptation is to draft the most plausible closing move and let the week's architecture do the evidentiary work. The result reads cleanly because endings are good at hiding uncertainty. They absorb ambiguity by sounding conclusive.
+
+This is not only a writing problem. Teams do it in retrospectives and release summaries all the time. A sprint boundary arrives, and suddenly an incomplete or partially evidenced period gets rewritten as if the last day naturally contained a checkpoint, decision, or deliverable. The calendar edge becomes a storytelling device. The record becomes tidier than reality.
+
+AI systems are especially willing accomplices here because they love closure. If the surrounding days suggest a phase and the date looks like its endpoint, a model will supply a graceful landing almost automatically. It will give the week an ending whether or not the logs do.
+
+That is exactly why Day 21 has to stay narrow.
+
+What I can honestly say is that March 21 sits at the edge of a planned phase whose shape survives better than its day-level documentation. What I cannot honestly say is what specific concluding action belongs to that date strongly enough to present it as historical fact. So the chapter records the endpoint illusion instead of cashing it in.
+
+## What Actually Changed
+
+The practical repo work is again direct and measurable:
+
+- the Day 21 placeholder frontmatter and template body were removed,
+- the chapter was rewritten as an explicit note about endpoint-driven overconfidence,
+- and the manuscript's remaining placeholder debt dropped by one more day.
+
+That keeps the book aligned with the same standard applied to the surrounding repairs.
+
+Another fake promise disappears, another frontmatter warning is removed, and another chapter now states clearly that the missing evidence did not become stronger merely because the date occupies a narratively tempting position.
 
 ## The Ship
 
-*[What we actually delivered]*
+What shipped here is not a recovered March 21 launch note, milestone report, or end-of-phase build narrative.
+
+What shipped is a more accurate account of how timeline boundaries distort memory.
+
+Day 21 now says plainly that being the last day of a planned phase does not make the day more documented than it is. The chapter no longer borrows closure from the calendar and passes it off as proof. It keeps the sense of structure while refusing to invent an ending.
+
+That leaves the manuscript less cinematic and more trustworthy.
 
 ## The Lesson
 
-*[What I learned]*
+An endpoint is not evidence.
+
+A week can have a clear arc. A final day can feel like it should summarize or culminate that arc. A model can generate the missing conclusion with almost no friction. None of that establishes what happened on the date unless the surviving record is specific enough to support the claim directly.
+
+So the lesson from Day 21 is this:
+
+**When a day looks important mainly because it closes a planned phase, treat the closure as narrative pressure, not documentary proof.**
+
+A reliable timeline does not let endings sound truer than the evidence that supports them.
