@@ -1,27 +1,91 @@
 ---
-title: "Day 27: [TBD]"
-subtitle: "[Product name TBD]"
+title: "Day 27: The Formalization Leap"
+subtitle: "Why a late-phase factory narrative can make an undocumented day sound ready for handoff by default"
 ---
 
 ::: {.callout-note}
-## Product: [TBD]
-**Date**: [TBD]
-**Repo**: [TBD]
-**Status**: 🔲 Not started
+## Product: Narrative continuity repair
+**Date**: March 27, 2026
+**Repo**: `agentic-ai-book`
+**Status**: 🟡 Honest cleanup
 :::
 
 ## The Goal
 
-*[To be written after we build it]*
+By Day 27, the missing-day pressure starts taking on a more polished shape.
+
+Week 4 has already been framed as factory infrastructure and connecting the pieces. The previous continuity-gap chapters have already marked the temptation to treat that framing as proof of convergence, workflow formation, repeatability, and even a real operating model. Once all of those pressures are in the air, the next undocumented day begins to sound like the one where the whole effort became formal enough to hand off, summarize, demo, or carry forward as a recognized system.
+
+That is the leap here.
+
+March 27 starts sounding like the day when the factory stopped merely functioning in principle and started feeling presentation-ready — not necessarily finished, but formal enough that the surrounding narrative wants to promote it into something stable, legible, and transferable. It sounds like the point where a messy build process gets rewritten as a coherent method with edges, milestones, and implied readiness.
+
+But when I checked what the current repository could actually support for March 27 itself, I still did not have enough direct evidence to narrate a factual formalization milestone, a trustworthy handoff moment, or a specific day where the software-factory story became concrete enough to claim as historical fact.
+
+So the goal for this session was to resist the formalization leap:
+
+- remove the placeholder that implied Day 27 simply needed its missing implementation details recovered,
+- avoid treating the late-March maturity of the surrounding narrative as proof that the undocumented day must contain a real shift from evolving process to formalized system,
+- and rewrite the chapter around the real problem, which is how a project can sound ready for handoff long before the record proves that any such handoff happened on that date.
 
 ## The Build
 
-*[Real-time narrative goes here]*
+Formalization is one of the cleanest illusions in project history.
+
+An initiative can spend days or weeks accumulating structure — better names, cleaner process language, more visible system boundaries, more believable claims about repeatability and operating discipline. Once enough of that language exists, the project starts sounding as if it must have crossed some threshold into official form. The next undocumented day begins to feel like the date when the work stopped being emergent and started being presentable.
+
+That is what Day 27 exposes.
+
+The larger book already supplies the ingredients for this mistake. The software-factory thesis is explicit. The sprint plan frames this stretch as infrastructure and connection work. Nearby continuity-gap chapters have already documented how phase context, convergence pressure, workflow language, automation rhetoric, and operationalization stories can each overclaim on behalf of thin evidence. Once all of that scaffolding is in place, the next empty day starts sounding less like a technical transition and more like a narrative formalization point.
+
+That feeling is seductive because formalization makes a project legible.
+
+It suggests that the moving pieces can now be described as one thing. It hints that the system is becoming stable enough to teach, present, package, or demonstrate. It invites summary language. It also makes the surrounding manuscript feel more elegant, because the late-stage days start appearing to progress from build, to process, to method, to something ready for external understanding.
+
+But that elegance is not the same thing as documentation.
+
+The repo does support the broader arc that late March is moving toward synthesis. It supports the idea that the software-factory thesis is becoming more central, not less. It supports the sense that by this point the surrounding work is conceptually coherent enough to tempt summary and handoff language.
+
+What it does not currently support is a day-specific claim about which formalization step, presentational milestone, handoff-ready artifact, or concrete readiness event belongs to March 27 strongly enough to narrate it as fact.
+
+That matters because formalization language often enters the record before the underlying system deserves it. Teams do a messy stretch of building, and once they can finally describe the direction clearly, the historical record starts acting as if the process itself had already become clean, stable, and transferable. The narrative becomes neater than the system was.
+
+AI writing tools are especially dangerous here because they love clean phase transitions. Give the model a mature thesis, a late-stage week, and a blank day just before the final polish stretch, and it will happily generate the paragraph where the system becomes something that can be shown, explained, or handed off. The output will sound like clarity. The evidence may still only support ambition.
+
+That is exactly why Day 27 has to remain narrow.
+
+What I can honestly say is that March 27 sits in the part of the sprint where the surrounding factory narrative is mature enough to invite formalization language: not just operation, but readiness-shaped language. What I cannot honestly say is which concrete formalization milestone, handoff moment, or readiness event belongs to that date with enough confidence to narrate it as historical fact. So the chapter records the leap toward formalization instead of pretending the formalization is directly documented.
+
+## What Actually Changed
+
+The practical repo work is simple and verifiable:
+
+- the Day 27 placeholder frontmatter and template body were removed,
+- the chapter was rewritten as an explicit note about formalization pressure,
+- and the manuscript's remaining placeholder debt dropped by one more day.
+
+That keeps the cleanup pattern consistent.
+
+Another placeholder disappears, another frontmatter warning is removed, and another chapter now states openly that a mature surrounding narrative is not enough to prove a specific day when the system became ready for handoff, summary, or demonstration.
 
 ## The Ship
 
-*[What we actually delivered]*
+What shipped here is not a recovered March 27 readiness milestone or a proven day when the software factory became formal enough to present as a coherent, handoff-ready system.
+
+What shipped is a more accurate account of how polished late-stage narratives can make undocumented days look more settled than they are.
+
+Day 27 now says plainly that a day near the end of a systems-heavy phase does not automatically become the day the method crystallized into something formal. The chapter preserves the broader sense of late-stage coherence without letting that coherence masquerade as a dated fact.
+
+That makes the manuscript less tidy and more credible.
 
 ## The Lesson
 
-*[What I learned]*
+Formalization language is not formalization evidence.
+
+A project can genuinely be approaching a stage where it is easier to summarize, present, or carry forward. A day in that stretch can feel like the obvious point where the system became legible enough for handoff. A model can generate that transition almost effortlessly. None of that proves what happened on the date unless the surviving artifacts are explicit enough to support the claim directly.
+
+So the lesson from Day 27 is this:
+
+**When an undocumented day starts to sound like the moment the process became formal enough to hand off or demonstrate, separate readiness language from actual proof.**
+
+A trustworthy timeline does not let a polished ending assign itself to a date the record has not earned.
