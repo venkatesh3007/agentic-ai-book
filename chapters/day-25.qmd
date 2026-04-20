@@ -1,27 +1,93 @@
 ---
-title: "Day 25: [TBD]"
-subtitle: "[Product name TBD]"
+title: "Day 25: The Automation Drift"
+subtitle: "Why a factory narrative can make an undocumented day sound repeatable by default"
 ---
 
 ::: {.callout-note}
-## Product: [TBD]
-**Date**: [TBD]
-**Repo**: [TBD]
-**Status**: 🔲 Not started
+## Product: Narrative continuity repair
+**Date**: March 25, 2026
+**Repo**: `agentic-ai-book`
+**Status**: 🟡 Honest cleanup
 :::
 
 ## The Goal
 
-*[To be written after we build it]*
+By Day 25, the surrounding narrative is no longer just about connection. It starts implying repeatability.
+
+Week 4 has already been framed as factory infrastructure and connecting the pieces. The previous repairs have already marked the temptations to overread boundaries, convergence, and workflow coherence. Once those are in place, the next undocumented day begins to feel like the one where the system stopped being merely connected and started becoming operationally reliable — the day where the process became something you could run again.
+
+That is the pressure here.
+
+An empty day inside a software-factory narrative does not stay empty for long. After enough architecture language accumulates, the mind starts supplying a more advanced claim: not just that the pieces were linked, but that they had begun to behave like automation. March 25 starts sounding like the day the assembly line learned to move.
+
+But when I checked what the current repository could actually support for March 25 itself, I still did not have enough direct evidence to narrate a factual automation milestone, a trustworthy repeatability breakthrough, or a specific factory workflow becoming dependable on that date.
+
+So the goal for this session was to resist automation drift:
+
+- remove the placeholder that implied Day 25 simply needed its missing implementation details filled in,
+- avoid treating factory-shaped context as proof that the undocumented day must contain a real move from workflow to repeatable automation,
+- and rewrite the chapter around the real problem, which is how systems narratives quietly upgrade plausible connection into claimed repeatability.
 
 ## The Build
 
-*[Real-time narrative goes here]*
+Repeatability is one of the easiest things to overclaim in technical storytelling.
+
+A one-off success can be romantic. A pipeline can sound promising. But the sentence everyone wants is the one that says the system now works as a system — reliably, repeatedly, operationally. That sentence has a special kind of authority. It suggests maturity. It implies that a messy collection of components has crossed the invisible line into process.
+
+That is what Day 25 makes dangerously easy.
+
+The larger book already argues for a software factory. The sprint plan frames this stretch as factory infrastructure and connecting the pieces. Nearby continuity-gap chapters have already shown why phase labels, convergence language, and pipeline inevitability can all overstate what a single day deserves to claim. Yet once those themes accumulate, the next undocumented slot starts to sound like the point where the factory became reproducible.
+
+That feeling is understandable.
+
+It is also exactly how thin records become overstated histories.
+
+The repo does support the general ambition of moving from isolated tools toward a more connected working model. It supports the broad idea that this phase was supposed to be about assembling infrastructure into a larger system. It supports the thesis that a software factory, to matter, must eventually become more than a set of promising pieces.
+
+What it does not currently support is a day-specific claim about which automation step, repeatability gain, or dependable workflow milestone belongs to March 25 strongly enough to narrate it as fact.
+
+That distinction matters because "automation" is a credibility amplifier. Once the word appears, uncertainty gets quieter. If someone says, "this was the day the process became repeatable," the claim feels more rigorous than a vague integration story. It sounds measured. It sounds operational. It sounds like something that would show up in a runbook or retrospective.
+
+But repeatability is one of the easiest properties to infer too early.
+
+Engineering teams do this constantly. A flow works twice in a row, or a set of components finally behave in sequence, and the retrospective language upgrades the event into an automation milestone. Soon the history no longer says "we got something working in a narrow context." It says "the pipeline became repeatable." The wording hardens before the evidence does.
+
+AI-assisted prose amplifies this because models are extremely good at making maturity claims sound earned. Give a model a factory thesis, a connection-heavy week, and an undocumented day after apparent workflow progress, and it will gladly write the paragraph where the process becomes reliable. The prose will sound like discipline. The underlying proof may still be missing.
+
+That is exactly why Day 25 has to stay constrained.
+
+What I can honestly say is that March 25 sits in the part of the sprint where factory language, infrastructure framing, and connected-systems ambition make automation-style storytelling unusually tempting. What I cannot honestly say is which concrete repeatability milestone, automation layer, or dependable factory behavior belongs to that date with enough confidence to narrate it as historical fact. So the chapter records the drift toward repeatability claims instead of pretending the repeatability is directly documented.
+
+## What Actually Changed
+
+The practical repo work is modest and verifiable:
+
+- the Day 25 placeholder frontmatter and template body were removed,
+- the chapter was rewritten as an explicit note about automation drift,
+- and the manuscript's remaining placeholder debt dropped by one more day.
+
+That keeps the cleanup pattern consistent.
+
+Another placeholder disappears, another frontmatter warning is removed, and another chapter now says plainly that factory ambition is not the same thing as a proven automation milestone.
 
 ## The Ship
 
-*[What we actually delivered]*
+What shipped here is not a recovered March 25 automation breakthrough or a proven day when the software factory became reliably repeatable.
+
+What shipped is a more accurate account of how operational language can harden faster than the record that is supposed to support it.
+
+Day 25 now says plainly that a day inside a factory-building phase does not automatically become the day repeatability arrived. The chapter preserves the larger systems ambition without turning that ambition into a false day-level claim.
+
+That makes the manuscript less sleek and more dependable.
 
 ## The Lesson
 
-*[What I learned]*
+Automation language is not automation evidence.
+
+A project can be moving toward repeatable workflows. A day in that stretch can feel like the obvious point where the process became dependable. A model can generate that milestone almost effortlessly. None of that proves what happened on the date unless the surviving artifacts are explicit enough to support the claim directly.
+
+So the lesson from Day 25 is this:
+
+**When an undocumented day starts to sound like the moment a promising workflow became repeatable automation, slow down and separate maturity language from actual proof.**
+
+A trustworthy timeline does not let factory rhetoric outrun the evidence that earns it.
