@@ -1,25 +1,22 @@
 # End-of-Day Wrap-Up
 
-Generated: 2026-04-19T13:37:03.376Z
+Generated: 2026-04-20T13:40:47.406Z
 
-Git HEAD: 244607e
+Git HEAD: 7c2293d
 
 ## Summary
 
 - Overall result: not fully green.
-- Validation found placeholder day chapters still needing honest rewrites (7 remaining).
+- Validation found placeholder day chapters still needing honest rewrites (2 remaining).
 - Local HTML render passed via the Quarto wrapper.
 
 ## Manuscript Integrity
 
 - Referenced chapter files missing: 0
-- Placeholder day chapters remaining: 7
+- Placeholder day chapters remaining: 2
 - Next priority rewrites:
-  - Day 23 — `chapters/day-23.qmd`
-  - Day 24 — `chapters/day-24.qmd`
-  - Day 25 — `chapters/day-25.qmd`
-  - Day 26 — `chapters/day-26.qmd`
-  - Day 27 — `chapters/day-27.qmd`
+  - Day 28 — `chapters/day-28.qmd`
+  - Day 29 — `chapters/day-29.qmd`
 
 ## Validation Command
 
@@ -76,12 +73,7 @@ OK: Chapter exists: chapters/factory.qmd
 OK: Wrote report: PLACEHOLDER_CHAPTERS.md
 OK: Wrote report: placeholder-chapters.json
 
-WARN: Placeholder day chapters still present (7):
-WARN:   - Day 23: chapters/day-23.qmd
-WARN:   - Day 24: chapters/day-24.qmd
-WARN:   - Day 25: chapters/day-25.qmd
-WARN:   - Day 26: chapters/day-26.qmd
-WARN:   - Day 27: chapters/day-27.qmd
+WARN: Placeholder day chapters still present (2):
 WARN:   - Day 28: chapters/day-28.qmd
 WARN:   - Day 29: chapters/day-29.qmd
 ```
@@ -92,12 +84,12 @@ WARN:   - Day 29: chapters/day-29.qmd
 - Exit status: 2
 - Overall status: WARN (exit 2)
 - Checks:
-  - Placeholder Audit: WARN (exit 2, 61 ms)
-  - Internal Link Audit: PASS (exit 0, 65 ms)
-  - Image Asset Audit: PASS (exit 0, 56 ms)
-  - Frontmatter Audit: WARN (exit 2, 72 ms)
-  - Render Environment Doctor: WARN (exit 2, 293 ms)
-  - Local HTML Render: PASS (exit 0, 84928 ms)
+  - Placeholder Audit: WARN (exit 2, 58 ms)
+  - Internal Link Audit: PASS (exit 0, 60 ms)
+  - Image Asset Audit: PASS (exit 0, 50 ms)
+  - Frontmatter Audit: WARN (exit 2, 71 ms)
+  - Render Environment Doctor: WARN (exit 2, 315 ms)
+  - Local HTML Render: PASS (exit 0, 81826 ms)
 - Reports:
   - `reports/healthcheck-report.md`
   - `reports/healthcheck-report.json`
@@ -215,7 +207,7 @@ M STATUS.md
 
 ## Tagging
 
-- Local tag created at HEAD: `eod-2026-04-19`. Working tree had uncommitted audit/output changes, but tagging the current commit is still valid for a daily milestone.
+- Local tag created at HEAD: `eod-2026-04-20`. Working tree had uncommitted audit/output changes, but tagging the current commit is still valid for a daily milestone.
 
 ## Notes
 
