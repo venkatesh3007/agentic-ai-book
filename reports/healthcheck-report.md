@@ -1,18 +1,18 @@
 # Repository Healthcheck Report
 
-- Generated: 2026-04-21T04:34:20.608Z
+- Generated: 2026-04-21T07:34:09.789Z
 - Overall status: **WARN** (⚠️ WARN)
 - Checks run: 6
 - Exit code: 2
 
 ## Check Results
 
-### Placeholder Audit — ⚠️ WARN
+### Placeholder Audit — ✅ PASS
 
 - Description: Validates _quarto.yml references and flags day chapters that are still placeholder templates.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/validate-book.js`
-- Exit code: 2
-- Duration: 71 ms
+- Exit code: 0
+- Duration: 70 ms
 - Reports:
   - `PLACEHOLDER_CHAPTERS.md`
   - `placeholder-chapters.json`
@@ -70,9 +70,7 @@ OK: Chapter exists: chapters/failures.qmd
 OK: Chapter exists: chapters/factory.qmd
 OK: Wrote report: PLACEHOLDER_CHAPTERS.md
 OK: Wrote report: placeholder-chapters.json
-
-WARN: Placeholder day chapters still present (1):
-WARN:   - Day 29: chapters/day-29.qmd
+OK: Book validation passed
 ```
 </details>
 
@@ -81,7 +79,7 @@ WARN:   - Day 29: chapters/day-29.qmd
 - Description: Scans Markdown/QMD files for broken repo-local links and missing anchors.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-internal-links.js`
 - Exit code: 0
-- Duration: 78 ms
+- Duration: 74 ms
 - Reports:
   - `reports/link-check-report.md`
   - `reports/link-check-report.json`
@@ -101,7 +99,7 @@ Internal link check passed.
 - Description: Ensures every referenced image exists inside the repository with a valid extension.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-image-assets.js`
 - Exit code: 0
-- Duration: 62 ms
+- Duration: 69 ms
 - Reports:
   - `reports/image-audit-report.md`
   - `reports/image-audit-report.json`
@@ -116,12 +114,12 @@ Image asset audit passed.
 ```
 </details>
 
-### Frontmatter Audit — ⚠️ WARN
+### Frontmatter Audit — ✅ PASS
 
 - Description: Checks QMD frontmatter for required metadata and placeholder leftovers.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-frontmatter.js`
-- Exit code: 2
-- Duration: 81 ms
+- Exit code: 0
+- Duration: 89 ms
 - Reports:
   - `reports/frontmatter-audit-report.md`
   - `reports/frontmatter-audit-report.json`
@@ -132,10 +130,8 @@ Image asset audit passed.
 ```text
 Scanned 49 QMD file(s)
 Inspected 46 chapter frontmatter block(s)
-Found 0 error(s) and 1 warning(s)
-
-WARN [placeholder-metadata] chapters/day-29.qmd — Frontmatter still contains placeholder text
-Frontmatter audit completed with warnings. See reports/frontmatter-audit-report.md for details.
+Found 0 error(s) and 0 warning(s)
+Frontmatter audit passed.
 ```
 </details>
 
@@ -144,7 +140,7 @@ Frontmatter audit completed with warnings. See reports/frontmatter-audit-report.
 - Description: Checks the local machine for the tools required to run a trustworthy `quarto render`.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/render-environment-doctor.js`
 - Exit code: 2
-- Duration: 334 ms
+- Duration: 351 ms
 - Reports:
   - `reports/render-environment-report.md`
   - `reports/render-environment-report.json`
@@ -172,7 +168,7 @@ Reports written to: reports/render-environment-report.md and reports/render-envi
 - Description: Runs an actual local HTML book render through the Quarto wrapper so health checks verify the artifact, not just the environment.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/render-with-local-quarto.js . --to html`
 - Exit code: 0
-- Duration: 97.73 s
+- Duration: 94.04 s
 - Reports:
   - `reports/local-render-report.md`
   - `reports/local-render-report.json`

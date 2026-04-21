@@ -1,17 +1,7 @@
 {
-  "generatedAt": "2026-04-21T04:32:42.301Z",
+  "generatedAt": "2026-04-21T07:32:35.153Z",
   "chapterCount": 46,
   "missingChapters": [],
-  "placeholderDayChapters": [
-    {
-      "path": "chapters/day-29.qmd",
-      "day": 29
-    }
-  ],
-  "nextPriority": [
-    {
-      "path": "chapters/day-29.qmd",
-      "day": 29
-    }
-  ]
+  "placeholderDayChapters": [],
+  "nextPriority": []
 }

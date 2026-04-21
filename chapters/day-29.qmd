@@ -1,27 +1,89 @@
 ---
-title: "Day 29: [TBD]"
-subtitle: "[Product name TBD]"
+title: "Day 29: The Demo-Phase Overwrite"
+subtitle: "Why an explicit polish-and-demo plan can make an undocumented day sound finished enough by default"
 ---
 
 ::: {.callout-note}
-## Product: [TBD]
-**Date**: [TBD]
-**Repo**: [TBD]
-**Status**: 🔲 Not started
+## Product: Narrative continuity repair
+**Date**: March 29, 2026
+**Repo**: `agentic-ai-book`
+**Status**: 🟡 Honest cleanup
 :::
 
 ## The Goal
 
-*[To be written after we build it]*
+Day 29 is where the planning language becomes the loudest.
+
+The sprint plan does not merely place this date inside a broad thematic week. It explicitly labels Days 29–31 as the stretch for polish, documentation, and the factory demo. That makes the missing chapter unusually dangerous. Earlier gaps could inherit momentum, convergence, repeatability, operating-model language, formalization pressure, or demo-readiness rhetoric from the surrounding arc. Day 29 inherits something even stronger: a named endgame.
+
+That is the overwrite here.
+
+March 29 starts sounding like the day when the software factory stopped needing explanation and started needing presentation. It feels like the natural first chapter of the demo phase — the point where the work allegedly crossed from internal build system to outwardly narratable result. The phrase "polish, documentation, and the factory demo" creates a ready-made script. Once that script exists, the date begins to attract summary language, cleanup language, and showcase language even if the surviving record for the day itself remains thin.
+
+But when I checked what the current repository could actually support for March 29 itself, I still did not have enough direct evidence to narrate a factual demo kickoff, a trustworthy polish milestone, or a specific day where the factory became presentation-ready enough to write as historical fact.
+
+So the goal for this session was to resist the demo-phase overwrite:
+
+- remove the placeholder that implied Day 29 simply needed its missing implementation details filled back in,
+- avoid treating the sprint plan's explicit endgame framing as proof that the undocumented day must contain a real transition into polish-and-demo execution,
+- and rewrite the chapter around the real problem, which is how named closing phases can overwrite weak day-level evidence with a stronger retrospective script than the repo actually supports.
 
 ## The Build
 
-*[Real-time narrative goes here]*
+Planning language gets more dangerous as it gets more specific.
+
+A vague phase title like "infrastructure" can over-color a missing day. A title like "polish, documentation, and the factory demo" does even more. It does not just suggest an area of work. It suggests a sequence, a tone, and a mode of completion. It implies that the project is now entering the stretch where rough edges get cleaned up, the story gets organized, and the system becomes something you can show another person.
+
+That is exactly what makes Day 29 so easy to miswrite.
+
+The larger book already supports the factory thesis. The surrounding continuity-gap chapters have already shown how late March can tempt readers — and models — into upgrading proximity, maturity, and clarity into concrete milestones. By the time I reach Day 29, the manuscript is standing right next to an explicit plan for polish and demo work. The date does not merely feel late. It feels scripted.
+
+That feeling is powerful because it offers closure without needing new hard evidence. If the plan says this is where the demo stretch begins, then the undocumented day starts to sound like the obvious point where narrative cleanup, system explanation, and outward-facing readiness all begin in earnest. The gap becomes hard to see because the plan itself is doing so much storytelling.
+
+But a strong plan is not the same thing as a strong record.
+
+The repo does support the broad fact that March 29 belongs to the portion of the sprint that was planned around polish, documentation, and the factory demo. It supports the idea that by this point the project is conceptually close to synthesis. It supports the expectation that late-stage presentation language becomes more tempting here than in the earlier infrastructure days.
+
+What it does not currently support is a day-specific claim about which demo-preparation action, polish pass, documentation milestone, or presentation threshold belongs to March 29 strongly enough to narrate it as fact.
+
+That distinction matters because closing phases are especially good at laundering uncertainty. Once a team reaches the part of a project labeled "polish" or "launch prep," the historical record often stops describing what happened and starts describing what such a phase is *supposed* to contain. Missing days become tidy. Ambiguous work becomes preparation. Weak evidence becomes sequencing.
+
+AI systems are particularly vulnerable to this because they love planned endings. Give a model an explicit three-day run titled "polish, documentation, and the factory demo," leave the first day blank, and it will produce a very believable opening move: cleanup, framing, prep, synthesis, or demo setup. The paragraph will sound inevitable. The evidence may still be thinner than the structure implies.
+
+That is exactly why Day 29 has to remain careful.
+
+What I can honestly say is that March 29 sits at the start of a planned closing stretch whose label strongly encourages polish-and-demo storytelling. What I cannot honestly say is which concrete polish step, documentation milestone, demo-prep action, or presentational threshold belongs to that date with enough confidence to narrate it as historical fact. So the chapter records the overwrite pressure instead of pretending the phase label is itself evidence.
+
+## What Actually Changed
+
+The practical repo work is straightforward and verifiable:
+
+- the Day 29 placeholder frontmatter and template body were removed,
+- the chapter was rewritten as an explicit note about demo-phase overwrite pressure,
+- and the manuscript's remaining placeholder debt dropped to zero.
+
+That matters more than it sounds like it should.
+
+The last placeholder was the easiest one to excuse because the sprint plan already supplied such a plausible script for it. Replacing it with an honest continuity-gap chapter keeps the manuscript from letting planned closure impersonate documented closure.
 
 ## The Ship
 
-*[What we actually delivered]*
+What shipped here is not a recovered March 29 demo kickoff or a proven day when the software factory entered a clean, documented polish-and-presentation phase.
+
+What shipped is a more accurate account of how explicit endgame planning can overstate what an individual date actually proves.
+
+Day 29 now says plainly that a day at the start of a named demo-oriented phase does not automatically become the day the demo work truly began in a historically defensible sense. The chapter preserves the sprint-plan context without letting that context silently become evidence.
+
+That makes the manuscript less cinematic and more dependable.
 
 ## The Lesson
 
-*[What I learned]*
+Phase language is not phase evidence.
+
+A project can genuinely be entering a stage that is *supposed* to focus on polish, documentation, and presentation. A day at the start of that stretch can feel like the obvious moment where those things began. A model can generate that opening almost effortlessly. None of that proves what happened on the date unless the surviving artifacts are explicit enough to support the claim directly.
+
+So the lesson from Day 29 is this:
+
+**When an undocumented day sits at the start of a named closing phase, do not let the plan overwrite the record.**
+
+A trustworthy timeline does not let a well-structured ending assign itself to a date the evidence has not earned.

@@ -1,15 +1,15 @@
 # Audit Refresh Report
 
-- Generated: 2026-04-21T04:31:08.811Z
+- Generated: 2026-04-21T07:30:56.623Z
 - Overall status: ⚠️ **WARN**
 - Commands run: 9
 
 ## Results
 
-### ⚠️ Placeholder Audit
+### ✅ Placeholder Audit
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/validate-book.js`
-- Exit code: 2
-- Duration: 67 ms
+- Exit code: 0
+- Duration: 73 ms
 - Reports:
   - `PLACEHOLDER_CHAPTERS.md`
   - `placeholder-chapters.json`
@@ -67,16 +67,14 @@ OK: Chapter exists: chapters/failures.qmd
 OK: Chapter exists: chapters/factory.qmd
 OK: Wrote report: PLACEHOLDER_CHAPTERS.md
 OK: Wrote report: placeholder-chapters.json
-
-WARN: Placeholder day chapters still present (1):
-WARN:   - Day 29: chapters/day-29.qmd
+OK: Book validation passed
 ```
 </details>
 
 ### ✅ Internal Link Audit
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-internal-links.js`
 - Exit code: 0
-- Duration: 84 ms
+- Duration: 66 ms
 - Reports:
   - `reports/link-check-report.md`
   - `reports/link-check-report.json`
@@ -94,7 +92,7 @@ Internal link check passed.
 ### ✅ Image Asset Audit
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-image-assets.js`
 - Exit code: 0
-- Duration: 63 ms
+- Duration: 55 ms
 - Reports:
   - `reports/image-audit-report.md`
   - `reports/image-audit-report.json`
@@ -109,10 +107,10 @@ Image asset audit passed.
 ```
 </details>
 
-### ⚠️ Frontmatter Audit
+### ✅ Frontmatter Audit
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-frontmatter.js`
-- Exit code: 2
-- Duration: 82 ms
+- Exit code: 0
+- Duration: 76 ms
 - Reports:
   - `reports/frontmatter-audit-report.md`
   - `reports/frontmatter-audit-report.json`
@@ -123,17 +121,15 @@ Image asset audit passed.
 ```text
 Scanned 49 QMD file(s)
 Inspected 46 chapter frontmatter block(s)
-Found 0 error(s) and 1 warning(s)
-
-WARN [placeholder-metadata] chapters/day-29.qmd — Frontmatter still contains placeholder text
-Frontmatter audit completed with warnings. See reports/frontmatter-audit-report.md for details.
+Found 0 error(s) and 0 warning(s)
+Frontmatter audit passed.
 ```
 </details>
 
 ### ⚠️ Render Environment Doctor
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/render-environment-doctor.js`
 - Exit code: 2
-- Duration: 314 ms
+- Duration: 325 ms
 - Reports:
   - `reports/render-environment-report.md`
   - `reports/render-environment-report.json`
@@ -159,7 +155,7 @@ Reports written to: reports/render-environment-report.md and reports/render-envi
 ### ✅ Local HTML Render
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/render-with-local-quarto.js . --to html`
 - Exit code: 0
-- Duration: 92782 ms
+- Duration: 97834 ms
 - Reports:
   - `reports/local-render-report.md`
   - `reports/local-render-report.json`
@@ -227,7 +223,7 @@ Output created: _book/index.html
 ### ⚠️ Combined Healthcheck
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/run-healthcheck.js`
 - Exit code: 2
-- Duration: 98416 ms
+- Duration: 94745 ms
 - Reports:
   - `reports/healthcheck-report.md`
   - `reports/healthcheck-report.json`
@@ -243,7 +239,7 @@ Healthcheck WARN (exit 2). Report written to reports/healthcheck-report.md
 ### ✅ Status Dashboard
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/build-status-dashboard.js`
 - Exit code: 0
-- Duration: 52 ms
+- Duration: 49 ms
 - Reports:
   - `reports/status-dashboard.md`
   - `reports/status-dashboard.json`

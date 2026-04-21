@@ -1,24 +1,17 @@
 {
-  "generatedAt": "2026-04-21T04:34:20.660Z",
+  "generatedAt": "2026-04-21T07:34:09.834Z",
   "overallStatus": "warn",
   "snapshotFreshness": "fresh",
   "snapshotGeneratedAt": {
-    "oldest": "2026-04-21T04:32:42.301Z",
-    "newest": "2026-04-21T04:34:20.608Z",
-    "oldestAgeMs": 98359,
-    "newestAgeMs": 52
+    "oldest": "2026-04-21T07:32:35.153Z",
+    "newest": "2026-04-21T07:34:09.789Z",
+    "oldestAgeMs": 94681,
+    "newestAgeMs": 45
   },
-  "refreshReportGeneratedAt": "2026-04-21T04:31:08.811Z",
-  "placeholderCount": 1,
-  "nextPriority": [
-    {
-      "path": "chapters/day-29.qmd",
-      "day": 29
-    }
-  ],
-  "blockers": [
-    "1 placeholder day chapters still need honest rewrites"
-  ],
+  "refreshReportGeneratedAt": "2026-04-21T07:30:56.623Z",
+  "placeholderCount": 0,
+  "nextPriority": [],
+  "blockers": [],
   "wins": [
     "Audit snapshot is fresh (oldest report age: 2 minute(s))",
     "Bulk audit refresh command available via `npm run audit:refresh`",
@@ -26,55 +19,55 @@
     "Image asset audit is clean",
     "Frontmatter audit has zero errors",
     "Latest local HTML render passed via /home/openclaw/quarto/bin/quarto",
-    "Placeholder backlog currently at 1"
+    "Placeholder backlog currently at 0"
   ],
   "checks": [
     {
       "id": "placeholder-audit",
       "title": "Placeholder Audit",
-      "status": "warn",
-      "exitCode": 2,
-      "durationMs": 71
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 70
     },
     {
       "id": "internal-links",
       "title": "Internal Link Audit",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 78
+      "durationMs": 74
     },
     {
       "id": "image-assets",
       "title": "Image Asset Audit",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 62
+      "durationMs": 69
     },
     {
       "id": "frontmatter-audit",
       "title": "Frontmatter Audit",
-      "status": "warn",
-      "exitCode": 2,
-      "durationMs": 81
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 89
     },
     {
       "id": "render-doctor",
       "title": "Render Environment Doctor",
       "status": "warn",
       "exitCode": 2,
-      "durationMs": 334
+      "durationMs": 351
     },
     {
       "id": "local-render",
       "title": "Local HTML Render",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 97735
+      "durationMs": 94040
     }
   ],
   "audits": {
     "frontmatter": {
-      "warnings": 1,
+      "warnings": 0,
       "errors": 0
     },
     "links": {
