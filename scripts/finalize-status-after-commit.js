@@ -28,7 +28,7 @@ let text = fs.readFileSync(statusPath, 'utf8');
 const oldText = text;
 
 text = text.replace(
-  /- ✅ Verified the sync against current repo state at git HEAD `[^`]+`, which keeps `STATUS\.md` aligned with the dashboard\/healthcheck reports after the Day 11 cleanup reduced placeholder debt to \d+\n/,
+  /- ✅ Verified the sync against current repo state at git HEAD `[^`]+`, which keeps `STATUS\.md` aligned with the dashboard\/healthcheck reports[^\n]*(?:\n|$)/,
   match => match.replace(/git HEAD `[^`]+`/, `git HEAD \`${headSha}\``)
 );
 

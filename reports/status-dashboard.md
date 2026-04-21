@@ -1,16 +1,16 @@
 # Repository Status Dashboard
 
-- Generated: 2026-04-21T10:33:49.961Z
+- Generated: 2026-04-21T13:36:48.398Z
 - Overall status: ⚠️ **WARN**
 - Audit snapshot freshness: ✅ **FRESH**
-- Oldest source report: 2026-04-21T10:32:25.433Z (1 minute(s) old)
-- Newest source report: 2026-04-21T10:33:49.917Z (0 minute(s) old)
+- Oldest source report: 2026-04-21T13:33:59.206Z (3 minute(s) old)
+- Newest source report: 2026-04-21T13:35:22.283Z (1 minute(s) old)
 - Placeholder day chapters remaining: **0**
 - Latest local HTML render: ✅ **PASS** (exit 0)
 
 ## Current Wins
 
-- Audit snapshot is fresh (oldest report age: 1 minute(s))
+- Audit snapshot is fresh (oldest report age: 3 minute(s))
 - Bulk audit refresh command available via `npm run audit:refresh`
 - Internal link audit is clean
 - Image asset audit is clean
@@ -28,12 +28,12 @@
 
 ## Audit Snapshot
 
-- ✅ **Placeholder Audit** — PASS (exit 0, 57 ms)
-- ✅ **Internal Link Audit** — PASS (exit 0, 61 ms)
-- ✅ **Image Asset Audit** — PASS (exit 0, 57 ms)
+- ✅ **Placeholder Audit** — PASS (exit 0, 162 ms)
+- ✅ **Internal Link Audit** — PASS (exit 0, 205 ms)
+- ✅ **Image Asset Audit** — PASS (exit 0, 143 ms)
 - ✅ **Frontmatter Audit** — PASS (exit 0, 64 ms)
-- ⚠️ **Render Environment Doctor** — WARN (exit 2, 256 ms)
-- ✅ **Local HTML Render** — PASS (exit 0, 84033 ms)
+- ⚠️ **Render Environment Doctor** — WARN (exit 2, 257 ms)
+- ✅ **Local HTML Render** — PASS (exit 0, 82348 ms)
 
 ## Detailed Counts
 
@@ -49,7 +49,7 @@
 ## Refresh Workflow
 
 - Run `npm run audit:refresh` to regenerate the prerequisite audit JSON files in one pass before rebuilding the dashboard.
-- Last bulk refresh report: 2026-04-21T10:31:00.333Z
+- Last bulk refresh report: 2026-04-21T13:30:22.104Z
 
 ## Source Reports
 

@@ -1,27 +1,22 @@
 # End-of-Day Wrap-Up
 
-Generated: 2026-04-20T13:40:47.406Z
+Generated: 2026-04-21T13:36:48.506Z
 
-Git HEAD: 7c2293d
+Git HEAD: 15be356
 
 ## Summary
 
-- Overall result: not fully green.
-- Validation found placeholder day chapters still needing honest rewrites (2 remaining).
-- Local HTML render passed via the Quarto wrapper.
+- Overall result: manuscript validation passed and local HTML render passed.
 
 ## Manuscript Integrity
 
 - Referenced chapter files missing: 0
-- Placeholder day chapters remaining: 2
-- Next priority rewrites:
-  - Day 28 — `chapters/day-28.qmd`
-  - Day 29 — `chapters/day-29.qmd`
+- Placeholder day chapters remaining: 0
 
 ## Validation Command
 
 - Command: `/usr/bin/node scripts/validate-book.js`
-- Exit status: 2
+- Exit status: 0
 ```text
 OK: Found 46 chapter entries in _quarto.yml
 OK: Chapter exists: chapters/01-what-is-agentic-ai.qmd
@@ -72,10 +67,7 @@ OK: Chapter exists: chapters/failures.qmd
 OK: Chapter exists: chapters/factory.qmd
 OK: Wrote report: PLACEHOLDER_CHAPTERS.md
 OK: Wrote report: placeholder-chapters.json
-
-WARN: Placeholder day chapters still present (2):
-WARN:   - Day 28: chapters/day-28.qmd
-WARN:   - Day 29: chapters/day-29.qmd
+OK: Book validation passed
 ```
 
 ## Combined Healthcheck
@@ -84,12 +76,12 @@ WARN:   - Day 29: chapters/day-29.qmd
 - Exit status: 2
 - Overall status: WARN (exit 2)
 - Checks:
-  - Placeholder Audit: WARN (exit 2, 58 ms)
-  - Internal Link Audit: PASS (exit 0, 60 ms)
-  - Image Asset Audit: PASS (exit 0, 50 ms)
-  - Frontmatter Audit: WARN (exit 2, 71 ms)
-  - Render Environment Doctor: WARN (exit 2, 315 ms)
-  - Local HTML Render: PASS (exit 0, 81826 ms)
+  - Placeholder Audit: PASS (exit 0, 162 ms)
+  - Internal Link Audit: PASS (exit 0, 205 ms)
+  - Image Asset Audit: PASS (exit 0, 143 ms)
+  - Frontmatter Audit: PASS (exit 0, 64 ms)
+  - Render Environment Doctor: WARN (exit 2, 257 ms)
+  - Local HTML Render: PASS (exit 0, 82348 ms)
 - Reports:
   - `reports/healthcheck-report.md`
   - `reports/healthcheck-report.json`
@@ -199,15 +191,18 @@ M STATUS.md
  M reports/link-check-report.json
  M reports/local-render-report.json
  M reports/local-render-report.md
+ M reports/refresh-audits-report.json
+ M reports/refresh-audits-report.md
  M reports/render-environment-report.json
  M reports/render-environment-report.md
  M reports/status-dashboard.json
  M reports/status-dashboard.md
+ M scripts/finalize-status-after-commit.js
 ```
 
 ## Tagging
 
-- Local tag created at HEAD: `eod-2026-04-20`. Working tree had uncommitted audit/output changes, but tagging the current commit is still valid for a daily milestone.
+- Local tag created at HEAD: `eod-2026-04-21`. Working tree had uncommitted audit/output changes, but tagging the current commit is still valid for a daily milestone.
 
 ## Notes
 
