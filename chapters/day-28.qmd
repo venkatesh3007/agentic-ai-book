@@ -1,27 +1,91 @@
 ---
-title: "Day 28: [TBD]"
-subtitle: "[Product name TBD]"
+title: "Day 28: The Demo-Readiness Illusion"
+subtitle: "Why a late Week 4 factory arc can make an undocumented day sound showcase-ready by default"
 ---
 
 ::: {.callout-note}
-## Product: [TBD]
-**Date**: [TBD]
-**Repo**: [TBD]
-**Status**: 🔲 Not started
+## Product: Narrative continuity repair
+**Date**: March 28, 2026
+**Repo**: `agentic-ai-book`
+**Status**: 🟡 Honest cleanup
 :::
 
 ## The Goal
 
-*[To be written after we build it]*
+By Day 28, the surrounding narrative starts sounding less like construction and more like pre-presentation.
+
+Week 4 has already been framed as factory infrastructure and connecting the pieces. The earlier continuity-gap repairs have already documented how easy it is to overread connection, workflow coherence, repeatability, operating-model maturity, and formalization. Once those layers accumulate, the last undocumented day of the phase begins to feel like the one where the system became showable — not merely plausible, not merely functional in theory, but coherent enough to point at as a real demonstration of the factory.
+
+That is the illusion here.
+
+March 28 starts sounding like the day when the work stopped being internal process and started becoming something ready to exhibit. It feels like the natural moment for a demo-prep chapter, a showcase milestone, or a neat summary of how the pieces finally became legible enough to present. The date sits close enough to the planned polish and factory-demo stretch that the narrative almost tries to complete the bridge by itself.
+
+But when I checked what the current repository could actually support for March 28 itself, I still did not have enough direct evidence to narrate a factual demo-readiness milestone, a trustworthy showcase preparation step, or a specific day where the software-factory story became presentable enough to write as historical fact.
+
+So the goal for this session was to resist the demo-readiness illusion:
+
+- remove the placeholder that implied Day 28 simply needed its missing implementation details restored,
+- avoid treating late-stage narrative polish as proof that the undocumented day must contain a real transition from evolving system to demonstrable system,
+- and rewrite the chapter around the real problem, which is how a phase that *feels* close to presentation can cause a blank day to inherit more readiness than the record actually shows.
 
 ## The Build
 
-*[Real-time narrative goes here]*
+Demo language is one of the fastest ways to turn momentum into a false milestone.
+
+A project does not need to be fully complete before people start describing it as something they could show. Once the pieces feel coherent enough, the vocabulary shifts. Teams start talking about readiness, framing, polish, and what would need to happen to turn the system into a demonstration. In hindsight, that soft shift often gets rewritten as if it happened cleanly on one day.
+
+That is what Day 28 exposes.
+
+The larger book already makes this temptation strong. The software-factory thesis is explicit. The sprint plan says Days 29–31 are for polish, documentation, and the factory demo. The previous continuity-gap chapters have already documented how the late Week 4 narrative can overclaim on behalf of missing days. Once all of that is true, the final undocumented day before the polish stretch starts to feel like a built-in handoff into presentation mode.
+
+That feeling is narratively satisfying.
+
+It is not the same thing as proof.
+
+The repo does support the broad idea that this is late in the infrastructure phase and close to the section of the sprint where demonstration and synthesis become more plausible topics. It supports the sense that the manuscript is moving toward a more explicit articulation of the factory. It supports the idea that a reader might naturally expect readiness language to start appearing around here.
+
+What it does not currently support is a day-specific claim about which demo-preparation step, showcase milestone, presentational artifact, or concrete readiness event belongs to March 28 strongly enough to narrate it as fact.
+
+That matters because demo-shaped storytelling is especially seductive. Demonstrations are built from selective clarity. They emphasize coherence, suppress rough edges, and organize a system around what can be shown. That is useful when the demo is real. It becomes dangerous when the historical record starts using demo logic to backfill missing dates.
+
+Teams do this all the time. A project becomes easier to explain near the end of a phase, and someone later writes, "this was the day it became demo-ready." The sentence sounds plausible because the surrounding work *was* heading toward something showable. But unless the surviving artifacts identify a real readiness threshold on that date, the sentence may just be the shape of the ending talking.
+
+AI writing systems make this worse because they are extremely good at narrating polish. Give the model a mature factory thesis, a late-stage week, and one last blank day before the planned demo stretch, and it will eagerly generate the chapter where the system becomes presentable. The prose will sound orderly. The evidence may still only support proximity, not event.
+
+That is exactly why Day 28 has to remain constrained.
+
+What I can honestly say is that March 28 sits at the end of the infrastructure-and-connection phase and near the planned transition into polish, documentation, and demo work, which makes showcase-style language unusually tempting. What I cannot honestly say is which concrete readiness milestone, demo-prep step, or presentational threshold belongs to that date with enough confidence to narrate it as historical fact. So the chapter records the readiness illusion instead of pretending the readiness is directly documented.
+
+## What Actually Changed
+
+The practical repo work is straightforward and verifiable:
+
+- the Day 28 placeholder frontmatter and template body were removed,
+- the chapter was rewritten as an explicit note about demo-readiness pressure,
+- and the manuscript's remaining placeholder debt dropped by one more day.
+
+That keeps the cleanup pattern intact.
+
+Another placeholder disappears, another frontmatter warning is removed, and another chapter now says openly that proximity to a demo-oriented stretch of the sprint is not enough to prove a specific day when the system became showcase-ready.
 
 ## The Ship
 
-*[What we actually delivered]*
+What shipped here is not a recovered March 28 demo milestone or a proven day when the software factory became ready to present as a coherent showcase.
+
+What shipped is a more accurate account of how late-stage polish narratives can make undocumented days look more prepared than they are.
+
+Day 28 now says plainly that a day near the threshold of demo-oriented work does not automatically become the day readiness arrived. The chapter preserves the sense of narrative approach without letting that approach masquerade as dated evidence.
+
+That makes the manuscript less theatrical and more trustworthy.
 
 ## The Lesson
 
-*[What I learned]*
+Readiness language is not readiness evidence.
+
+A project can genuinely be moving toward a point where it will be easier to demo, summarize, or present. A day in that stretch can feel like the obvious moment where the system became showable. A model can generate that transition almost effortlessly. None of that proves what happened on the date unless the surviving artifacts are explicit enough to support the claim directly.
+
+So the lesson from Day 28 is this:
+
+**When an undocumented day starts to sound like the moment the system became ready to demo, separate showcase language from actual proof.**
+
+A dependable timeline does not let the shape of an ending assign itself to a date the record has not earned.
