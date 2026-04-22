@@ -1,8 +1,8 @@
 # End-of-Day Wrap-Up
 
-Generated: 2026-04-21T13:36:48.506Z
+Generated: 2026-04-22T13:34:00.058Z
 
-Git HEAD: 15be356
+Git HEAD: 41859e1
 
 ## Summary
 
@@ -76,12 +76,12 @@ OK: Book validation passed
 - Exit status: 2
 - Overall status: WARN (exit 2)
 - Checks:
-  - Placeholder Audit: PASS (exit 0, 162 ms)
-  - Internal Link Audit: PASS (exit 0, 205 ms)
-  - Image Asset Audit: PASS (exit 0, 143 ms)
-  - Frontmatter Audit: PASS (exit 0, 64 ms)
-  - Render Environment Doctor: WARN (exit 2, 257 ms)
-  - Local HTML Render: PASS (exit 0, 82348 ms)
+  - Placeholder Audit: PASS (exit 0, 62 ms)
+  - Internal Link Audit: PASS (exit 0, 80 ms)
+  - Image Asset Audit: PASS (exit 0, 66 ms)
+  - Frontmatter Audit: PASS (exit 0, 105 ms)
+  - Render Environment Doctor: WARN (exit 2, 468 ms)
+  - Local HTML Render: PASS (exit 0, 111004 ms)
 - Reports:
   - `reports/healthcheck-report.md`
   - `reports/healthcheck-report.json`
@@ -191,18 +191,15 @@ M STATUS.md
  M reports/link-check-report.json
  M reports/local-render-report.json
  M reports/local-render-report.md
- M reports/refresh-audits-report.json
- M reports/refresh-audits-report.md
  M reports/render-environment-report.json
  M reports/render-environment-report.md
  M reports/status-dashboard.json
  M reports/status-dashboard.md
- M scripts/finalize-status-after-commit.js
 ```
 
 ## Tagging
 
-- Local tag created at HEAD: `eod-2026-04-21`. Working tree had uncommitted audit/output changes, but tagging the current commit is still valid for a daily milestone.
+- Local tag created at HEAD: `eod-2026-04-22`. Working tree had uncommitted audit/output changes, but tagging the current commit is still valid for a daily milestone.
 
 ## Notes
 
