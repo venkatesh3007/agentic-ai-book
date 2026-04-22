@@ -1,6 +1,6 @@
 # Audit Refresh Report
 
-- Generated: 2026-04-21T13:30:22.104Z
+- Generated: 2026-04-22T04:30:39.521Z
 - Overall status: ⚠️ **WARN**
 - Commands run: 9
 
@@ -9,7 +9,7 @@
 ### ✅ Placeholder Audit
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/validate-book.js`
 - Exit code: 0
-- Duration: 145 ms
+- Duration: 61 ms
 - Reports:
   - `PLACEHOLDER_CHAPTERS.md`
   - `placeholder-chapters.json`
@@ -74,7 +74,7 @@ OK: Book validation passed
 ### ✅ Internal Link Audit
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-internal-links.js`
 - Exit code: 0
-- Duration: 177 ms
+- Duration: 69 ms
 - Reports:
   - `reports/link-check-report.md`
   - `reports/link-check-report.json`
@@ -92,7 +92,7 @@ Internal link check passed.
 ### ✅ Image Asset Audit
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-image-assets.js`
 - Exit code: 0
-- Duration: 172 ms
+- Duration: 52 ms
 - Reports:
   - `reports/image-audit-report.md`
   - `reports/image-audit-report.json`
@@ -110,7 +110,7 @@ Image asset audit passed.
 ### ✅ Frontmatter Audit
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-frontmatter.js`
 - Exit code: 0
-- Duration: 177 ms
+- Duration: 60 ms
 - Reports:
   - `reports/frontmatter-audit-report.md`
   - `reports/frontmatter-audit-report.json`
@@ -129,7 +129,7 @@ Frontmatter audit passed.
 ### ⚠️ Render Environment Doctor
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/render-environment-doctor.js`
 - Exit code: 2
-- Duration: 508 ms
+- Duration: 291 ms
 - Reports:
   - `reports/render-environment-report.md`
   - `reports/render-environment-report.json`
@@ -141,7 +141,8 @@ Frontmatter audit passed.
 [OK] Node.js runtime — Detected v22.22.0, required ≥ v18.0.0
 [OK] npm CLI — Detected v10.9.4
 [OK] git — Detected v2.43.0
-[OK] Quarto CLI — Detected v1.6.42 via PATH
+[OK] Quarto CLI — Detected v1.6.42 via PATH (repo bootstrap PATH includes /home/openclaw/quarto/bin)
+      ↳ Discovered candidate paths: /home/openclaw/quarto/bin/quarto, /home/openclaw/bin/quarto, /home/openclaw/bin/bin/quarto
 [WARN] Pandoc — Command `pandoc` was not found in PATH.
       ↳ Install Pandoc 3.1+ or rely on the copy bundled with Quarto.
 [WARN] LaTeX engine (tectonic/pdflatex) — Command `tectonic` was not found in PATH.
@@ -155,7 +156,7 @@ Reports written to: reports/render-environment-report.md and reports/render-envi
 ### ✅ Local HTML Render
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/render-with-local-quarto.js . --to html`
 - Exit code: 0
-- Duration: 92266 ms
+- Duration: 94057 ms
 - Reports:
   - `reports/local-render-report.md`
   - `reports/local-render-report.json`
@@ -223,7 +224,7 @@ Output created: _book/index.html
 ### ⚠️ Combined Healthcheck
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/run-healthcheck.js`
 - Exit code: 2
-- Duration: 87706 ms
+- Duration: 80477 ms
 - Reports:
   - `reports/healthcheck-report.md`
   - `reports/healthcheck-report.json`
@@ -239,7 +240,7 @@ Healthcheck WARN (exit 2). Report written to reports/healthcheck-report.md
 ### ✅ Status Dashboard
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/build-status-dashboard.js`
 - Exit code: 0
-- Duration: 44 ms
+- Duration: 46 ms
 - Reports:
   - `reports/status-dashboard.md`
   - `reports/status-dashboard.json`
@@ -256,7 +257,7 @@ Wrote reports/status-dashboard.json
 ### ✅ STATUS.md Sync
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/sync-status-md.js`
 - Exit code: 0
-- Duration: 73 ms
+- Duration: 78 ms
 - Reports:
   - `STATUS.md`
 

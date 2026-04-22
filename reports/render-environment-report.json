@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-21T13:33:59.689Z",
+  "generatedAt": "2026-04-22T04:32:14.467Z",
   "exitCode": 2,
   "host": {
     "platform": "linux 6.8.0-107-generic",
@@ -35,9 +35,25 @@
       "name": "Quarto CLI",
       "required": true,
       "status": "pass",
-      "detail": "Detected v1.6.42 via PATH",
+      "detail": "Detected v1.6.42 via PATH (repo bootstrap PATH includes /home/openclaw/quarto/bin)",
       "recommendation": "",
-      "discoveredPaths": []
+      "discoveredPaths": [
+        {
+          "path": "/home/openclaw/quarto/bin/quarto",
+          "version": "1.6.42",
+          "status": "ok"
+        },
+        {
+          "path": "/home/openclaw/bin/quarto",
+          "version": "1.6.42",
+          "status": "ok"
+        },
+        {
+          "path": "/home/openclaw/bin/bin/quarto",
+          "version": "1.6.42",
+          "status": "ok"
+        }
+      ]
     },
     {
       "name": "Pandoc",
@@ -67,7 +83,23 @@
     "LaTeX engine (tectonic/pdflatex)",
     "Quarto user config directory"
   ],
-  "quartoDiscoveredPaths": [],
+  "quartoDiscoveredPaths": [
+    {
+      "path": "/home/openclaw/quarto/bin/quarto",
+      "version": "1.6.42",
+      "status": "ok"
+    },
+    {
+      "path": "/home/openclaw/bin/quarto",
+      "version": "1.6.42",
+      "status": "ok"
+    },
+    {
+      "path": "/home/openclaw/bin/bin/quarto",
+      "version": "1.6.42",
+      "status": "ok"
+    }
+  ],
   "bootstrapPath": "/home/openclaw/quarto/bin",
   "bootstrapAddedPathEntry": true
 }

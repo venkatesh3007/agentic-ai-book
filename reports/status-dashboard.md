@@ -1,16 +1,16 @@
 # Repository Status Dashboard
 
-- Generated: 2026-04-21T13:36:48.398Z
+- Generated: 2026-04-22T04:33:34.621Z
 - Overall status: ⚠️ **WARN**
 - Audit snapshot freshness: ✅ **FRESH**
-- Oldest source report: 2026-04-21T13:33:59.206Z (3 minute(s) old)
-- Newest source report: 2026-04-21T13:35:22.283Z (1 minute(s) old)
+- Oldest source report: 2026-04-22T04:32:14.192Z (1 minute(s) old)
+- Newest source report: 2026-04-22T04:33:34.580Z (0 minute(s) old)
 - Placeholder day chapters remaining: **0**
 - Latest local HTML render: ✅ **PASS** (exit 0)
 
 ## Current Wins
 
-- Audit snapshot is fresh (oldest report age: 3 minute(s))
+- Audit snapshot is fresh (oldest report age: 1 minute(s))
 - Bulk audit refresh command available via `npm run audit:refresh`
 - Internal link audit is clean
 - Image asset audit is clean
@@ -28,12 +28,12 @@
 
 ## Audit Snapshot
 
-- ✅ **Placeholder Audit** — PASS (exit 0, 162 ms)
-- ✅ **Internal Link Audit** — PASS (exit 0, 205 ms)
-- ✅ **Image Asset Audit** — PASS (exit 0, 143 ms)
-- ✅ **Frontmatter Audit** — PASS (exit 0, 64 ms)
-- ⚠️ **Render Environment Doctor** — WARN (exit 2, 257 ms)
-- ✅ **Local HTML Render** — PASS (exit 0, 82348 ms)
+- ✅ **Placeholder Audit** — PASS (exit 0, 55 ms)
+- ✅ **Internal Link Audit** — PASS (exit 0, 63 ms)
+- ✅ **Image Asset Audit** — PASS (exit 0, 52 ms)
+- ✅ **Frontmatter Audit** — PASS (exit 0, 87 ms)
+- ⚠️ **Render Environment Doctor** — WARN (exit 2, 320 ms)
+- ✅ **Local HTML Render** — PASS (exit 0, 79854 ms)
 
 ## Detailed Counts
 
@@ -43,13 +43,19 @@
 - Image asset issues: **0**
 - Render required failures: **0**
 - Render warnings: **3**
-- Quarto candidate paths discovered: **0**
+- Quarto candidate paths discovered: **3**
 - Local render output directory present: **yes**
+
+## Quarto Discovery
+
+- `/home/openclaw/quarto/bin/quarto` — version 1.6.42
+- `/home/openclaw/bin/quarto` — version 1.6.42
+- `/home/openclaw/bin/bin/quarto` — version 1.6.42
 
 ## Refresh Workflow
 
 - Run `npm run audit:refresh` to regenerate the prerequisite audit JSON files in one pass before rebuilding the dashboard.
-- Last bulk refresh report: 2026-04-21T13:30:22.104Z
+- Last bulk refresh report: 2026-04-22T04:30:39.521Z
 
 ## Source Reports
 

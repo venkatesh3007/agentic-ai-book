@@ -1,6 +1,6 @@
 # Render Environment Doctor
 
-Generated: 2026-04-21T13:33:59.689Z
+Generated: 2026-04-22T04:32:14.467Z
 
 ## Host Overview
 
@@ -17,6 +17,7 @@ Generated: 2026-04-21T13:33:59.689Z
 - Exit code: 2
 - Repo bootstrap PATH includes: `/home/openclaw/quarto/bin`
 - Repo bootstrap added PATH entry this run: yes
+- Quarto binaries discovered outside raw shell PATH: `/home/openclaw/quarto/bin/quarto`, `/home/openclaw/bin/quarto`, `/home/openclaw/bin/bin/quarto`
 
 ## Detailed Checks
 
@@ -25,10 +26,18 @@ Generated: 2026-04-21T13:33:59.689Z
 | Node.js runtime | Yes | ✅ PASS | Detected v22.22.0, required ≥ v18.0.0 |  |
 | npm CLI | Yes | ✅ PASS | Detected v10.9.4 |  |
 | git | Yes | ✅ PASS | Detected v2.43.0 |  |
-| Quarto CLI | Yes | ✅ PASS | Detected v1.6.42 via PATH |  |
+| Quarto CLI | Yes | ✅ PASS | Detected v1.6.42 via PATH (repo bootstrap PATH includes /home/openclaw/quarto/bin) |  |
 | Pandoc | No | ⚠️ WARN | Command `pandoc` was not found in PATH. | Install Pandoc 3.1+ or rely on the copy bundled with Quarto. |
 | LaTeX engine (tectonic/pdflatex) | No | ⚠️ WARN | Command `tectonic` was not found in PATH. | Install Tectonic (preferred) or TeX Live to enable PDF output. |
 | Quarto user config directory | No | ⚠️ WARN | Not found. Quarto usually initializes this on first run. | Run `quarto check` after Quarto is available on PATH so the user config directory is created. |
+
+## Quarto Discovery
+
+| Path | Detected Version | Probe Status |
+| --- | --- | --- |
+| /home/openclaw/quarto/bin/quarto | 1.6.42 | ok |
+| /home/openclaw/bin/quarto | 1.6.42 | ok |
+| /home/openclaw/bin/bin/quarto | 1.6.42 | ok |
 
 ## Next Actions
 

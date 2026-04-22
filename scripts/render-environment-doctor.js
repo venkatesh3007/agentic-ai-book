@@ -102,6 +102,7 @@ function checkBinary({ name, command, args = ['--version'], required = false, mi
 }
 
 function checkQuartoCli(envDetails) {
+  const discoveredPaths = discoverLocalQuartoBinaries();
   const pathResult = runCommand('quarto', ['--version'], { env: envDetails.env });
   if (pathResult.status !== 'not-found') {
     const version = extractVersion(pathResult.stdout || pathResult.stderr);
@@ -118,17 +119,19 @@ function checkQuartoCli(envDetails) {
       detail += ` (< v${REQUIRED_MIN_VERSIONS.quarto} required)`;
     }
 
+    if (envDetails?.quartoBinDir && discoveredPaths.some((item) => item.path.startsWith(envDetails.quartoBinDir))) {
+      detail += ` (repo bootstrap PATH includes ${envDetails.quartoBinDir})`;
+    }
+
     return {
       name: 'Quarto CLI',
       required: true,
       status,
       detail,
       recommendation: status === 'pass' ? '' : 'Upgrade Quarto to a supported version and keep it on PATH.',
-      discoveredPaths: []
+      discoveredPaths
     };
   }
-
-  const discoveredPaths = discoverLocalQuartoBinaries();
 
   if (discoveredPaths.length) {
     const best = discoveredPaths.find((item) => item.version) || discoveredPaths[0];

@@ -1,6 +1,6 @@
 # Repository Healthcheck Report
 
-- Generated: 2026-04-21T13:35:22.242Z
+- Generated: 2026-04-22T04:33:34.580Z
 - Overall status: **WARN** (⚠️ WARN)
 - Checks run: 6
 - Exit code: 2
@@ -12,7 +12,7 @@
 - Description: Validates _quarto.yml references and flags day chapters that are still placeholder templates.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/validate-book.js`
 - Exit code: 0
-- Duration: 162 ms
+- Duration: 55 ms
 - Reports:
   - `PLACEHOLDER_CHAPTERS.md`
   - `placeholder-chapters.json`
@@ -79,7 +79,7 @@ OK: Book validation passed
 - Description: Scans Markdown/QMD files for broken repo-local links and missing anchors.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-internal-links.js`
 - Exit code: 0
-- Duration: 205 ms
+- Duration: 63 ms
 - Reports:
   - `reports/link-check-report.md`
   - `reports/link-check-report.json`
@@ -99,7 +99,7 @@ Internal link check passed.
 - Description: Ensures every referenced image exists inside the repository with a valid extension.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-image-assets.js`
 - Exit code: 0
-- Duration: 143 ms
+- Duration: 52 ms
 - Reports:
   - `reports/image-audit-report.md`
   - `reports/image-audit-report.json`
@@ -119,7 +119,7 @@ Image asset audit passed.
 - Description: Checks QMD frontmatter for required metadata and placeholder leftovers.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/check-frontmatter.js`
 - Exit code: 0
-- Duration: 64 ms
+- Duration: 87 ms
 - Reports:
   - `reports/frontmatter-audit-report.md`
   - `reports/frontmatter-audit-report.json`
@@ -140,7 +140,7 @@ Frontmatter audit passed.
 - Description: Checks the local machine for the tools required to run a trustworthy `quarto render`.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/render-environment-doctor.js`
 - Exit code: 2
-- Duration: 257 ms
+- Duration: 320 ms
 - Reports:
   - `reports/render-environment-report.md`
   - `reports/render-environment-report.json`
@@ -152,7 +152,8 @@ Frontmatter audit passed.
 [OK] Node.js runtime — Detected v22.22.0, required ≥ v18.0.0
 [OK] npm CLI — Detected v10.9.4
 [OK] git — Detected v2.43.0
-[OK] Quarto CLI — Detected v1.6.42 via PATH
+[OK] Quarto CLI — Detected v1.6.42 via PATH (repo bootstrap PATH includes /home/openclaw/quarto/bin)
+      ↳ Discovered candidate paths: /home/openclaw/quarto/bin/quarto, /home/openclaw/bin/quarto, /home/openclaw/bin/bin/quarto
 [WARN] Pandoc — Command `pandoc` was not found in PATH.
       ↳ Install Pandoc 3.1+ or rely on the copy bundled with Quarto.
 [WARN] LaTeX engine (tectonic/pdflatex) — Command `tectonic` was not found in PATH.
@@ -168,7 +169,7 @@ Reports written to: reports/render-environment-report.md and reports/render-envi
 - Description: Runs an actual local HTML book render through the Quarto wrapper so health checks verify the artifact, not just the environment.
 - Command: `/usr/bin/node /home/openclaw/.openclaw/workspace/agentic-ai-book/scripts/render-with-local-quarto.js . --to html`
 - Exit code: 0
-- Duration: 82.35 s
+- Duration: 79.85 s
 - Reports:
   - `reports/local-render-report.md`
   - `reports/local-render-report.json`
