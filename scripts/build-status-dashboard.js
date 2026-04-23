@@ -14,6 +14,7 @@ const imageJsonPath = path.join(reportDir, 'image-audit-report.json');
 const renderJsonPath = path.join(reportDir, 'render-environment-report.json');
 const localRenderJsonPath = path.join(reportDir, 'local-render-report.json');
 const refreshJsonPath = path.join(reportDir, 'refresh-audits-report.json');
+const wrapupPath = path.join(repoRoot, 'END_OF_DAY_WRAPUP.md');
 const STALE_THRESHOLD_MS = 6 * 60 * 60 * 1000;
 
 function readJson(filePath) {
@@ -50,6 +51,15 @@ function parseGeneratedAt(payload) {
   return Number.isNaN(time) ? null : time;
 }
 
+function parseWrapupGeneratedAt(filePath) {
+  if (!fs.existsSync(filePath)) return null;
+  const text = fs.readFileSync(filePath, 'utf8');
+  const match = text.match(/^Generated:\s+(.+)$/m);
+  if (!match) return null;
+  const time = Date.parse(match[1].trim());
+  return Number.isNaN(time) ? null : time;
+}
+
 function formatAge(ms) {
   if (ms == null) return 'unknown age';
   const minutes = Math.round(ms / (60 * 1000));
@@ -74,6 +84,7 @@ function main() {
   const render = readJson(renderJsonPath);
   const localRender = readJson(localRenderJsonPath);
   const refresh = readJson(refreshJsonPath);
+  const wrapupGeneratedAt = parseWrapupGeneratedAt(wrapupPath);
 
   if (!placeholder || !health || !frontmatter || !links || !images || !render || !localRender) {
     console.error('ERROR: Missing one or more prerequisite JSON reports. Run the audits first.');
@@ -150,6 +161,7 @@ function main() {
       newestAgeMs
     },
     refreshReportGeneratedAt: refresh?.generatedAt ?? null,
+    wrapupGeneratedAt: wrapupGeneratedAt == null ? null : new Date(wrapupGeneratedAt).toISOString(),
     placeholderCount,
     nextPriority,
     blockers,
@@ -265,6 +277,9 @@ function main() {
     lines.push(`- Last bulk refresh report: ${summary.refreshReportGeneratedAt}`);
   } else {
     lines.push('- No bulk refresh report has been generated yet.');
+  }
+  if (summary.wrapupGeneratedAt) {
+    lines.push(`- Last end-of-day wrap-up validation: ${summary.wrapupGeneratedAt}`);
   }
   lines.push('');
 

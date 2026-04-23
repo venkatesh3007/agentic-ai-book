@@ -1,16 +1,15 @@
 # Repository Status Dashboard
 
-- Generated: 2026-04-22T13:33:59.944Z
+- Generated: 2026-04-23T04:30:57.811Z
 - Overall status: ⚠️ **WARN**
-- Audit snapshot freshness: ✅ **FRESH**
-- Oldest source report: 2026-04-22T13:30:27.476Z (4 minute(s) old)
-- Newest source report: 2026-04-22T13:32:19.278Z (2 minute(s) old)
+- Audit snapshot freshness: ⚠️ **STALE**
+- Oldest source report: 2026-04-22T13:30:27.476Z (15.0 hour(s) old)
+- Newest source report: 2026-04-22T13:32:19.278Z (15.0 hour(s) old)
 - Placeholder day chapters remaining: **0**
 - Latest local HTML render: ✅ **PASS** (exit 0)
 
 ## Current Wins
 
-- Audit snapshot is fresh (oldest report age: 4 minute(s))
 - Bulk audit refresh command available via `npm run audit:refresh`
 - Internal link audit is clean
 - Image asset audit is clean
@@ -20,7 +19,7 @@
 
 ## Current Blockers
 
-- None 🎉
+- Audit snapshot is stale (oldest report is 15.0 hour(s) old); run `npm run audit:refresh`
 
 ## Next Priority Rewrites
 
@@ -56,6 +55,7 @@
 
 - Run `npm run audit:refresh` to regenerate the prerequisite audit JSON files in one pass before rebuilding the dashboard.
 - Last bulk refresh report: 2026-04-22T04:30:39.521Z
+- Last end-of-day wrap-up validation: 2026-04-22T13:34:00.058Z
 
 ## Source Reports
 
