@@ -1,6 +1,6 @@
 # AI-Native Book - Current Status
 
-**Last Updated**: April 22, 2026
+**Last Updated**: April 23, 2026
 
 ## Progress
 
@@ -23,7 +23,7 @@
 
 ## Current Session Focus
 
-April 22, 2026 status now reflects the current verified repo state instead of the stale manuscript-debt framing from earlier cleanup sessions:
+April 23, 2026 status now reflects the current verified repo state instead of the stale manuscript-debt framing from earlier cleanup sessions:
 - keep the audit/render pipeline honest and reproducible through `npm run audit:refresh`
 - preserve the current verified baseline: local HTML render is **PASS**, combined healthcheck is **WARN**, audit snapshot freshness is **FRESH**, and render environment has 0 required failures and 3 optional warning(s)
 - placeholder debt is fully cleared, so follow-up work should focus on status/report truthfulness and any optional infrastructure polish rather than fictional chapter progress
@@ -58,7 +58,7 @@ April 22, 2026 status now reflects the current verified repo state instead of th
 ### Snapshot Sync Note
 
 - ✅ Added `scripts/sync-status-md.js` plus `npm run status:sync`, so volatile status prose like **Last Updated**, placeholder summaries, current-focus bullets, and the next-update note can be refreshed from current repo reports instead of drifting by hand
-- ✅ Verified the sync against current repo state at git HEAD `41859e1`, which keeps `STATUS.md` aligned with the dashboard/healthcheck reports instead of leaving stale narrative leftovers behind
+- ✅ Verified the sync against current repo state at git HEAD `1ea8efd`, which keeps `STATUS.md` aligned with the dashboard/healthcheck reports instead of leaving stale narrative leftovers behind
 - ✅ Current audit baseline is now explicit here: placeholder backlog **0**, local HTML render **PASS**, combined healthcheck **WARN**, and audit snapshot freshness **FRESH**
 - ✅ Current render-environment summary is recorded honestly: render environment has 0 required failures and 3 optional warning(s)
 - ✅ Dashboard blockers are now synced from the current report set rather than preserved from older manuscript-debt sessions, which correctly yields “None 🎉” right now

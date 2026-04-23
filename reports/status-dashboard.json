@@ -1,21 +1,20 @@
 {
-  "generatedAt": "2026-04-23T04:30:57.811Z",
+  "generatedAt": "2026-04-23T13:33:54.916Z",
   "overallStatus": "warn",
-  "snapshotFreshness": "stale",
+  "snapshotFreshness": "fresh",
   "snapshotGeneratedAt": {
-    "oldest": "2026-04-22T13:30:27.476Z",
-    "newest": "2026-04-22T13:32:19.278Z",
-    "oldestAgeMs": 54030335,
-    "newestAgeMs": 53918533
+    "oldest": "2026-04-23T13:30:19.335Z",
+    "newest": "2026-04-23T13:32:09.275Z",
+    "oldestAgeMs": 215581,
+    "newestAgeMs": 105641
   },
   "refreshReportGeneratedAt": "2026-04-22T04:30:39.521Z",
   "wrapupGeneratedAt": "2026-04-22T13:34:00.058Z",
   "placeholderCount": 0,
   "nextPriority": [],
-  "blockers": [
-    "Audit snapshot is stale (oldest report is 15.0 hour(s) old); run `npm run audit:refresh`"
-  ],
+  "blockers": [],
   "wins": [
+    "Audit snapshot is fresh (oldest report age: 4 minute(s))",
     "Bulk audit refresh command available via `npm run audit:refresh`",
     "Internal link audit is clean",
     "Image asset audit is clean",
@@ -29,42 +28,42 @@
       "title": "Placeholder Audit",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 62
+      "durationMs": 81
     },
     {
       "id": "internal-links",
       "title": "Internal Link Audit",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 80
+      "durationMs": 81
     },
     {
       "id": "image-assets",
       "title": "Image Asset Audit",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 66
+      "durationMs": 73
     },
     {
       "id": "frontmatter-audit",
       "title": "Frontmatter Audit",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 105
+      "durationMs": 103
     },
     {
       "id": "render-doctor",
       "title": "Render Environment Doctor",
       "status": "warn",
       "exitCode": 2,
-      "durationMs": 468
+      "durationMs": 475
     },
     {
       "id": "local-render",
       "title": "Local HTML Render",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 111004
+      "durationMs": 109134
     }
   ],
   "audits": {

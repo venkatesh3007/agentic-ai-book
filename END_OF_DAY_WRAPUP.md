@@ -1,8 +1,8 @@
 # End-of-Day Wrap-Up
 
-Generated: 2026-04-22T13:34:00.058Z
+Generated: 2026-04-23T13:33:55.056Z
 
-Git HEAD: 41859e1
+Git HEAD: 1ea8efd
 
 ## Summary
 
@@ -76,12 +76,12 @@ OK: Book validation passed
 - Exit status: 2
 - Overall status: WARN (exit 2)
 - Checks:
-  - Placeholder Audit: PASS (exit 0, 62 ms)
-  - Internal Link Audit: PASS (exit 0, 80 ms)
-  - Image Asset Audit: PASS (exit 0, 66 ms)
-  - Frontmatter Audit: PASS (exit 0, 105 ms)
-  - Render Environment Doctor: WARN (exit 2, 468 ms)
-  - Local HTML Render: PASS (exit 0, 111004 ms)
+  - Placeholder Audit: PASS (exit 0, 81 ms)
+  - Internal Link Audit: PASS (exit 0, 81 ms)
+  - Image Asset Audit: PASS (exit 0, 73 ms)
+  - Frontmatter Audit: PASS (exit 0, 103 ms)
+  - Render Environment Doctor: WARN (exit 2, 475 ms)
+  - Local HTML Render: PASS (exit 0, 109134 ms)
 - Reports:
   - `reports/healthcheck-report.md`
   - `reports/healthcheck-report.json`
@@ -199,7 +199,7 @@ M STATUS.md
 
 ## Tagging
 
-- Local tag created at HEAD: `eod-2026-04-22`. Working tree had uncommitted audit/output changes, but tagging the current commit is still valid for a daily milestone.
+- Local tag created at HEAD: `eod-2026-04-23`. Working tree had uncommitted audit/output changes, but tagging the current commit is still valid for a daily milestone.
 
 ## Notes
 
