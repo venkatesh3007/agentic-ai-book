@@ -25,17 +25,25 @@ if (!fs.existsSync(statusPath)) {
 
 const headSha = getHeadShortSha();
 let text = fs.readFileSync(statusPath, 'utf8');
-const oldText = text;
 
-text = text.replace(
-  /- ✅ Verified the sync against current repo state at git HEAD `[^`]+`, which keeps `STATUS\.md` aligned with the dashboard\/healthcheck reports[^\n]*(?:\n|$)/,
-  match => match.replace(/git HEAD `[^`]+`/, `git HEAD \`${headSha}\``)
-);
+const headLineRegex = /- ✅ Verified the sync against current repo state at git HEAD `([^`]+)`, which keeps `STATUS\.md` aligned with the dashboard\/healthcheck reports[^\n]*(?:\n|$)/;
+const match = text.match(headLineRegex);
 
-if (text === oldText) {
-  console.error('ERROR: Could not update Snapshot Sync Note HEAD line in STATUS.md');
+if (!match) {
+  console.error('ERROR: Could not find Snapshot Sync Note HEAD line in STATUS.md');
   process.exit(1);
 }
+
+const currentSha = match[1];
+if (currentSha === headSha) {
+  console.log(`STATUS.md snapshot note already points at HEAD ${headSha}`);
+  process.exit(0);
+}
+
+text = text.replace(
+  headLineRegex,
+  whole => whole.replace(/git HEAD `[^`]+`/, `git HEAD \`${headSha}\``)
+);
 
 fs.writeFileSync(statusPath, text);
 console.log(`Updated STATUS.md snapshot note to HEAD ${headSha}`);
