@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-04-24T04:38:04.283Z",
+  "generatedAt": "2026-04-24T10:30:39.043Z",
   "overallStatus": "warn",
   "snapshotFreshness": "fresh",
-  "snapshotGeneratedAt": {
+  "snapshotWindow": {
     "oldest": "2026-04-24T04:34:50.917Z",
     "newest": "2026-04-24T04:36:32.720Z",
-    "oldestAgeMs": 193366,
-    "newestAgeMs": 91563
+    "oldestAgeMs": 21348125,
+    "newestAgeMs": 21246322
   },
   "refreshReportGeneratedAt": "2026-04-22T04:30:39.521Z",
-  "wrapupGeneratedAt": "2026-04-24T04:38:04.238Z",
+  "wrapupGeneratedAt": "2026-04-24T04:38:04.300Z",
   "placeholderCount": 0,
   "nextPriority": [],
   "blockers": [],
   "wins": [
-    "Audit snapshot is fresh (oldest report age: 3 minute(s))",
+    "Audit snapshot is fresh (oldest report age: 5.9 hour(s))",
     "Bulk audit refresh command available via `npm run audit:refresh`",
     "Internal link audit is clean",
     "Image asset audit is clean",

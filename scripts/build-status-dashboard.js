@@ -154,7 +154,7 @@ function main() {
     generatedAt: new Date().toISOString(),
     overallStatus: health.overallStatus,
     snapshotFreshness,
-    snapshotGeneratedAt: {
+    snapshotWindow: {
       oldest: oldestGeneratedAt == null ? null : new Date(oldestGeneratedAt).toISOString(),
       newest: newestGeneratedAt == null ? null : new Date(newestGeneratedAt).toISOString(),
       oldestAgeMs,
@@ -214,8 +214,9 @@ function main() {
   lines.push(`- Generated: ${summary.generatedAt}`);
   lines.push(`- Overall status: ${statusEmoji(summary.overallStatus)} **${statusWord(summary.overallStatus)}**`);
   lines.push(`- Audit snapshot freshness: ${snapshotFreshness === 'fresh' ? '✅' : snapshotFreshness === 'stale' ? '⚠️' : '❓'} **${statusWord(snapshotFreshness)}**`);
-  lines.push(`- Oldest source report: ${summary.snapshotGeneratedAt.oldest || 'unknown'} (${formatAge(oldestAgeMs)} old)`);
-  lines.push(`- Newest source report: ${summary.snapshotGeneratedAt.newest || 'unknown'} (${formatAge(newestAgeMs)} old)`);
+  lines.push(`- Snapshot source window: ${summary.snapshotWindow.oldest || 'unknown'} → ${summary.snapshotWindow.newest || 'unknown'}`);
+  lines.push(`- Oldest source report age: ${formatAge(oldestAgeMs)}`);
+  lines.push(`- Newest source report age: ${formatAge(newestAgeMs)}`);
   lines.push(`- Placeholder day chapters remaining: **${placeholderCount}**`);
   lines.push(`- Latest local HTML render: ${statusEmoji(localRenderStatus)} **${statusWord(localRenderStatus)}**${localRenderExitCode == null ? '' : ` (exit ${localRenderExitCode})`}`);
   lines.push('');
@@ -273,6 +274,7 @@ function main() {
 
   lines.push('## Refresh Workflow', '');
   lines.push('- Run `npm run audit:refresh` to regenerate the prerequisite audit JSON files in one pass before rebuilding the dashboard.');
+  lines.push('- `npm run wrapup:eod` reruns validation/health/render/dashboard/status-sync, but it does not rewrite `reports/refresh-audits-report.json`; the bulk-refresh and wrap-up timestamps can diverge honestly.');
   if (summary.refreshReportGeneratedAt) {
     lines.push(`- Last bulk refresh report: ${summary.refreshReportGeneratedAt}`);
   } else {
