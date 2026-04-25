@@ -1,9 +1,9 @@
 # Repository Status Dashboard
 
-- Generated: 2026-04-25T04:33:31.263Z
+- Generated: 2026-04-25T07:33:57.303Z
 - Overall status: ⚠️ **WARN**
 - Audit snapshot freshness: ✅ **FRESH**
-- Snapshot source window: 2026-04-25T04:30:27.689Z → 2026-04-25T04:31:59.756Z
+- Snapshot source window: 2026-04-25T07:30:30.839Z → 2026-04-25T07:32:16.052Z
 - Oldest source report age: 3 minute(s)
 - Newest source report age: 2 minute(s)
 - Placeholder day chapters remaining: **0**
@@ -29,12 +29,12 @@
 
 ## Audit Snapshot
 
-- ✅ **Placeholder Audit** — PASS (exit 0, 56 ms)
-- ✅ **Internal Link Audit** — PASS (exit 0, 60 ms)
-- ✅ **Image Asset Audit** — PASS (exit 0, 47 ms)
-- ✅ **Frontmatter Audit** — PASS (exit 0, 67 ms)
-- ⚠️ **Render Environment Doctor** — WARN (exit 2, 314 ms)
-- ✅ **Local HTML Render** — PASS (exit 0, 91509 ms)
+- ✅ **Placeholder Audit** — PASS (exit 0, 59 ms)
+- ✅ **Internal Link Audit** — PASS (exit 0, 84 ms)
+- ✅ **Image Asset Audit** — PASS (exit 0, 74 ms)
+- ✅ **Frontmatter Audit** — PASS (exit 0, 82 ms)
+- ⚠️ **Render Environment Doctor** — WARN (exit 2, 385 ms)
+- ✅ **Local HTML Render** — PASS (exit 0, 104506 ms)
 
 ## Detailed Counts
 
@@ -58,7 +58,7 @@
 - Run `npm run audit:refresh` to regenerate the prerequisite audit JSON files in one pass before rebuilding the dashboard.
 - `npm run wrapup:eod` reruns validation/health/render/dashboard/status-sync, but it does not rewrite `reports/refresh-audits-report.json`; the bulk-refresh and wrap-up timestamps can diverge honestly.
 - Last bulk refresh report: 2026-04-22T04:30:39.521Z
-- Last end-of-day wrap-up validation: 2026-04-25T04:33:31.228Z
+- Last end-of-day wrap-up validation: 2026-04-25T07:33:57.269Z
 
 ## Source Reports
 

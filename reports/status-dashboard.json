@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-04-25T04:33:31.263Z",
+  "generatedAt": "2026-04-25T07:33:57.303Z",
   "overallStatus": "warn",
   "snapshotFreshness": "fresh",
   "snapshotWindow": {
-    "oldest": "2026-04-25T04:30:27.689Z",
-    "newest": "2026-04-25T04:31:59.756Z",
-    "oldestAgeMs": 183574,
-    "newestAgeMs": 91507
+    "oldest": "2026-04-25T07:30:30.839Z",
+    "newest": "2026-04-25T07:32:16.052Z",
+    "oldestAgeMs": 206464,
+    "newestAgeMs": 101251
   },
   "refreshReportGeneratedAt": "2026-04-22T04:30:39.521Z",
-  "wrapupGeneratedAt": "2026-04-25T04:33:31.228Z",
+  "wrapupGeneratedAt": "2026-04-25T07:33:57.269Z",
   "placeholderCount": 0,
   "nextPriority": [],
   "blockers": [],
@@ -28,42 +28,42 @@
       "title": "Placeholder Audit",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 56
+      "durationMs": 59
     },
     {
       "id": "internal-links",
       "title": "Internal Link Audit",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 60
+      "durationMs": 84
     },
     {
       "id": "image-assets",
       "title": "Image Asset Audit",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 47
+      "durationMs": 74
     },
     {
       "id": "frontmatter-audit",
       "title": "Frontmatter Audit",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 67
+      "durationMs": 82
     },
     {
       "id": "render-doctor",
       "title": "Render Environment Doctor",
       "status": "warn",
       "exitCode": 2,
-      "durationMs": 314
+      "durationMs": 385
     },
     {
       "id": "local-render",
       "title": "Local HTML Render",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 91509
+      "durationMs": 104506
     }
   ],
   "audits": {

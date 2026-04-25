@@ -1,8 +1,8 @@
 # End-of-Day Wrap-Up
 
-Generated: 2026-04-25T04:33:31.278Z
+Generated: 2026-04-25T07:33:57.315Z
 
-Git HEAD: f88059f
+Git HEAD: 33038c0
 
 ## Summary
 
@@ -76,12 +76,12 @@ OK: Book validation passed
 - Exit status: 2
 - Overall status: WARN (exit 2)
 - Checks:
-  - Placeholder Audit: PASS (exit 0, 56 ms)
-  - Internal Link Audit: PASS (exit 0, 60 ms)
-  - Image Asset Audit: PASS (exit 0, 47 ms)
-  - Frontmatter Audit: PASS (exit 0, 67 ms)
-  - Render Environment Doctor: WARN (exit 2, 314 ms)
-  - Local HTML Render: PASS (exit 0, 91509 ms)
+  - Placeholder Audit: PASS (exit 0, 59 ms)
+  - Internal Link Audit: PASS (exit 0, 84 ms)
+  - Image Asset Audit: PASS (exit 0, 74 ms)
+  - Frontmatter Audit: PASS (exit 0, 82 ms)
+  - Render Environment Doctor: WARN (exit 2, 385 ms)
+  - Local HTML Render: PASS (exit 0, 104506 ms)
 - Reports:
   - `reports/healthcheck-report.md`
   - `reports/healthcheck-report.json`
@@ -195,11 +195,12 @@ M STATUS.md
  M reports/render-environment-report.md
  M reports/status-dashboard.json
  M reports/status-dashboard.md
+ M scripts/end-of-day-wrapup.js
 ```
 
 ## Tagging
 
-- Tag request skipped: local tag `eod-2026-04-24` already exists.
+- Tag request skipped: local tag `eod-2026-04-24` already exists at 309b99f, while current HEAD is 33038c0.
 
 ## Notes
 

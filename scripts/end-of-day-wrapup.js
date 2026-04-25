@@ -307,7 +307,16 @@ if (wantsTag) {
   } else {
     const existingTag = run('git', ['tag', '--list', tagName]);
     if (cleanText(existingTag.stdout)) {
-      tagMessage = `- Tag request skipped: local tag \`${tagName}\` already exists.`;
+      const existingTarget = cleanText(run('git', ['rev-list', '-n', '1', tagName]).stdout);
+      const currentHeadShort = cleanText(run('git', ['rev-parse', '--short', 'HEAD']).stdout);
+      const existingTargetShort = existingTarget ? cleanText(run('git', ['rev-parse', '--short', existingTarget]).stdout) : '';
+      if (existingTarget && gitHeadFull && existingTarget === gitHeadFull) {
+        tagMessage = `- Tag request skipped: local tag \`${tagName}\` already exists at current HEAD (${currentHeadShort}).`;
+      } else if (existingTargetShort) {
+        tagMessage = `- Tag request skipped: local tag \`${tagName}\` already exists at ${existingTargetShort}, while current HEAD is ${currentHeadShort}.`;
+      } else {
+        tagMessage = `- Tag request skipped: local tag \`${tagName}\` already exists.`;
+      }
     } else {
       const tagResult = run('git', ['tag', '-a', tagName, gitHeadFull, '-m', `End-of-day wrap-up ${todayStamp()}`]);
       if (tagResult.status === 0) {
