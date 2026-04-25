@@ -1,8 +1,8 @@
 # End-of-Day Wrap-Up
 
-Generated: 2026-04-24T04:38:04.300Z
+Generated: 2026-04-25T04:33:31.278Z
 
-Git HEAD: 309b99f
+Git HEAD: f88059f
 
 ## Summary
 
@@ -76,12 +76,12 @@ OK: Book validation passed
 - Exit status: 2
 - Overall status: WARN (exit 2)
 - Checks:
-  - Placeholder Audit: PASS (exit 0, 65 ms)
-  - Internal Link Audit: PASS (exit 0, 71 ms)
-  - Image Asset Audit: PASS (exit 0, 78 ms)
-  - Frontmatter Audit: PASS (exit 0, 103 ms)
-  - Render Environment Doctor: WARN (exit 2, 410 ms)
-  - Local HTML Render: PASS (exit 0, 101080 ms)
+  - Placeholder Audit: PASS (exit 0, 56 ms)
+  - Internal Link Audit: PASS (exit 0, 60 ms)
+  - Image Asset Audit: PASS (exit 0, 47 ms)
+  - Frontmatter Audit: PASS (exit 0, 67 ms)
+  - Render Environment Doctor: WARN (exit 2, 314 ms)
+  - Local HTML Render: PASS (exit 0, 91509 ms)
 - Reports:
   - `reports/healthcheck-report.md`
   - `reports/healthcheck-report.json`
@@ -182,8 +182,7 @@ Synced STATUS.md
 
 - Working tree dirty before wrap-up write: yes
 ```text
-M END_OF_DAY_WRAPUP.md
- M STATUS.md
+M STATUS.md
  M placeholder-chapters.json
  M reports/frontmatter-audit-report.json
  M reports/healthcheck-report.json
@@ -196,12 +195,11 @@ M END_OF_DAY_WRAPUP.md
  M reports/render-environment-report.md
  M reports/status-dashboard.json
  M reports/status-dashboard.md
- M scripts/end-of-day-wrapup.js
 ```
 
 ## Tagging
 
-- Local tag created at HEAD: `eod-2026-04-24`. Working tree had uncommitted audit/output changes, but tagging the current commit is still valid for a daily milestone.
+- Tag request skipped: local tag `eod-2026-04-24` already exists.
 
 ## Notes
 
