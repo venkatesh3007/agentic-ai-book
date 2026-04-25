@@ -1,17 +1,17 @@
 # Repository Status Dashboard
 
-- Generated: 2026-04-25T07:33:57.303Z
+- Generated: 2026-04-25T13:33:47.586Z
 - Overall status: ⚠️ **WARN**
 - Audit snapshot freshness: ✅ **FRESH**
-- Snapshot source window: 2026-04-25T07:30:30.839Z → 2026-04-25T07:32:16.052Z
-- Oldest source report age: 3 minute(s)
+- Snapshot source window: 2026-04-25T13:30:10.153Z → 2026-04-25T13:32:00.789Z
+- Oldest source report age: 4 minute(s)
 - Newest source report age: 2 minute(s)
 - Placeholder day chapters remaining: **0**
 - Latest local HTML render: ✅ **PASS** (exit 0)
 
 ## Current Wins
 
-- Audit snapshot is fresh (oldest report age: 3 minute(s))
+- Audit snapshot is fresh (oldest report age: 4 minute(s))
 - Bulk audit refresh command available via `npm run audit:refresh`
 - Internal link audit is clean
 - Image asset audit is clean
@@ -29,12 +29,12 @@
 
 ## Audit Snapshot
 
-- ✅ **Placeholder Audit** — PASS (exit 0, 59 ms)
-- ✅ **Internal Link Audit** — PASS (exit 0, 84 ms)
-- ✅ **Image Asset Audit** — PASS (exit 0, 74 ms)
-- ✅ **Frontmatter Audit** — PASS (exit 0, 82 ms)
-- ⚠️ **Render Environment Doctor** — WARN (exit 2, 385 ms)
-- ✅ **Local HTML Render** — PASS (exit 0, 104506 ms)
+- ✅ **Placeholder Audit** — PASS (exit 0, 77 ms)
+- ✅ **Internal Link Audit** — PASS (exit 0, 95 ms)
+- ✅ **Image Asset Audit** — PASS (exit 0, 78 ms)
+- ✅ **Frontmatter Audit** — PASS (exit 0, 102 ms)
+- ⚠️ **Render Environment Doctor** — WARN (exit 2, 505 ms)
+- ✅ **Local HTML Render** — PASS (exit 0, 109772 ms)
 
 ## Detailed Counts
 
@@ -58,7 +58,7 @@
 - Run `npm run audit:refresh` to regenerate the prerequisite audit JSON files in one pass before rebuilding the dashboard.
 - `npm run wrapup:eod` reruns validation/health/render/dashboard/status-sync, but it does not rewrite `reports/refresh-audits-report.json`; the bulk-refresh and wrap-up timestamps can diverge honestly.
 - Last bulk refresh report: 2026-04-22T04:30:39.521Z
-- Last end-of-day wrap-up validation: 2026-04-25T07:33:57.269Z
+- Last end-of-day wrap-up validation: 2026-04-25T13:33:47.524Z
 
 ## Source Reports
 
