@@ -1,17 +1,19 @@
 # Repository Status Dashboard
 
-- Generated: 2026-04-25T13:33:47.586Z
+- Generated: 2026-04-30T04:34:39.926Z
 - Overall status: ⚠️ **WARN**
 - Audit snapshot freshness: ✅ **FRESH**
-- Snapshot source window: 2026-04-25T13:30:10.153Z → 2026-04-25T13:32:00.789Z
-- Oldest source report age: 4 minute(s)
+- Snapshot source window: 2026-04-25T13:32:00.723Z → 2026-04-30T04:32:21.890Z
+- Oldest source report age: 111.0 hour(s)
 - Newest source report age: 2 minute(s)
+- Latest validation signal: 2026-04-30T04:32:21.890Z
+- Latest validation signal age: 2 minute(s)
 - Placeholder day chapters remaining: **0**
 - Latest local HTML render: ✅ **PASS** (exit 0)
 
 ## Current Wins
 
-- Audit snapshot is fresh (oldest report age: 4 minute(s))
+- Audit snapshot is fresh (latest validation signal age: 2 minute(s))
 - Bulk audit refresh command available via `npm run audit:refresh`
 - Internal link audit is clean
 - Image asset audit is clean
@@ -58,7 +60,7 @@
 - Run `npm run audit:refresh` to regenerate the prerequisite audit JSON files in one pass before rebuilding the dashboard.
 - `npm run wrapup:eod` reruns validation/health/render/dashboard/status-sync, but it does not rewrite `reports/refresh-audits-report.json`; the bulk-refresh and wrap-up timestamps can diverge honestly.
 - Last bulk refresh report: 2026-04-22T04:30:39.521Z
-- Last end-of-day wrap-up validation: 2026-04-25T13:33:47.524Z
+- Last end-of-day wrap-up validation: 2026-04-25T13:33:47.605Z
 
 ## Source Reports
 

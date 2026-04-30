@@ -113,11 +113,16 @@ function main() {
   const now = Date.now();
   const oldestAgeMs = oldestGeneratedAt == null ? null : now - oldestGeneratedAt;
   const newestAgeMs = newestGeneratedAt == null ? null : now - newestGeneratedAt;
-  const snapshotFreshness = freshnessStatus(oldestAgeMs);
+  const refreshReportGeneratedAtMs = parseGeneratedAt(refresh);
+  const validationReferenceTimes = [newestGeneratedAt, wrapupGeneratedAt, refreshReportGeneratedAtMs]
+    .filter((value) => value != null);
+  const latestValidationGeneratedAt = validationReferenceTimes.length ? Math.max(...validationReferenceTimes) : null;
+  const latestValidationAgeMs = latestValidationGeneratedAt == null ? null : now - latestValidationGeneratedAt;
+  const snapshotFreshness = freshnessStatus(latestValidationAgeMs);
 
   const blockers = [];
   if (snapshotFreshness === 'stale') {
-    blockers.push(`Audit snapshot is stale (oldest report is ${formatAge(oldestAgeMs)} old); run \`npm run audit:refresh\``);
+    blockers.push(`Audit snapshot is stale (latest validation signal is ${formatAge(latestValidationAgeMs)} old); run \`npm run audit:refresh\``);
   }
   if (renderRequiredFailures.length) {
     if (quartoDiscoveredPaths.length) {
@@ -140,7 +145,7 @@ function main() {
   }
 
   const wins = [];
-  if (snapshotFreshness === 'fresh') wins.push(`Audit snapshot is fresh (oldest report age: ${formatAge(oldestAgeMs)})`);
+  if (snapshotFreshness === 'fresh') wins.push(`Audit snapshot is fresh (latest validation signal age: ${formatAge(latestValidationAgeMs)})`);
   wins.push(`Bulk audit refresh command available via \`npm run audit:refresh\``);
   if (linkIssues === 0) wins.push('Internal link audit is clean');
   if (imageIssues === 0) wins.push('Image asset audit is clean');
@@ -160,6 +165,8 @@ function main() {
       oldestAgeMs,
       newestAgeMs
     },
+    latestValidationGeneratedAt: latestValidationGeneratedAt == null ? null : new Date(latestValidationGeneratedAt).toISOString(),
+    latestValidationAgeMs,
     refreshReportGeneratedAt: refresh?.generatedAt ?? null,
     wrapupGeneratedAt: wrapupGeneratedAt == null ? null : new Date(wrapupGeneratedAt).toISOString(),
     placeholderCount,
@@ -217,6 +224,8 @@ function main() {
   lines.push(`- Snapshot source window: ${summary.snapshotWindow.oldest || 'unknown'} → ${summary.snapshotWindow.newest || 'unknown'}`);
   lines.push(`- Oldest source report age: ${formatAge(oldestAgeMs)}`);
   lines.push(`- Newest source report age: ${formatAge(newestAgeMs)}`);
+  lines.push(`- Latest validation signal: ${summary.latestValidationGeneratedAt || 'unknown'}`);
+  lines.push(`- Latest validation signal age: ${formatAge(latestValidationAgeMs)}`);
   lines.push(`- Placeholder day chapters remaining: **${placeholderCount}**`);
   lines.push(`- Latest local HTML render: ${statusEmoji(localRenderStatus)} **${statusWord(localRenderStatus)}**${localRenderExitCode == null ? '' : ` (exit ${localRenderExitCode})`}`);
   lines.push('');
