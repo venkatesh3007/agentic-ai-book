@@ -14,6 +14,7 @@
     "status:sync": "node scripts/sync-status-md.js",
     "status:finalize": "node scripts/finalize-status-after-commit.js",
     "render:local": "node scripts/render-with-local-quarto.js . --to html",
+    "render:local:clean": "node scripts/render-with-local-quarto.js . --to html --clean-generated",
     "wrapup:eod": "node scripts/end-of-day-wrapup.js",
     "doctor:render": "node scripts/render-environment-doctor.js",
     "quarto:check": "node scripts/bootstrap-env.js quarto check"
