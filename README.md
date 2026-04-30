@@ -75,7 +75,7 @@ npm run doctor:render
 npm run quarto:check
 ```
 
-The end-of-day wrap-up script writes `END_OF_DAY_WRAPUP.md`, reruns the placeholder audit, records the combined healthcheck, local render, and status dashboard summaries, and only creates a local git tag when `--tag` is explicitly requested. The tag is anchored to the current `HEAD`, even if the working tree contains freshly generated audit artifacts.
+The end-of-day wrap-up script writes `END_OF_DAY_WRAPUP.md`, reruns the placeholder audit, records the combined healthcheck, local render, status dashboard summary, and the narrow `STATUS.md` finalize step, and only creates a local git tag when `--tag` is explicitly requested. The tag is anchored to the current `HEAD`, even if the working tree contains freshly generated audit artifacts.
 
 As of the latest tooling pass, `npm run audit:refresh` also regenerates the standalone local render report directly, so the dashboard and refresh artifacts now describe the same validation window instead of mixing fresh audits with an older render snapshot.
 

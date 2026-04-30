@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-04-30T04:34:39.926Z",
+  "generatedAt": "2026-04-30T10:38:44.043Z",
   "overallStatus": "warn",
   "snapshotFreshness": "fresh",
   "snapshotWindow": {
-    "oldest": "2026-04-25T13:32:00.723Z",
-    "newest": "2026-04-30T04:32:21.890Z",
-    "oldestAgeMs": 399759202,
-    "newestAgeMs": 138035
+    "oldest": "2026-04-30T10:34:50.282Z",
+    "newest": "2026-04-30T10:36:50.458Z",
+    "oldestAgeMs": 233760,
+    "newestAgeMs": 113584
   },
-  "latestValidationGeneratedAt": "2026-04-30T04:32:21.890Z",
-  "latestValidationAgeMs": 138035,
+  "latestValidationGeneratedAt": "2026-04-30T10:38:43.996Z",
+  "latestValidationAgeMs": 46,
   "refreshReportGeneratedAt": "2026-04-22T04:30:39.521Z",
-  "wrapupGeneratedAt": "2026-04-25T13:33:47.605Z",
+  "wrapupGeneratedAt": "2026-04-30T10:38:43.996Z",
   "placeholderCount": 0,
   "nextPriority": [],
   "blockers": [],
   "wins": [
-    "Audit snapshot is fresh (latest validation signal age: 2 minute(s))",
+    "Audit snapshot is fresh (latest validation signal age: 0 minute(s))",
     "Bulk audit refresh command available via `npm run audit:refresh`",
     "Internal link audit is clean",
     "Image asset audit is clean",
@@ -30,42 +30,42 @@
       "title": "Placeholder Audit",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 77
+      "durationMs": 82
     },
     {
       "id": "internal-links",
       "title": "Internal Link Audit",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 95
+      "durationMs": 83
     },
     {
       "id": "image-assets",
       "title": "Image Asset Audit",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 78
+      "durationMs": 87
     },
     {
       "id": "frontmatter-audit",
       "title": "Frontmatter Audit",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 102
+      "durationMs": 103
     },
     {
       "id": "render-doctor",
       "title": "Render Environment Doctor",
       "status": "warn",
       "exitCode": 2,
-      "durationMs": 505
+      "durationMs": 468
     },
     {
       "id": "local-render",
       "title": "Local HTML Render",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 109772
+      "durationMs": 119349
     }
   ],
   "audits": {

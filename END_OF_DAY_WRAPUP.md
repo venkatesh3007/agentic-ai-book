@@ -1,8 +1,8 @@
 # End-of-Day Wrap-Up
 
-Generated: 2026-04-25T13:33:47.605Z
+Generated: 2026-04-30T10:38:44.061Z
 
-Git HEAD: 1fc8571
+Git HEAD: cd920df
 
 ## Summary
 
@@ -76,12 +76,12 @@ OK: Book validation passed
 - Exit status: 2
 - Overall status: WARN (exit 2)
 - Checks:
-  - Placeholder Audit: PASS (exit 0, 77 ms)
-  - Internal Link Audit: PASS (exit 0, 95 ms)
-  - Image Asset Audit: PASS (exit 0, 78 ms)
-  - Frontmatter Audit: PASS (exit 0, 102 ms)
-  - Render Environment Doctor: WARN (exit 2, 505 ms)
-  - Local HTML Render: PASS (exit 0, 109772 ms)
+  - Placeholder Audit: PASS (exit 0, 82 ms)
+  - Internal Link Audit: PASS (exit 0, 83 ms)
+  - Image Asset Audit: PASS (exit 0, 87 ms)
+  - Frontmatter Audit: PASS (exit 0, 103 ms)
+  - Render Environment Doctor: WARN (exit 2, 468 ms)
+  - Local HTML Render: PASS (exit 0, 119349 ms)
 - Reports:
   - `reports/healthcheck-report.md`
   - `reports/healthcheck-report.json`
@@ -178,11 +178,22 @@ Wrote reports/status-dashboard.json
 Synced STATUS.md
 ```
 
+## STATUS.md Finalize
+
+- Command: `/usr/bin/node scripts/finalize-status-after-commit.js`
+- Exit status: 0
+- Reports:
+  - `STATUS.md`
+```text
+STATUS.md snapshot note already points at HEAD cd920df
+```
+
 ## Git Working Tree
 
 - Working tree dirty before wrap-up write: yes
 ```text
-M STATUS.md
+M README.md
+ M STATUS.md
  M placeholder-chapters.json
  M reports/frontmatter-audit-report.json
  M reports/healthcheck-report.json
@@ -195,11 +206,12 @@ M STATUS.md
  M reports/render-environment-report.md
  M reports/status-dashboard.json
  M reports/status-dashboard.md
+ M scripts/end-of-day-wrapup.js
 ```
 
 ## Tagging
 
-- Local tag created at HEAD: `eod-2026-04-25`. Working tree had uncommitted audit/output changes, but tagging the current commit is still valid for a daily milestone.
+- No tag requested.
 
 ## Notes
 

@@ -14,6 +14,7 @@ const localRenderJsonPath = path.join(repoRoot, 'reports', 'local-render-report.
 const dashboardScript = path.join(repoRoot, 'scripts', 'build-status-dashboard.js');
 const dashboardJsonPath = path.join(repoRoot, 'reports', 'status-dashboard.json');
 const statusSyncScript = path.join(repoRoot, 'scripts', 'sync-status-md.js');
+const statusFinalizeScript = path.join(repoRoot, 'scripts', 'finalize-status-after-commit.js');
 
 const args = process.argv.slice(2);
 const tagArgIndex = args.indexOf('--tag');
@@ -75,6 +76,7 @@ const healthcheckCommand = formatCommand(process.execPath, [path.relative(repoRo
 const localRenderCommand = formatCommand(process.execPath, [path.relative(repoRoot, localRenderScript), '.', '--to', 'html']);
 const dashboardCommand = formatCommand(process.execPath, [path.relative(repoRoot, dashboardScript)]);
 const statusSyncCommand = formatCommand(process.execPath, [path.relative(repoRoot, statusSyncScript)]);
+const statusFinalizeCommand = formatCommand(process.execPath, [path.relative(repoRoot, statusFinalizeScript)]);
 
 function buildWrapupMarkdown({
   generatedAt,
@@ -94,6 +96,8 @@ function buildWrapupMarkdown({
   dashboardSummary,
   hasStatusSyncScript,
   statusSync,
+  hasStatusFinalizeScript,
+  statusFinalize,
   dirtyTreeBeforeWrap,
   gitStatusBeforeWrap,
   tagMessage,
@@ -102,6 +106,7 @@ function buildWrapupMarkdown({
   localRenderCommand,
   dashboardCommand,
   statusSyncCommand,
+  statusFinalizeCommand,
   localRenderPassed
 }) {
   const summary = [];
@@ -244,6 +249,19 @@ function buildWrapupMarkdown({
   }
   summary.push(...section('STATUS.md Sync', statusSyncLines));
 
+  const statusFinalizeLines = [];
+  if (!hasStatusFinalizeScript) {
+    statusFinalizeLines.push('- STATUS.md finalize script not found; skipping.');
+  } else {
+    statusFinalizeLines.push(`- Command: \`${statusFinalizeCommand}\``);
+    statusFinalizeLines.push(`- Exit status: ${typeof statusFinalize?.status === 'number' ? statusFinalize.status : 'unknown'}`);
+    statusFinalizeLines.push('- Reports:');
+    statusFinalizeLines.push('  - `STATUS.md`');
+    const statusFinalizeOutput = [statusFinalize?.stdout || '', statusFinalize?.stderr || ''].filter(Boolean).join('\n');
+    statusFinalizeLines.push(...codeBlock(statusFinalizeOutput));
+  }
+  summary.push(...section('STATUS.md Finalize', statusFinalizeLines));
+
   const gitLines = [
     `- Working tree dirty before wrap-up write: ${dirtyTreeBeforeWrap ? 'yes' : 'no'}`,
     ...codeBlock(gitStatusBeforeWrap.stdout || gitStatusBeforeWrap.stderr)
@@ -290,6 +308,12 @@ const hasStatusSyncScript = fs.existsSync(statusSyncScript);
 let statusSync = null;
 if (hasStatusSyncScript) {
   statusSync = run(process.execPath, [statusSyncScript]);
+}
+
+const hasStatusFinalizeScript = fs.existsSync(statusFinalizeScript);
+let statusFinalize = null;
+if (hasStatusFinalizeScript) {
+  statusFinalize = run(process.execPath, [statusFinalizeScript]);
 }
 
 const gitHead = run('git', ['rev-parse', '--short', 'HEAD']);
@@ -347,6 +371,8 @@ let wrapupText = buildWrapupMarkdown({
   dashboardSummary,
   hasStatusSyncScript,
   statusSync,
+  hasStatusFinalizeScript,
+  statusFinalize,
   dirtyTreeBeforeWrap,
   gitStatusBeforeWrap,
   tagMessage,
@@ -355,6 +381,7 @@ let wrapupText = buildWrapupMarkdown({
   localRenderCommand,
   dashboardCommand,
   statusSyncCommand,
+  statusFinalizeCommand,
   localRenderPassed
 });
 fs.writeFileSync(summaryPath, wrapupText);
@@ -383,6 +410,8 @@ wrapupText = buildWrapupMarkdown({
   dashboardSummary,
   hasStatusSyncScript,
   statusSync,
+  hasStatusFinalizeScript,
+  statusFinalize,
   dirtyTreeBeforeWrap,
   gitStatusBeforeWrap,
   tagMessage,
@@ -391,6 +420,7 @@ wrapupText = buildWrapupMarkdown({
   localRenderCommand,
   dashboardCommand,
   statusSyncCommand,
+  statusFinalizeCommand,
   localRenderPassed
 });
 fs.writeFileSync(summaryPath, wrapupText);
