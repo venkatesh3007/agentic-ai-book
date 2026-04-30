@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-04-30T10:38:44.043Z",
+  "generatedAt": "2026-04-30T13:34:20.296Z",
   "overallStatus": "warn",
   "snapshotFreshness": "fresh",
   "snapshotWindow": {
-    "oldest": "2026-04-30T10:34:50.282Z",
-    "newest": "2026-04-30T10:36:50.458Z",
-    "oldestAgeMs": 233760,
-    "newestAgeMs": 113584
+    "oldest": "2026-04-30T13:30:11.069Z",
+    "newest": "2026-04-30T13:32:24.074Z",
+    "oldestAgeMs": 249226,
+    "newestAgeMs": 116221
   },
-  "latestValidationGeneratedAt": "2026-04-30T10:38:43.996Z",
-  "latestValidationAgeMs": 46,
+  "latestValidationGeneratedAt": "2026-04-30T13:34:20.248Z",
+  "latestValidationAgeMs": 47,
   "refreshReportGeneratedAt": "2026-04-22T04:30:39.521Z",
-  "wrapupGeneratedAt": "2026-04-30T10:38:43.996Z",
+  "wrapupGeneratedAt": "2026-04-30T13:34:20.248Z",
   "placeholderCount": 0,
   "nextPriority": [],
   "blockers": [],
@@ -30,42 +30,42 @@
       "title": "Placeholder Audit",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 82
+      "durationMs": 131
     },
     {
       "id": "internal-links",
       "title": "Internal Link Audit",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 83
+      "durationMs": 109
     },
     {
       "id": "image-assets",
       "title": "Image Asset Audit",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 87
+      "durationMs": 106
     },
     {
       "id": "frontmatter-audit",
       "title": "Frontmatter Audit",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 103
+      "durationMs": 119
     },
     {
       "id": "render-doctor",
       "title": "Render Environment Doctor",
       "status": "warn",
       "exitCode": 2,
-      "durationMs": 468
+      "durationMs": 625
     },
     {
       "id": "local-render",
       "title": "Local HTML Render",
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 119349
+      "durationMs": 131958
     }
   ],
   "audits": {
